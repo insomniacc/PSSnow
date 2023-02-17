@@ -1,3 +1,6 @@
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Internal
+
 $ErrorActionPreference = "Stop"
 
 $ModulePath = $PSScriptRoot

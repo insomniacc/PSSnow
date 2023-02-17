@@ -117,7 +117,7 @@ function Invoke-SNOWTableGET {
                 }
             }else{
                 if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
-                    Write-Verbose "$URI&sysparm_offset=$Offset"
+                    Write-Verbose $URI
                 }
                 $Results = (Invoke-RestMethod -URI $URI @AuthSplat).Result
             }            

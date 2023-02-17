@@ -2,6 +2,7 @@ function Get-SNOWObject {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [string]
         $Table,
         [Parameter(ValueFromPipelineByPropertyName)]

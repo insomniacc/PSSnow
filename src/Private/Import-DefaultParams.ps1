@@ -13,20 +13,24 @@ function Import-DefaultParams {
     
     [CmdletBinding()]
     param(
-        [Parameter()]
+        [Parameter(ValueFromPipeline)]
         [string]
-        $FunctionName = "Get-SNOWObject",
+        $TemplateFunction,
         [Parameter()]
         [array]
         $Exclusions = @("table"),
         [switch]
         $AsStringArray
     )
-    $BaseCommand = Get-Command $FunctionName
-    $Common = [CommonParameters].GetProperties().name + $Exclusions
+    $BaseCommand = Get-Command $TemplateFunction
+    $Common = @(
+                    [System.Management.Automation.PSCmdlet]::CommonParameters;
+                    [System.Management.Automation.PSCmdlet]::OptionalCommonParameters;
+                    $Exclusions
+                )
 
     if(-not $BaseCommand){
-        Write-Error "Unable to find function $FunctionName" -ErrorAction Stop
+        Write-Error "Unable to find function $TemplateFunction" -ErrorAction Stop
     }
 
     if($AsStringArray.IsPresent){

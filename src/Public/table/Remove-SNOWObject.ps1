@@ -17,9 +17,7 @@ function Remove-SNOWObject {
         $Table
     )
 
-    Begin {}
     Process {
-        Invoke-SNOWTableREMOVE -table $Table -Parameters $PSBoundParameters
+        Invoke-SNOWTableDELETE -table $Table -Parameters $PSBoundParameters
     }
-    End {}
 }

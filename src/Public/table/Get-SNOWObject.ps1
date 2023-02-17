@@ -6,6 +6,13 @@ function Get-SNOWObject {
         [string]
         $Table,
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateScript({
+            if($_ -match "^[0-9a-f]{32}$"){
+                $true
+            }else{
+                Throw "Must be a valid sys_id"
+            }
+        })]
         [string]
         [alias('SysID')]
         $Sys_ID,
@@ -42,11 +49,7 @@ function Get-SNOWObject {
         $SysParmView
     )
 
-    Begin {}
     Process {
-        Invoke-SNOWTableGET -table $Table -Parameters $PSBoundParameters
-    }
-    End {
-
+        Invoke-SNOWTableREAD -table $Table -Parameters $PSBoundParameters
     }
 }

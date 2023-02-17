@@ -1,5 +1,5 @@
-function Get-SNOWUser {
-    [CmdletBinding()]
+function Set-SNOWUser {
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         $first_name,
         $last_name,
@@ -12,12 +12,12 @@ function Get-SNOWUser {
         $Manager,
         $locked_out
     )
-    DynamicParam { "Get-SNOWObject" | Import-DefaultParams }
+    DynamicParam { "Set-SNOWObject" | Import-DefaultParams }
 
     Begin {
         $table = "sys_user"
     }
     Process {
-        Invoke-SNOWTableREAD -table $table -Parameters $PSBoundParameters
+        Invoke-SNOWTableUPDATE -table $table -Parameters $PSBoundParameters
     }
 }

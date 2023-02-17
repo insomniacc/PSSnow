@@ -1,4 +1,4 @@
-function Invoke-SNOWTableREMOVE {
+function Invoke-SNOWTableDELETE {
     [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
     param (
         [Parameter(Mandatory)]
@@ -34,6 +34,4 @@ function Invoke-SNOWTableREMOVE {
         }
        
     }
-    
-    END {}
 }

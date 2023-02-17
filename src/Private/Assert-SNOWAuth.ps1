@@ -2,7 +2,6 @@ function Assert-SNOWAuth() {
     [CmdletBinding()]
     param ()
     
-    
     if($null -eq $script:SNOWAuth){
         Write-Error "Please set ServiceNow authentication with Set-SNOWAuth" -ErrorAction Stop
     }

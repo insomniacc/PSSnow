@@ -22,9 +22,11 @@ function Get-SNOWObject {
         [switch]
         $ExcludeReferenceLinks,
         [Parameter()]
+        [ValidateRange(0, [int]::MaxValue)]
         [int]
         $Offset,
         [Parameter()]
+        [ValidateRange(0, [int]::MaxValue)]
         [int]
         $Limit,
         [Parameter()]

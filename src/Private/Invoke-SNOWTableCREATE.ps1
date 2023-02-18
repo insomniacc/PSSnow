@@ -1,4 +1,4 @@
-function Invoke-SNOWTableUPDATE {
+function Invoke-SNOWTableCREATE {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory)]
@@ -11,9 +11,9 @@ function Invoke-SNOWTableUPDATE {
     
     BEGIN {
         Assert-SNOWAuth
-        $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
-        $DefaultParameterList = Import-DefaultParams -TemplateFunction "Set-SNOWObject" -AsStringArray
-        $UpdateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
+        $URI = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
+        $DefaultParameterList = Import-DefaultParams -TemplateFunction "New-SNOWObject" -AsStringArray
+        $CreateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
         #todo support oauth
         $AuthSplat = @{Credential = $script:SNOWAuth.Credential}
 
@@ -22,8 +22,6 @@ function Invoke-SNOWTableUPDATE {
     }
     
     PROCESS {
-        $URI = "$BaseURL/$($Parameters.Sys_ID)"
-
         #? Create BODY
         #Combine properties hashtable with any additional parameters
         if($Parameters.Properties){
@@ -32,11 +30,11 @@ function Invoke-SNOWTableUPDATE {
             $Body = @{}
         }
 
-        if($UpdateParameters){
-            if($UpdateParameters.GetType().Name -eq "DictionaryEntry"){
-                $Body.Add($UpdateParameters.Key,$UpdateParameters.Value)
+        if($CreateParameters){
+            if($CreateParameters.GetType().Name -eq "DictionaryEntry"){
+                $Body.Add($CreateParameters.Key,$CreateParameters.Value)
             }else{
-                Foreach($Property in $UpdateParameters.GetEnumerator()){
+                Foreach($Property in $CreateParameters.GetEnumerator()){
                     $Body.Add($Property.Key,$Property.Value)
                 }
             }
@@ -61,8 +59,8 @@ function Invoke-SNOWTableUPDATE {
                 Write-Verbose $URI
             }
 
-            if($PSCmdlet.ShouldProcess($table,$Parameters.Sys_ID)){
-                $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat
+            if($PSCmdlet.ShouldProcess($Table)){
+                $Response = Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
 
                 if($Parameters.Passthru.IsPresent){
                     Return $Response.Result

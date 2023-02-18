@@ -15,7 +15,7 @@ function Invoke-SNOWTableREAD {
     BEGIN {
         Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
-        $DefaultParameterList = "Get-SNOWObject" | Import-DefaultParams -AsStringArray
+        $DefaultParameterList = Import-DefaultParams -TemplateFunction "Get-SNOWObject" -AsStringArray
         $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
         $QueryParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
         #todo support oauth

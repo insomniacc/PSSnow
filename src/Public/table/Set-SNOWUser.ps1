@@ -12,7 +12,7 @@ function Set-SNOWUser {
         $Manager,
         $locked_out
     )
-    DynamicParam { "Set-SNOWObject" | Import-DefaultParams }
+    DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
 
     Begin {
         $table = "sys_user"

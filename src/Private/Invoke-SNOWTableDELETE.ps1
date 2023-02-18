@@ -11,7 +11,7 @@ function Invoke-SNOWTableDELETE {
     
     BEGIN {
         Assert-SNOWAuth
-        $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
+        $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase #todo remove this & test
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table/"
         
         #todo support oauth

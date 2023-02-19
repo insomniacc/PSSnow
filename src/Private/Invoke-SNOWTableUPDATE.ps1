@@ -24,6 +24,11 @@ function Invoke-SNOWTableUPDATE {
     PROCESS {
         $URI = "$BaseURL/$($Parameters.Sys_ID)"
 
+        #? sysparm_input_display_value
+        if($Parameters.ContainsKey('InputDisplayValue')){
+            $URI = "$URI`?sysparm_input_display_value=$($Parameters.InputDisplayValue.ToString().ToLower())"
+        }
+
         #? Create BODY
         #Combine properties hashtable with any additional parameters
         if($Parameters.Properties){
@@ -61,7 +66,7 @@ function Invoke-SNOWTableUPDATE {
                 Write-Verbose $URI
             }
 
-            if($PSCmdlet.ShouldProcess($table,$Parameters.Sys_ID)){
+            if($PSCmdlet.ShouldProcess("$table/$($Parameters.Sys_ID)","UPDATE")){
                 $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat
 
                 if($Parameters.Passthru.IsPresent){

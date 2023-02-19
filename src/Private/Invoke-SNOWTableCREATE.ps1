@@ -22,6 +22,11 @@ function Invoke-SNOWTableCREATE {
     }
     
     PROCESS {
+        #? sysparm_input_display_value
+        if($Parameters.ContainsKey('InputDisplayValue')){
+            $URI = "$URI`?sysparm_input_display_value=$($Parameters.InputDisplayValue.ToString().ToLower())"
+        }
+
         #? Create BODY
         #Combine properties hashtable with any additional parameters
         if($Parameters.Properties){

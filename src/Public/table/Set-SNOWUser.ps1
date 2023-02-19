@@ -10,12 +10,17 @@ function Set-SNOWUser {
         $Company,
         $Department,
         $Manager,
-        $locked_out
+        $locked_out,
+        $user_password
     )
     DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
 
     Begin {
         $table = "sys_user"
+        
+        if($PSBoundParameters.ContainsKey('user_password') -and -not $PSBoundParameters.ContainsKey('InputDisplayValue')){
+            $PSBoundParameters.add('InputDisplayValue',$True)
+        }
     }
     Process {
         Invoke-SNOWTableUPDATE -table $table -Parameters $PSBoundParameters

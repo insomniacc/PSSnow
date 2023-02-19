@@ -1,3 +1,9 @@
+<#todo
+        sysparm_display_value
+        sysparm_fields
+        sysparm_query_no_domain
+#>
+
 function Set-SNOWObject {
     [CmdletBinding(SupportsShouldProcess)]
     param (
@@ -19,6 +25,9 @@ function Set-SNOWObject {
         [Parameter()]
         [hashtable]
         $Properties,
+        [Parameter()]
+        [switch]
+        $InputDisplayValue,
         [Parameter()]
         [switch]
         $PassThru,

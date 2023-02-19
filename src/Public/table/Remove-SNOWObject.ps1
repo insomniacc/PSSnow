@@ -14,7 +14,10 @@ function Remove-SNOWObject {
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Table
+        $Table,
+        [Parameter()]
+        [switch]
+        $RestrictDomain = $false
     )
 
     Process {

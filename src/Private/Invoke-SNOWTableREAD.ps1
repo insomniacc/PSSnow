@@ -78,7 +78,7 @@ function Invoke-SNOWTableREAD {
         }
 
         #? sysparm_query_no_domain
-        if($Parameters.ContainsKey('restrictdomain')){
+        if($Parameters.ContainsKey('RestrictDomain')){
             $URI = "$URI&sysparm_query_no_domain=$($Parameters.RestrictDomain.ToString().ToLower())"
         }
         

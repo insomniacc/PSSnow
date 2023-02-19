@@ -21,9 +21,15 @@ function Invoke-SNOWTableDELETE {
     }
     
     PROCESS {
+        $URI = "$BaseURL$($Parameters.sys_id)"
+
+        #? sysparm_query_no_domain
+        if($Parameters.ContainsKey('RestrictDomain')){
+            $URI = "$URI`?sysparm_query_no_domain=$($Parameters.RestrictDomain.ToString().ToLower())"
+        }
+
         try{
-            $URI = "$BaseURL$($Parameters.sys_id)"
-            if($PSCmdlet.ShouldProcess($table,"DELETE $($Parameters.sys_id)")){
+            if($PSCmdlet.ShouldProcess("$table/$($Parameters.sys_id)","DELETE")){
                 if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                     Write-Verbose $URI
                 }

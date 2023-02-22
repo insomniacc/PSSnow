@@ -66,8 +66,9 @@ function Invoke-SNOWTableCREATE {
 
             if($PSCmdlet.ShouldProcess($Table)){
                 $Response = Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
-                Return $Response.Result.sys_id
-                
+                if($Parameters.ContainsKey('PassThru')){
+                    Return $Response.result
+                }
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"

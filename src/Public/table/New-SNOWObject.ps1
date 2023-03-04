@@ -24,7 +24,7 @@ function New-SNOWObject {
         [Parameter()]
         [switch]
         $PassThru,
-        [Parameter()]
+        [Parameter(Hidden)]
         [switch]
         $AsBatchRequest
      )

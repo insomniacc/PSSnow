@@ -45,17 +45,14 @@ function Invoke-SNOWTableCREATE {
             }
         }
 
-        $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
-
         #todo type conversions from additional parameters; datetimes, switch?, etc
-        #todo support batch requests
-        #if($Parameter.ContainsKey('AsBatchRequest')){
 
-            #return batch request
-        #}
-
+        $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
         $Body = $Body | ConvertTo-Json -Depth 10 -Compress
 
+        if($Parameter.ContainsKey('AsBatchRequest')){
+            return (ConvertTo-BatchRequest -URI $URI -Method 'POST' -Body $Body)
+        }
 
         #? API Call
         try{

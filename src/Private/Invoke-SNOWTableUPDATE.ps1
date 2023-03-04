@@ -48,16 +48,15 @@ function Invoke-SNOWTableUPDATE {
         }
 
         $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
-
-        #todo type conversions from additional parameters; datetimes, switch?, etc
-        #todo support batch requests
-        #if($Parameter.ContainsKey('AsBatchRequest')){
-
-            #return batch request
-        #}
-
         $Body = $Body | ConvertTo-Json -Depth 10 -Compress
 
+        #todo type conversions from additional parameters; datetimes, switch?, etc
+
+        if($Parameter.ContainsKey('AsBatchRequest')){
+            if($Parameter.ContainsKey('AsBatchRequest')){
+                return (ConvertTo-BatchRequest -URI $URI -Method 'PATCH' -Body $Body -ExcludeResponseHeaders)
+            }
+        }
 
         #? API Call
         try{

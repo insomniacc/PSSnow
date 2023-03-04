@@ -40,9 +40,6 @@ function Get-SNOWObject {
         [Parameter()]
         [switch]
         $RestrictDomain = $false,
-        #[Parameter(DontShow)]
-        #[switch]
-        #$SuppressPaginationHeader,
         [Parameter(DontShow)]
         [ValidateSet("desktop","mobile","both")]
         [string]

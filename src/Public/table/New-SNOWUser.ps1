@@ -77,7 +77,7 @@ function New-SNOWUser {
     )
     DynamicParam { Import-DefaultParams -TemplateFunction "New-SNOWObject" }
 
-    Begin {
+    Begin {   
         $table = "sys_user"
 
         <#
@@ -85,7 +85,7 @@ function New-SNOWUser {
             Might be worth revising & refactoring at some point but this functions for now.
         #>
 
-        if($PSBoundParameters.ContainsKey('PassThru')){
+        if($PSBoundParameters.ContainsKey('AsBatchRequest') -or $PSBoundParameters.ContainsKey('Passthru')){
             $ReturnObject = $true
         }
 
@@ -104,13 +104,13 @@ function New-SNOWUser {
             #? photo requires a separate rest call, so we'll remove it from out bound parameters
             [void]$PSBoundParameters.Remove('photo')
 
-            if(-not $PSBoundParameters.ContainsKey('PassThru')){
+            if(-not ($PSBoundParameters.ContainsKey('AsBatchRequest') -or $PSBoundParameters.ContainsKey('Passthru'))){
                 [void]$PSBoundParameters.Add('PassThru',[switch]$true)
                 $ReturnObject = $false
             }
         }
     }
-    Process {          
+    Process {        
         $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters
         if($Response.sys_id -and $photo){
             $properties = @{
@@ -125,6 +125,6 @@ function New-SNOWUser {
 
         if($ReturnObject){
             $Response
-        }        
+        }
     }
 }

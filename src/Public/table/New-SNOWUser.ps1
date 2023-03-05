@@ -112,7 +112,7 @@ function New-SNOWUser {
     }
     Process {          
         $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters
-        if($photo){
+        if($Response.sys_id -and $photo){
             $properties = @{
                 agent = "Posting a picture to a User Record"
                 topic = "AttachmentCreator"

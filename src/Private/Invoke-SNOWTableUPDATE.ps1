@@ -52,12 +52,10 @@ function Invoke-SNOWTableUPDATE {
 
         #todo type conversions from additional parameters; datetimes, switch?, etc
 
-        if($Parameter.ContainsKey('AsBatchRequest')){
-            if($Parameter.ContainsKey('AsBatchRequest')){
-                return (ConvertTo-BatchRequest -URI $URI -Method 'PATCH' -Body $Body -ExcludeResponseHeaders)
-            }
+        if($Parameters.ContainsKey('AsBatchRequest')){
+            return (ConvertTo-BatchRequest -URI $URI -Method 'PATCH' -Body $Body -ExcludeResponseHeaders)
         }
-
+        
         #? API Call
         try{
             

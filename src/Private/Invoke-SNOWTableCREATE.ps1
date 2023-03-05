@@ -50,7 +50,7 @@ function Invoke-SNOWTableCREATE {
         $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
         $Body = $Body | ConvertTo-Json -Depth 10 -Compress
 
-        if($Parameter.ContainsKey('AsBatchRequest')){
+        if($Parameters.ContainsKey('AsBatchRequest')){
             return (ConvertTo-BatchRequest -URI $URI -Method 'POST' -Body $Body)
         }
 

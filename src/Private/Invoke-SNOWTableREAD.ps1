@@ -79,6 +79,7 @@ function Invoke-SNOWTableREAD {
                         if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
+                        #Last time I did this in core I followed the rel links instead of using a for loop and I think there were issues so I havent bothered to try replicate that yet.
                         $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
                         [void]$Results.Add($Response)
                     }

@@ -80,50 +80,53 @@ function New-SNOWUser {
     Begin {   
         $table = "sys_user"
 
-        <#
-            The passthru param caused some issue here due to the way params are passed to the private functions.
-            Might be worth revising & refactoring at some point but this functions for now.
-        #>
-
-        if($PSBoundParameters.ContainsKey('AsBatchRequest') -or $PSBoundParameters.ContainsKey('Passthru')){
-            $ReturnObject = $true
-        }
-
         if($photo){
-            #? Photo can either be a filepath or base64. We'll check and convert so that our end format is always base64
-            if(Test-Path $Photo){
-                $photo = Convert-ImageFileToBase64 -FilePath $photo    
-            }else{
-                try {
-                    [Void][System.Convert]::FromBase64String($photo)
-                } catch {
-                    throw "Photo must be either a filepath or a base64 encoded string."
+            <#
+                Adding photos to a user record is done in a second API call to a different endpoint,
+                So technically it's a separate thing all together, but it's something you exact should be available when creating a user
+                I've added it as a feature here for usability.
+                It is not supported by batch API requests in this way, because we need to create the user first to get their sys_id in order to attach the photo.
+                In this instance it would be best to make the calls separately by omitting the photo from New-SNOWUser and also running a separate batch with New-SNOWUserPhoto.
+                If both -AsBatchRequest and -Photo are provided this will be highlighted in a warning message and the photo will not be set.
+            #>
+
+            #? Photo can either be a filepath or base64. We'll check and convert so that the format is always base64
+            $PhotoIsBase64  =   try {
+                                    [Void][System.Convert]::FromBase64String($photo)
+                                    $true
+                                } catch {
+                                    $false
+                                }
+
+            if(-not $PhotoIsBase64){
+                if(Test-Path $Photo){
+                    # As per https://docs.servicenow.com/en-US/bundle/utah-platform-administration/page/administer/field-administration/task/t_UsingImageFields.html
+                    # The image type must be .gif, .jpg/.jpeg, or .png.
+                    if([System.IO.Path]::GetExtension($Photo) -in @('.jpg','.jpeg','.gif','.png')){
+                        $photo = Convert-ImageFileToBase64 -FilePath $photo    
+                    }else{
+                        Write-Error "Photo must be one of the following filetypes: .jpg/.jpeg/.gif/.png"
+                    }
+                }else{
+                        Throw "Photo must be either a filepath or a base64 encoded string."
                 }
-            }
+            }            
 
-            #? photo requires a separate rest call, so we'll remove it from out bound parameters
+            #? Photo requires a separate rest call, so we'll remove it from the bound parameters
             [void]$PSBoundParameters.Remove('photo')
-
-            if(-not ($PSBoundParameters.ContainsKey('AsBatchRequest') -or $PSBoundParameters.ContainsKey('Passthru'))){
-                [void]$PSBoundParameters.Add('PassThru',[switch]$true)
-                $ReturnObject = $false
-            }
         }
     }
-    Process {        
-        $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters
+    Process {          
+        $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters -Passthru
+        
         if($Response.sys_id -and $photo){
-            $properties = @{
-                agent = "Posting a picture to a User Record"
-                topic = "AttachmentCreator"
-                name = "photo:image/jpeg"
-                source = "sys_user:$($Response.sys_id)"
-                payload = $photo
-            }
-            Invoke-SNOWTableCREATE -table "ecc_queue" -Parameters $properties
+            New-SNOWUserPhoto -Base64String $photo -SysID $Response.sys_id
+        }elseif($PSBoundParameters.AsBatchRequest.IsPresent -and $photo){
+            Write-Warning "New-SNOWUser does not support the photo property while batching. Please make a separate call with New-SNOWUserPhoto."
+            #todo add link to readme in warning.
         }
 
-        if($ReturnObject){
+        if($PSBoundParameters.Passthru.IsPresent -or $PSBoundParameters.AsBatchRequest.IsPresent){
             $Response
         }
     }

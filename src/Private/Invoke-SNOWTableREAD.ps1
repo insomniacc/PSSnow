@@ -46,7 +46,7 @@ function Invoke-SNOWTableREAD {
         
         #? Additional query modifiers
         Switch ($Parameters.Keys){
-            "fields"                { $URI = "$URI&sysparm_fields=$($Parameters.fields -join ',')" }
+            "fields"                { $URI = "$URI&sysparm_fields=$($Parameters.fields.ToLower() -join ',')" }
             "displayvalue"          { $URI = "$URI&sysparm_display_value=$($Parameters.displayvalue)" }
             "excludereferencelinks" { $URI = "$URI&sysparm_exclude_reference_link=$($Parameters.excludereferencelinks)" }
             "RestrictDomain"        { $URI = "$URI&sysparm_query_no_domain=$($Parameters.RestrictDomain.ToString().ToLower())" }
@@ -76,7 +76,7 @@ function Invoke-SNOWTableREAD {
             if($EnablePagination){
                 if($Parameters.ContainsKey('limit')){
                     For($Offset = 0; $Offset -lt $Parameters.limit; $Offset+=$PaginationAmount){
-                        if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
+                        if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
                         #Last time I did this in core I followed the rel links instead of using a for loop and I think there were issues so I havent bothered to try replicate that yet.
@@ -87,7 +87,7 @@ function Invoke-SNOWTableREAD {
                 }else{
                     $Offset = 0
                     Do{
-                        if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
+                        if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
                         $Response = Invoke-WebRequest -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
@@ -97,7 +97,7 @@ function Invoke-SNOWTableREAD {
                     $Results = @($Results | ForEach-Object {$_})
                 }
             }else{
-                if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
+                if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                     Write-Verbose $URI
                 }
                 $Results = (Invoke-RestMethod -URI $URI @AuthSplat).Result

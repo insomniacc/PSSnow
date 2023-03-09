@@ -6,7 +6,10 @@ function Invoke-SNOWTableCREATE {
         $Parameters,
         [Parameter(Mandatory)]
         [string]
-        $Table
+        $Table,
+        [Parameter()]
+        [switch]
+        $Passthru
     )
     
     BEGIN {
@@ -50,7 +53,7 @@ function Invoke-SNOWTableCREATE {
         $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
         $Body = $Body | ConvertTo-Json -Depth 10 -Compress
 
-        if($Parameters.ContainsKey('AsBatchRequest')){
+        if($Parameters.AsBatchRequest.IsPresent){
             return (ConvertTo-BatchRequest -URI $URI -Method 'POST' -Body $Body)
         }
 
@@ -63,7 +66,12 @@ function Invoke-SNOWTableCREATE {
 
             if($PSCmdlet.ShouldProcess($Table)){
                 $Response = Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
-                if($Parameters.ContainsKey('PassThru')){
+                <#
+                    Unlike the other CRUD private functions, CREATE has an additional passthru
+                    This is for granularity between the public and private functions as some CREATE actions may require the sys_id in order to perform other tasks, while not nessesarily wanting to return output to the user
+                    A good example of this is New-SNOWUser which features adding a photo to the user record (it's a second rest call after creation of the user)
+                #>
+                if($Parameters.PassThru.IsPresent -or $Passthru.IsPresent){
                     Return $Response.result
                 }
             }

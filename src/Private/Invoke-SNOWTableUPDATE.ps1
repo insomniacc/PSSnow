@@ -52,7 +52,7 @@ function Invoke-SNOWTableUPDATE {
 
         #todo type conversions from additional parameters; datetimes, switch?, etc
 
-        if($Parameters.ContainsKey('AsBatchRequest')){
+        if($Parameters.AsBatchRequest.IsPresent){
             return (ConvertTo-BatchRequest -URI $URI -Method 'PATCH' -Body $Body -ExcludeResponseHeaders)
         }
         

@@ -3,6 +3,7 @@ function Set-SNOWUser {
     param (
         $first_name,
         $last_name,
+        $middle_name,
         $user_name,
         $employee_number,
         $email,
@@ -19,6 +20,7 @@ function Set-SNOWUser {
         $table = "sys_user"
         
         if($PSBoundParameters.ContainsKey('user_password') -and -not $PSBoundParameters.ContainsKey('InputDisplayValue')){
+            # This is requird for setting encrypted fields
             $PSBoundParameters.add('InputDisplayValue',$True)
         }
     }

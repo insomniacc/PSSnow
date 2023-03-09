@@ -1,8 +1,8 @@
-<#todo
+ <#todo
         sysparm_display_value
         sysparm_fields
         sysparm_query_no_domain
-#>
+        #>
 
 function Set-SNOWObject {
     [CmdletBinding(SupportsShouldProcess)]
@@ -31,7 +31,7 @@ function Set-SNOWObject {
         [Parameter()]
         [switch]
         $PassThru,
-        [Parameter(Hidden)]
+        [Parameter(DontShow)]
         [switch]
         $AsBatchRequest
      )

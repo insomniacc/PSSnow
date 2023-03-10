@@ -1,4 +1,26 @@
 function New-SNOWUser {
+    <#
+    .SYNOPSIS
+        Creates a new servicenow user record
+    .DESCRIPTION
+        Creates a record in the sys_user table
+    .OUTPUTS
+        PSCustomObject. The full table record (requires -passthru).
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        $Properties = @{
+            user_name = "bruce.wayne"
+            title = "Director"
+            first_name = "Bruce"
+            last_name = "Wayne"
+            department = "Finance"
+            email = "Bruce@WayneIndustries.com"
+        }
+        New-SNOWUser @Properties -PassThru
+        Creates a new user called bruce wayne in the sys_user table
+    #> 
+
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -122,7 +144,7 @@ function New-SNOWUser {
         if($Response.sys_id -and $photo){
             New-SNOWUserPhoto -Base64String $photo -SysID $Response.sys_id
         }elseif($PSBoundParameters.AsBatchRequest.IsPresent -and $photo){
-            Write-Warning "Ignoring '-photo' parameter. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto.`nSee: https://github.com/insomniacc/PSServiceNow/blob/main/docs/Batching_New_User_Photos.MD"
+            Write-Warning "Ignoring 'photo' param. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto.`nSee: https://github.com/insomniacc/PSServiceNow/blob/main/docs/Batching_New_User_Photos.MD"
         }
 
         if($PSBoundParameters.Passthru.IsPresent -or $PSBoundParameters.AsBatchRequest.IsPresent){

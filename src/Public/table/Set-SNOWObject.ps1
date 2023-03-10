@@ -1,10 +1,21 @@
- <#todo
-        sysparm_display_value
-        sysparm_fields
-        sysparm_query_no_domain
-        #>
-
 function Set-SNOWObject {
+    <#
+    .SYNOPSIS
+        Updates a new servicenow record
+    .DESCRIPTION
+        Updates a record in the specified table
+    .OUTPUTS
+        PSCustomObject. The full table record (requires -passthru).
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        Get-SNOWObject -table "sys_user" -query "user_name=bruce.wayne^active=true" | Set-SNOWObject -table "sys_user" -middle_name "Thomas"
+        Updates the middle_name of the user record bruce.wayne in the sys_user table
+    .EXAMPLE
+        Set-SNOWObject -table "sys_user" -sys_id '02826bf03710200044e0bfc8bcbe5d3f' -properties @{middle_name="Thomas"}
+        Updates the middle_name of the user record bruce.wayne in the sys_user table
+    #> 
+
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory)]

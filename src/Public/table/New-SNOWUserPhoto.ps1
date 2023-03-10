@@ -1,4 +1,18 @@
 function New-SNOWUserPhoto {
+    <#
+    .SYNOPSIS
+        Creates a photo attachment for a user record and sets the photo property on that user
+    .DESCRIPTION
+        Using the ecc_queue table and the AttachmentCreator topic, a photo/image is associated to a user record
+    .OUTPUTS
+        PSCustomObject. The full table record (requires -PassThru).
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        New-SNOWUserPhoto -sysID "70c008e047a12110d3e5fa8bd36d436f" -filepath "C:\Users\Insomniac\Desktop\Bruce.jpg"
+        Creates a new user called bruce wayne in the sys_user table
+    #> 
+
     [CmdletBinding()]
     param (
         [Parameter(ParameterSetName = 'Filepath', Mandatory)]
@@ -17,8 +31,10 @@ function New-SNOWUserPhoto {
         $Filepath,
         [Parameter(ParameterSetName = 'Base64', Mandatory)]
         [string]
+        #A base64 encoded image string
         $Base64String,
         [Parameter(Mandatory)]
+        [alias('SysID')]
         [ValidateScript({
             if($_ -match "^[0-9a-f]{32}$"){
                 $true
@@ -27,10 +43,11 @@ function New-SNOWUserPhoto {
             }
         })]
         [string]
-        $SysID,
+        #The sys_id of the user record in the sys_user table
+        $Sys_ID,
         [Parameter()]
         [switch]
-        $Passthru,
+        $PassThru,
         [Parameter(DontShow)]
         [switch]
         $AsBatchRequest
@@ -49,9 +66,9 @@ function New-SNOWUserPhoto {
             agent = "Posting a picture to a User Record"
             topic = "AttachmentCreator"
             name = "photo:image/jpeg"
-            source = "sys_user:$SysID"
+            source = "sys_user:$Sys_ID"
             payload = $Base64String
-            passthru = $Passthru
+            PassThru = $PassThru
             AsBatchRequest = $AsBatchRequest
         }
         Invoke-SNOWTableCREATE -table "ecc_queue" -Parameters $properties

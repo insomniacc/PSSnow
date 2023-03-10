@@ -1,24 +1,76 @@
 function Invoke-SNOWBatch {
+    <#
+    .SYNOPSIS
+        Allows for multiple requests to be made via the ServiceNow Batch API
+    .DESCRIPTION
+        Supported table operations can be wrapped with this command, instead of calls being made, all the requests will be grouped and sent to the batch api to be processed in parallel.
+        This lightens API usage but also speeds up much lager calls against lots of records.
+    .INPUTS
+        An array of 'requests'. These can be collected from supported commands by either issuing the -AsBatchRequest parameter or simply wrapping those commands with Invoke-SNOWBatch -scriptblock { <supported commands go here> }
+    .LINK
+        https://docs.servicenow.com/bundle/tokyo-application-development/page/integrate/inbound-rest/concept/batch-api.html
+    .EXAMPLE
+        $Response = Invoke-SNOWBatch -scriptblock {
+        1..500 | ForEach-Object {
+                $num = $_
+                $Properties = @{
+                    user_name = "bruce.wayne$num"
+                    title = "Director"
+                    first_name = "Bruce"
+                    last_name = "Wayne"
+                    Department = "Finance"
+                    active = $false
+                    email = "Bruce$num@WayneIndustries.com"
+                    employee_number = "0000$num"
+                }
+                New-SNOWUser @Properties -Verbose
+            }
+        }
+        $Response.serviced_requests | Group-Object -Property status_text
+        Creates 500 users in the sys_user table called bruce.wayne, instead of making 500 calls, the requests are split into batches of 150 (default) at a time.
+    .EXAMPLE
+        $Response = Invoke-SNOWBatch -scriptblock {
+        1..100 | ForEach-Object {
+                $num = $_
+                $Properties = @{
+                    user_name = "bruce.wayne$num"
+                    title = "Director"
+                    first_name = "Bruce"
+                    last_name = "Wayne"
+                    Department = "Finance"
+                    active = $false
+                    email = "Bruce$num@WayneIndustries.com"
+                    employee_number = "0000$num"
+                }
+                New-SNOWUser @Properties -Verbose
+            }
+        } -BatchSize 50  -Parallel
+        $Response.serviced_requests | Group-Object -Property status_text
+        Creates 100 users in the sys_user table called bruce.wayne, only 2 API calls (batches) are made to do this, both in parallel.
+    #> 
+
     [CmdletBinding(SupportsShouldProcess)]
     param (
-        [Parameter(Mandatory,ParameterSetName='Requests')]
+        [Parameter(Mandatory,ParameterSetName='Requests',ValueFromPipeline)]
+        #Requests can be gathered from supporting commands with -AsBatchRequest
         $Requests,
         [Parameter(Mandatory,ParameterSetName='ScriptBlock')]
         [scriptblock]
+        #This can be used to wrap supported commands in a scriptblock. Instead of making individual calls they will be automatically grouped and sent to the batch API.
         $ScriptBlock,
         [Parameter()]
         [int]
+        #How many requests should go into each batch. Too high and the calls could timeout.
         $BatchSize = 150,
         [Parameter()]
         [switch]
+        #Batch calls will be made in parallel
         $Parallel,
         [Parameter(DontShow)]
         [int]
         [ValidateRange(1, 20)]
-        $Threads = 3,
-        [Parameter()]
-        [switch]
-        $PassThru
+        #How many parallel calls to make against the Batch API
+        $Threads = 3
     )
     
     begin {

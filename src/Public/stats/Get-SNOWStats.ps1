@@ -48,18 +48,17 @@
     begin {
         Assert-SNOWAuth
         $URI = "https://$($script:SNOWAuth.Instance).service-now.com/api/now/v1/stats/$Table`?"
-        
     }
     
     process {
         Switch ($PSBoundParameters.Keys) {
-            'Fields' {$URI += "&sysparm_$FieldAggregation`_fields=$($Fields -join ',')"}
-            'DisplayValue' {$URI += "&sysparm_display_value=$DisplayValue"}
-            'GroupBy' {$URI += "&sysparm_group_by=$($GroupBy -join ',')"}
-            'OrderBy' {$URI += "&sysparm_orderby=$OrderBy"}
-            'Query' {$URI += "&sysparm_query=$Query"}
-            'HavingQuery' {$URI += "&sysparm_having=$HavingQuery"}
-            'Count' {$URI += "&sysparm_count=$($Count.IsPresent.ToString().ToLower())"}
+            'Fields'        {$URI += "&sysparm_$FieldAggregation`_fields=$($Fields -join ',')"}
+            'DisplayValue'  {$URI += "&sysparm_display_value=$DisplayValue"}
+            'GroupBy'       {$URI += "&sysparm_group_by=$($GroupBy -join ',')"}
+            'OrderBy'       {$URI += "&sysparm_orderby=$OrderBy"}
+            'Query'         {$URI += "&sysparm_query=$Query"}
+            'HavingQuery'   {$URI += "&sysparm_having=$HavingQuery"}
+            'Count'         {$URI += "&sysparm_count=$($Count.IsPresent.ToString().ToLower())"}
         }
 
         $Response = Invoke-RestMethod -URI $URI -Credential $script:SNOWAuth.Credential

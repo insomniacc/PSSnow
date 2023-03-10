@@ -17,9 +17,7 @@ function Remove-SNOWObject {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
     param (      
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-        [ValidateScript({
-            Confirm-SysID -Sys_ID $_ -ValidateScript
-        })]
+        [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [string]
         $Sys_ID,
         [Parameter(Mandatory)]

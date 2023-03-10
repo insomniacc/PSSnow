@@ -1,6 +1,6 @@
 function Confirm-SysID {
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory,ValueFromPipeline)]
         [alias('SysID')]
         [string]
         $sys_id,

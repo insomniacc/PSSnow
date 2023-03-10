@@ -27,13 +27,7 @@ function Get-SNOWObject {
         [string]
         $Table,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateScript({
-            if($_ -match "^[0-9a-f]{32}$"){
-                $true
-            }else{
-                Throw "Must be a valid sys_id"
-            }
-        })]
+        [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [string]
         [alias('SysID')]
         $Sys_ID,

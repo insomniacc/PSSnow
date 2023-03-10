@@ -47,11 +47,16 @@ function Invoke-SNOWBatch {
         } -BatchSize 50  -Parallel
         $Response.serviced_requests | Group-Object -Property status_text
         Creates 100 users in the sys_user table called bruce.wayne, only 2 API calls (batches) are made to do this, both in parallel.
+    .EXAMPLE
+        $UsersToDisable = Get-SNOWUser -active $true -department "Product Management"
+        $SNOWRequests = $UsersToDisable | Set-SNOWUser -active $false -AsBatchRequest
+        Invoke-SNOWBatch -Requests $SNOWRequests
+        Gets all the active users from a specific department, creates requests (as an array) to disable them all, passes that array into the Invoke-SNOWBatch to make the calls via the Batch API.
     #> 
 
     [CmdletBinding(SupportsShouldProcess)]
     param (
-        [Parameter(Mandatory,ParameterSetName='Requests',ValueFromPipeline)]
+        [Parameter(Mandatory,ParameterSetName='Requests')]
         #Requests can be gathered from supporting commands with -AsBatchRequest
         $Requests,
         [Parameter(Mandatory,ParameterSetName='ScriptBlock')]

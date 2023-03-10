@@ -18,11 +18,7 @@ function Remove-SNOWObject {
     param (      
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [ValidateScript({
-            if($_ -match "^[0-9a-f]{32}$"){
-                $true
-            }else{
-                Throw "Must be a valid sys_id"
-            }
+            Confirm-SysID -Sys_ID $_ -ValidateScript
         })]
         [string]
         $Sys_ID,

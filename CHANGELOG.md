@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Private function for confirming sys_ids
 - Get-SNOWStats function added for interaction with the Aggregate API
 - Batch API Support with Invoke-SNOWBatch. Can be used as a wrapper function around supporting commands.
 - New-SNOWUserPhoto with batch support

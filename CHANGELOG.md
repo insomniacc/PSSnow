@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Get-SNOWStats function added for interaction with the Aggregate API
 - Batch API Support with Invoke-SNOWBatch. Can be used as a wrapper function around supporting commands.
-- New-SNOWUserPhoto
-- New-SNOWUser
+- New-SNOWUserPhoto with batch support
+- New-SNOWUser Table API function
 - Core TABLE API framework. Private functions for CRUD Operations. Public Template functions for CRUD Operations.
 - Initial release
 

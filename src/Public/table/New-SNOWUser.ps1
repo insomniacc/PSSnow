@@ -21,7 +21,7 @@ function New-SNOWUser {
         Creates a new user called bruce wayne in the sys_user table
     #> 
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]
         [alias('firstname')]

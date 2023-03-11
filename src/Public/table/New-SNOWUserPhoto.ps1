@@ -13,7 +13,7 @@ function New-SNOWUserPhoto {
         Creates a new user called bruce wayne in the sys_user table
     #> 
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(ParameterSetName = 'Filepath', Mandatory)]
         [ValidateScript({

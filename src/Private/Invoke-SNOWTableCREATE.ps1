@@ -59,12 +59,7 @@ function Invoke-SNOWTableCREATE {
 
         #? API Call
         try{
-            
-            if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
-                Write-Verbose $URI
-            }
-
-            if($PSCmdlet.ShouldProcess($Table)){
+            if($PSCmdlet.ShouldProcess($URI,'POST')){
                 $Response = Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
                 <#
                     Unlike the other CRUD private functions, CREATE has an additional passthru

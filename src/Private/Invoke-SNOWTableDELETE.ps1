@@ -29,10 +29,7 @@ function Invoke-SNOWTableDELETE {
         }
 
         try{
-            if($PSCmdlet.ShouldProcess("$table/$($Parameters.sys_id)","DELETE")){
-                if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
-                    Write-Verbose $URI
-                }
+            if($PSCmdlet.ShouldProcess($URI,'DELETE')){
                 Invoke-RestMethod -Method "DELETE" -URI $URI @AuthSplat
             }
         }catch{

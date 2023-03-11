@@ -42,6 +42,7 @@ function Get-SNOWObject {
         [Parameter()]
         [ValidateSet("true","false","all")]
         [string]
+        #The query returns either the display value, the actual value in the database, or both.
         $DisplayValue,
         [Parameter()]
         [switch]

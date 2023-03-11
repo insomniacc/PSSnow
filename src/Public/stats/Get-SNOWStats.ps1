@@ -20,28 +20,36 @@
         $Table,
         [Parameter(ParameterSetName='fields')]
         [array]
+        # List of fields on which to perform each aggregate operation.
         $Fields,
         [Parameter(ParameterSetName='fields')]
         [ValidateSet('avg','max','min','sum')]
         [string]
+        #The aggregation function to perform on the fields parameter
         $FieldAggregation,
         [Parameter()]
         [ValidateSet('true','false','all')]
         [string]
+        #The query returns either the display value, the actual value in the database, or both.
         $DisplayValue,
         [Parameter()]
         [array]
+        #Fields by which to group the returned data
         $GroupBy,
         [Parameter()]
         [string]
+        #You can specify an order using, fields or an aggregate including COUNT. E.g, 'AVG^state'. Ascending by default. Use ^DESC to sort in descending order, E.g 'state^DESC'
         $OrderBy,
         [Parameter()]
+        #A ServiceNow encoded query, can be copied directly from the web ui
         $Query,
-        [Parameter()]
+        [Parameter(ParameterSetName='having')]
         [string]
+        #Additional query to filter based on an aggregate operation. e.g 'count^priority^>^3' to obtain the number of records within the query results with a priority greater than 3. You can specify multiple queries by separating each with a comma.
         $HavingQuery,
         [Parameter()]
         [switch]
+        #Flag that determines whether to return the number of records returned by the query.
         $Count
     )
     

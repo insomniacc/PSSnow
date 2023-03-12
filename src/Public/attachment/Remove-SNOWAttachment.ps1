@@ -19,6 +19,7 @@ function Remove-SNOWAttachment {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [string]
+        #The SysID of the attachment record to be deleted
         $Sys_ID
     )
     

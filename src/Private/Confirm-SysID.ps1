@@ -4,6 +4,7 @@ function Confirm-SysID {
         [alias('SysID')]
         [string]
         $sys_id,
+        [Parameter()]
         [switch]
         $ValidateScript
     )

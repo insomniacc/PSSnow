@@ -35,17 +35,21 @@ function New-SNOWAttachment {
         [string]
         [alias('table_sys_id')]
         [alias('SysID')]
+        #The sys_id of the parent record to associate with the new attachment
         $Sys_ID,
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [alias('table_name')]
         [alias('table')]
         [string]
+        #The table associated with the parent record
         $Sys_Class_Name,
         [Parameter()]
         [switch]
+        #The newly created attachment record will be returned
         $PassThru,
         [Parameter(DontShow)]
         [string]
+        #Used to alter the filename passed to servicenow.
         $AttachedFilename,
         [Parameter(DontShow)]
         [switch]

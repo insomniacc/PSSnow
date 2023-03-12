@@ -3,6 +3,7 @@ Function Format-Hashtable {
         [Parameter(Mandatory)]
         [hashtable]
         $Hashtable,
+        [Parameter()]
         [switch]
         $KeysToLowerCase
     )

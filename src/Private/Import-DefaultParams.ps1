@@ -19,6 +19,7 @@ function Import-DefaultParams {
         [Parameter()]
         [array]
         $Exclusions = @("table"),
+        [Parameter()]
         [switch]
         $AsStringArray
     )

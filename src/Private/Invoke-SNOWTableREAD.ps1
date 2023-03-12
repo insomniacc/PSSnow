@@ -67,9 +67,9 @@ function Invoke-SNOWTableREAD {
         $URI = "$URI&sysparm_limit=$PaginationAmount"   
 
         #Not included properties:
-        # sysparm_no_count - Unsure why this isnt working, but figured there's going to be a stats function with the stats API anyway. Excluding to keep things simple
-        # sysparm_query_category - not sure what the use case would be for this, havent included it
-        # sysparm_suppress_pagination_header
+        # sysparm_no_count - covered with Get-SNOWStats
+        # sysparm_query_category - not sure what the use case would be for this, haven't included it
+        # sysparm_suppress_pagination_header - Again, I can't see a use case so omitting for now
 
         #? API Call
         try{
@@ -79,7 +79,7 @@ function Invoke-SNOWTableREAD {
                         if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
-                        #Last time I did this in core I followed the rel links instead of using a for loop and I think there were issues so I havent bothered to try replicate that yet.
+                        #Last time I did similar with rel links in core, [https://github.com/ashscode] noticed they did not work so I haven't bothered to try replicate that method yet.
                         $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
                         [void]$Results.Add($Response)
                     }

@@ -7,8 +7,10 @@ function ConvertTo-BatchRequest {
         [string]
         [ValidateSet('POST','PATCH')]
         $Method,
+        [Parameter()]
         [string]
         $Body,
+        [Parameter()]
         [Switch]
         $ExcludeResponseHeaders
     )

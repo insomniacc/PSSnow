@@ -17,22 +17,23 @@ function New-SNOWUserPhoto {
     param (
         [Parameter(ParameterSetName = 'Filepath', Mandatory)]
         [ValidateScript({
-            if(Test-Path $_){
-                $filetypes = @('.jpg','.jpeg','.gif','.png')
-                if([System.IO.Path]::GetExtension($_) -in $filetypes){
-                    $true
+            if($_ | Test-Path){
+                if($_ | Test-Path -PathType Leaf){
+                    $filetypes = @('.jpg','.png','.bmp','.gif','.jpeg','.ico','.svg')
+                    if([System.IO.Path]::GetExtension($_) -in $filetypes){
+                        $true
+                    }else{
+                        Throw "Incorrect filetype, must be one of the following: $($filetypes -join ',')"
+                    }
                 }else{
-                    Throw "Incorrect filetype, must be one of the following: $($filetypes -join ',')"
+                    Throw "Filepath cannot be a directory."
                 }
             }else{
-                Throw "Filepath does not exist."
+                Throw "Unable to find file."
             }
         })]
+        [System.IO.FileInfo]
         $Filepath,
-        [Parameter(ParameterSetName = 'Base64', Mandatory)]
-        [string]
-        #A base64 encoded image string
-        $Base64String,
         [Parameter(Mandatory)]
         [alias('SysID')]
         [ValidateScript({
@@ -53,24 +54,15 @@ function New-SNOWUserPhoto {
         $AsBatchRequest
     )
     
-    begin {
-        $table = "ecc_queue"
-
-        if($PsCmdlet.ParameterSetName -eq "Filepath"){
-            $Base64String = Convert-ImageFileToBase64 -FilePath $Filepath
-        }
-    }
-    
     process {
-        $properties = @{
-            agent = "Posting a picture to a User Record"
-            topic = "AttachmentCreator"
-            name = "photo:image/jpeg"
-            source = "sys_user:$Sys_ID"
-            payload = $Base64String
-            PassThru = $PassThru
-            AsBatchRequest = $AsBatchRequest
+        $AttachmentSplat = @{
+            File = $Filepath
+            Sys_ID = $Sys_ID
+            Sys_Class_Name = "ZZ_YYsys_user"
+            PassThru = $PassThru.IsPresent
+            AttachedFilename = "photo"
+            AsBatchRequest = $AsBatchRequest.IsPresent
         }
-        Invoke-SNOWTableCREATE -table "ecc_queue" -Parameters $properties
+        New-SNOWAttachment @AttachmentSplat
     }
 }

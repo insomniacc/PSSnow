@@ -75,12 +75,32 @@ function Get-SNOWAttachment {
         [Parameter(ParameterSetName='SNOWObject')]
         [Parameter(ParameterSetName='Query')]
         [switch]
-        $Force
+        $Force,
+        [Parameter(ParameterSetName='Query')]
+        [Parameter(ParameterSetName='SNOWObject')]
+        [ValidateRange(1, [int]::MaxValue)]
+        [int]
+        $PaginationAmount = 50,
+        [Parameter(DontShow)]
+        [switch]
+        $DisregardSourceTable
     )
     
     begin {
         Assert-SNOWAuth
-        $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment"
+        $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment"      
+        $EnablePagination = $True
+
+        #Removes GUI and increases performance
+        $ProgressPreference = "SilentlyContinue"
+
+        $AuthSplat = @{
+            Credential = $Script:SNOWAuth.Credential
+        }
+
+        if($OutputDestination -and -not $PassThru.IsPresent){
+            $PassThru = [switch]$True
+        }
     }
     
     process {
@@ -105,25 +125,78 @@ function Get-SNOWAttachment {
             
             $ObjectTypeValidator = $Sys_AttachmentKeys.ForEach({$_ -in $SNOWObjectKeys})
             if($ObjectTypeValidator -NotContains $False ){
-                'attachment'
+                'Attachment'
             }else{
-                'parent'
+                'Parent'
             }
         }else{
             $PSCmdlet.ParameterSetName
         }
         
         switch($LookupType){
-            'attachment' {$URI = "$BaseURL/$Sys_ID"}
-            'parent' {$URI = "$BaseURL`?sysparm_query=table_sys_id=$Sys_ID"}
-            'query' {
-                #todo query
+            'Attachment'    {
+                $URI = "$BaseURL/$Sys_ID"
+                $EnablePagination = $False
             }
-        }                  
+            'Parent'        {
+                $URI = "$BaseURL`?sysparm_query=table_sys_id=$Sys_ID"
+                if(-not $DisregardSourceTable.IsPresent){
+                    $URI += "^table_name=$($SNOWObject.sys_class_name)"
+                }
+            }
+            'Query'         {$URI = "$BaseURL`?sysparm_query=$Query"}
+        }     
         
-        $Attachments = (Invoke-RestMethod -URI $URI -Credential $Script:SNOWAuth.Credential).Result
+        if($Limit -and $Limit -le $PaginationAmount){
+            $EnablePagination = $False
+            $PaginationAmount = $Limit
+        }
+    
+        if($Offset){
+            $EnablePagination = $False
+            $URI              = "$URI&sysparm_offset=$Offset"
+        }
+        
+        if($LookupType -ne 'Attachment'){
+            #? Always apply the limit (Default pagination or user defined)
+            $URI = "$URI&sysparm_limit=$PaginationAmount"   
+        }
+
+
+        try{
+            $Attachments = [System.Collections.ArrayList]@()
+            $Attachments = if($EnablePagination){
+                if($Limit){
+                    For($Offset = 0; $Offset -lt $Limit; $Offset+=$PaginationAmount){
+                        $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
+                        [void]$Attachments.Add($Response)
+                    }
+                    @($Attachments | ForEach-Object {$_}) | Select-Object -first $Limit
+                }else{
+                    $Offset = 0
+                    Do{
+                        $Response = Invoke-WebRequest -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
+                        [void]$Attachments.Add(($Response.content | ConvertFrom-Json).Result)
+                        $Offset += $PaginationAmount
+                    }While($Response.Headers.Link -like "*rel=`"next`"*")
+                    @($Attachments | ForEach-Object {$_})
+                }
+            }else{
+                #? If this is a direct 'attachment' lookup, we already have the full attachment object, and PassThru is specified then we don't need to get the record again.
+                if(-not ($PSCmdlet.ParameterSetName -eq 'SNOWObject' -and $LookupType -eq 'Attachment' -and $PassThru.IsPresent)){
+                    (Invoke-RestMethod -URI $URI @AuthSplat).Result
+                }else{
+                    $SNOWObject
+                }
+            }
+        }catch{
+            Write-Error "Unable to get attachment record/s. $($_.Exception.message)"
+            Return
+        }
 
         if($PassThru.IsPresent){
+            #? Show progress for file downloads
+            $ProgressPreference = "Continue"
             $Attachments = $Attachments.ForEach({
                 if(-not $OutputDestination){
                     $OutputDestination = $PWD
@@ -139,14 +212,13 @@ function Get-SNOWAttachment {
                 }
 
                 if($PSBoundParameters.OutputDestination -or $PSBoundParameters.OutputFilename){
-                    $DownloadSplat = @{
-                        OutFile = $OutFilepath
-                    }
+                    $_ | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath
+                    Invoke-RestMethod -URI $_.download_link -Credential $Script:SNOWAuth.Credential -OutFile $OutFilepath
+                    $_
                 }else{
-                    $DownloadSplat = @{}
-                }
-
-                Invoke-RestMethod -URI "$URI/file" -Credential $Script:SNOWAuth.Credential @DownloadSplat
+                    $_ | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $_.download_link -Credential $Script:SNOWAuth.Credential)
+                    $_
+                }                
             })
         }
         

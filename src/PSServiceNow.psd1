@@ -74,7 +74,7 @@ FunctionsToExport = 'Set-SNOWAuth', 'Get-SNOWObject', 'Get-SNOWUser', 'Remove-SN
                'Invoke-SNOWBatch', 'New-SNOWUserPhoto', 'Get-SNOWStats', 
                'New-SNOWAttachment', 'Get-SNOWAttachment', 'Remove-SNOWAttachment', 
                'Get-SNOWSCRequestedItem', 'Get-SNOWSCRequest', 'Get-SNOWSCTask', 
-               'Get-SNOWIncident', 'Get-SNOWApprover'
+               'Get-SNOWIncident', 'Get-SNOWApprover', 'Get-SNOWChangeRequest'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -100,7 +100,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'PSServiceNow','ServiceNow','SNOW'
+        Tags = 'PSServiceNow','ServiceNow'
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/insomniacc/PSServicenow/blob/master/LICENSE'

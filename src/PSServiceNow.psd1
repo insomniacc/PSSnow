@@ -84,9 +84,9 @@ FunctionsToExport = @(
     'New-SNOWAttachment'
     'Get-SNOWAttachment'
     'Remove-SNOWAttachment'
-    'Get-SNOWRequestedItem'
-    'Get-SNOWRequest'
-    'Get-SNOWTask'
+    'Get-SNOWSCRequestedItem'
+    'Get-SNOWSCRequest'
+    'Get-SNOWSCTask'
     'Get-SNOWIncident'
 )
 

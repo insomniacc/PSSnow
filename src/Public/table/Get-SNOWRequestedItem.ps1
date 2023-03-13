@@ -1,4 +1,4 @@
-function Get-SNOWRequestedItem {
+function Get-SNOWSCRequestedItem {
     <#
     .SYNOPSIS
         Retrieves a servicenow RITM record

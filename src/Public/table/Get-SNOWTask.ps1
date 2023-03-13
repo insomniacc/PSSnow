@@ -1,4 +1,4 @@
-function Get-SNOWTask {
+function Get-SNOWSCTask {
     <#
     .SYNOPSIS
         Retrieves a servicenow Task

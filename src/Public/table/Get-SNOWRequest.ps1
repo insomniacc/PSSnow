@@ -1,4 +1,4 @@
-function Get-SNOWRequest {
+function Get-SNOWSCRequest {
     <#
     .SYNOPSIS
         Retrieves a servicenow Request

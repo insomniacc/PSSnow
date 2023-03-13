@@ -3,13 +3,25 @@ Param(
     [Parameter(Mandatory,ValueFromPipeline)]
     [string]
     $TableName,
-    [Parameter()]
+    [Parameter(ParameterSetName='FunctionName')]
+    [ValidateScript({
+        if($_ -like "*-*"){
+            $AllowedVerbs =  @('Get','New','Remove','Set')
+            if($_.split('-')[0] -in $AllowedVerbs){
+                $True
+            }else{
+                Throw "FunctionName must start with one of the following verbs: $($AllowedVerbs -join ',' )"
+            }
+        }else{
+            Throw "FunctionName must follow the standard verb-noun format."
+        }
+    })]
     [string]
     $FunctionName,
     [Parameter()]
     [string]
     $OutputPath = "$PSScriptRoot\..\src\Public\table",
-    [Parameter()]
+    [Parameter(ParameterSetName='FunctionType')]
     [ValidateSet('GET','NEW','REMOVE','SET')]
     [string]
     $FunctionType = 'GET',
@@ -21,11 +33,18 @@ Param(
 begin {
     Push-Location -Path $PWD
     cd $PSScriptRoot
-    Write-Verbose "Getting boiler plate from: $("Boilerplate_Table_$FunctionType.txt")"
-    $Boilerplate = Get-Content "Boilerplate_Table_$FunctionType.txt" | out-string
 }
 
 process {
+    #todo this script is not pretty but it works, it could do with refactoring.
+
+    if($PSCmdlet.ParameterSetName -eq 'FunctionName'){
+        $FunctionType = $FunctionName.split('-')[0]
+    }
+
+    Write-Verbose "Getting boiler plate from: $("Boilerplate_Table_$FunctionType.txt")"
+    $Boilerplate = Get-Content "Boilerplate_Table_$FunctionType.txt" | out-string
+
     #? Create function name in pascal case based on table name
     if(-not $FunctionName){
         $FunctionName = $TableName -Replace '[^0-9A-Z]',' '
@@ -43,49 +62,126 @@ process {
             $Tables += $TableLookup
             $Table = Get-SNOWObject -table "sys_db_object" -Query "name=$TableLookup" -Fields @('name','super_class') -displayvalue True -ExcludeReferenceLinks
             $TableLookup = $Table.super_class
-        }while($Table.super_class -notlike "")
+        }while($Table.super_class -NotLike "")
         if($Tables.count -gt 1){
-            Write-Verbose "Extends from tables: $(($Tables | Where-Object {$_ -notlike $TableName}) -join ",")"
+            Write-Verbose "Extends from tables: $(($Tables | Where-Object {$_ -NotLike $TableName}) -join ",")"
         }
 
         $Columns = ForEach($Table In $Tables){
-            Get-SNOWObject -table "sys_dictionary" -Query "name=$Table^elementISNOTEMPTY" -Fields @('element','internal_type') -ErrorAction STOP
+            Get-SNOWObject -table "sys_dictionary" -Query "name=$Table^elementISNOTEMPTY" -ErrorAction STOP
         }
 
-        $IgnoredColumns = @(
-            'wf_activity'
-        )
-        if($FunctionType -eq 'GET'){
-            $IgnoredTypes = @(
-                'glide_date'
-                'glide_date_time'
-                'date_time'
-                'glide_time'
-                'glide_utc_time'
-                'schedule_date_time'
-                'datetime'
-                'insert_timestamp'
-                'calendar_date_time'
-                'date'
-                'due_date'
-                'time'
-                'glide_precise_time'
-                'password'
-                'email_script'
-                'script_client'
-                'script'
-            )
-        }else{
-            $IgnoredTypes = @()
-        }
+        $GlobalIgnoredTypes = @()
+        $GlobalIgnoredColumns = @('wf_activity')
 
-        $Columns = $Columns | Where-Object {$_.element -NotLike "sys_*" -and $_.internal_type.value -NotIn $IgnoredTypes -and $_.element -notin $IgnoredColumns}
+        $Columns = $Columns | Where-Object {
+            $_.active -eq "true" -and 
+            $_.element -NotLike "sys_*" -and 
+            $_.internal_type.value -NotIn $GlobalIgnoredTypes -and 
+            $_.element -notin $GlobalIgnoredColumns
+        }
         $Indent = "`n        "
         $Params = ""
+        foreach($Column in $Columns){
+            switch ($FunctionType) {
+                'GET' {
+                    $IgnoredTypes = @(
+                        'glide_date'
+                        'glide_date_time'
+                        'date_time'
+                        'glide_time'
+                        'glide_utc_time'
+                        'schedule_date_time'
+                        'datetime'
+                        'insert_timestamp'
+                        'calendar_date_time'
+                        'date'
+                        'due_date'
+                        'time'
+                        'glide_precise_time'
+                        'password'
+                        'email_script'
+                        'script_client'
+                        'script'
+                    )
+                }
+                'SET' {
+                    $IgnoredTypes = @()
 
-        switch ($Columns) {
-            {$_.internal_type.value -eq 'boolean'} {$Params += "$Indent[Parameter()]$Indent[boolean]$Indent`$$($_.element),"}
-            default {$Params += "$Indent[Parameter()]$Indent[string]$Indent`$$($_.element),"}
+                    if([System.Convert]::ToBoolean($Column.read_only)){
+                        Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"
+                        Continue
+                    }
+                    
+                    if($Column.dynamic_creation -eq "true"){
+                        Write-Verbose "'$($Column.element)' param skipped. Reason: DynamicCreation"
+                        Continue
+                    }
+
+                    #Maximum Length
+                    if($Column.max_length){
+                        $ValidateLength = "$Indent[ValidateLength(0, $($Column.max_length))]"
+                    }else{
+                        $ValidateLength = ""
+                    }
+                }
+                'NEW' {
+                    $IgnoredTypes = @()
+
+                    if(-not [System.Convert]::ToBoolean($Column.display)){
+                        Write-Verbose "'$($Column.element)' param skipped. Reason: Display=false"
+                        Continue
+                    }
+
+                    if($Column.dynamic_creation -eq "true"){
+                        Write-Verbose "'$($Column.element)' param skipped. Reason: DynamicCreation"
+                        Continue
+                    }
+
+                    #Maximum Length
+                    if($Column.max_length){
+                        $ValidateLength = "$Indent[ValidateLength(0, $($Column.max_length))]"
+                    }else{
+                        $ValidateLength = ""
+                    }
+
+                    #Mandatory
+                    if([System.Convert]::ToBoolean($Column.mandatory)){
+                        $Mandatory = "Mandatory"
+                    }else{
+                        $Mandatory = ""
+                    }
+
+                    #Defaults
+                    if($Column.default_value){
+                        $DefaultValue = " = '$($Column.default_value -replace "'",'"')'"
+                    }else{
+                        $DefaultValue = ""
+                    }
+                    
+                    #todo see if its possible to also leverage the following: dynamic_ref_qual,dependent_on_field,dynamic_creation,dynamic_creation_script,use_dynamic_default,dynamic_default_value,use_reference_qualifier,reference_qual
+                }
+            }
+
+            if($Column.internal_type.value -in $IgnoredTypes){
+                Write-Verbose "'$($Column.element)' param skipped. Reason: IgnoredTypes [$($Column.internal_type.value)]"
+                Continue
+            }
+            
+            $Alias = $Column.column_label.ToLower() -Replace '[^0-9A-Z]','_'
+            if($Alias -NotLike $Column.element){
+                $Alias = "$Indent[alias('$Alias')]"
+            }else{
+                $Alias = ""
+            }
+
+            #type mappings
+            $PSType = switch ($Column.internal_type.value) {
+                'boolean' {"$Indent[boolean]"}
+                default {"$Indent[string]"}
+            }
+            
+            $Params += "$Indent[Parameter($Mandatory)]$ValidateLength$Alias$PSType$Indent`$$($Column.element)$DefaultValue,"
         }
         $Params = $Params.TrimEnd(',') + "`n    "
         #Write-Verbose "Parameters: $($Columns.element -join ',')"

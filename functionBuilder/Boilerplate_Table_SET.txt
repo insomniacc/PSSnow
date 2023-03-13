@@ -1,0 +1,28 @@
+function {{functionname}} {
+    <#
+    .SYNOPSIS
+        Updates a {{tablename}} record in SNOW
+    .DESCRIPTION
+        Updates a record from the {{tablename}} table
+    .NOTES
+        Uses Set-SNOWObject as a template function.
+    .OUTPUTS
+        PSCustomObject. The full table record/s (-passthru only).
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        {{functionname}} -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
+        Updates a specific record in the table {{tablename}}
+    #>  
+
+    [CmdletBinding(SupportsShouldProcess)]
+    param ({{params}})
+    DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
+
+    Begin {
+        $table = "{{tablename}}"
+    }
+    Process {
+        Invoke-SNOWTableUPDATE -table $table -Parameters $PSBoundParameters
+    }
+}

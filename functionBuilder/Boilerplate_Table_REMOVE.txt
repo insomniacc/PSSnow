@@ -1,0 +1,28 @@
+function {{functionname}} {
+    <#
+    .SYNOPSIS
+        Removes a {{tablename}} record in SNOW
+    .DESCRIPTION
+        Removes a record from the {{tablename}} table
+    .NOTES
+        Uses Remove-SNOWObject as a template function.
+    .OUTPUTS
+        PSCustomObject. The full table record/s.
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        {{functionname}} -Sys_ID "<sys_id>"
+        Removes a specific record in the table {{tablename}}
+    #>  
+
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
+    param ()
+    DynamicParam { Import-DefaultParams -TemplateFunction "Remove-SNOWObject" }
+
+    Begin {
+        $table = "{{tablename}}"
+    }
+    Process {
+        Invoke-SNOWTableDELETE -table $table -Parameters $PSBoundParameters
+    }
+}

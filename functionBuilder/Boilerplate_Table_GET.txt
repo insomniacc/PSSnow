@@ -1,0 +1,28 @@
+function {{functionname}} {
+    <#
+    .SYNOPSIS
+        Retrieves a {{tablename}} record from SNOW
+    .DESCRIPTION
+        Gets a record from the {{tablename}} table
+    .NOTES
+        Uses Get-SNOWObject as a template function.
+    .OUTPUTS
+        PSCustomObject. The full table record/s.
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        {{functionname}} -limit 1 -verbose
+        Returns a single record from {{tablename}}
+    #>   
+
+    [CmdletBinding()]
+    param ({{params}})
+    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+
+    Begin {
+        $table = "{{tablename}}"
+    }
+    Process {
+        Invoke-SNOWTableREAD -table $table -Parameters $PSBoundParameters
+    }
+}

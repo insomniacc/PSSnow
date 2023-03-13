@@ -1,0 +1,28 @@
+function {{functionname}} {
+    <#
+    .SYNOPSIS
+        Creates a {{tablename}} record in SNOW
+    .DESCRIPTION
+        Creates a record in the {{tablename}} table
+    .NOTES
+        Uses New-SNOWObject as a template function.
+    .OUTPUTS
+        PSCustomObject. The full table record/s (-passthru only).
+    .LINK
+        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+    .EXAMPLE
+        {{functionname}} -Properties @{"<key>"="<value>"} -PassThru
+        Creates a single record in {{tablename}} and returns the new record with SysID
+    #>   
+
+    [CmdletBinding(SupportsShouldProcess)]
+    param ({{params}})
+    DynamicParam { Import-DefaultParams -TemplateFunction "New-SNOWObject" }
+
+    Begin {
+        $table = "{{tablename}}"
+    }
+    Process {
+        Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters
+    }
+}

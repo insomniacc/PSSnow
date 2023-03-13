@@ -28,5 +28,9 @@ function ConvertTo-QueryString {
     }
 
     $URI.Query = $QueryCollection.ToString()
-    Return $URI.URI.OriginalString
+    if($URI.Query){
+        Return $URI.URI.OriginalString
+    }else{
+        Return $URI.URI.OriginalString + "?"
+    }
 }

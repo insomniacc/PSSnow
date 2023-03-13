@@ -27,6 +27,6 @@ function ConvertTo-QueryString {
         }
     }
 
-    $URI.Query = "sysparm_query=&" + $QueryCollection.ToString()
+    $URI.Query = $QueryCollection.ToString()
     Return $URI.URI.OriginalString
 }

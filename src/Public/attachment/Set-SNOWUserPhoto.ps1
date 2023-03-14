@@ -1,4 +1,4 @@
-function New-SNOWUserPhoto {
+function Set-SNOWUserPhoto {
     <#
     .SYNOPSIS
         Creates a photo attachment for a user record and sets the photo property on that user

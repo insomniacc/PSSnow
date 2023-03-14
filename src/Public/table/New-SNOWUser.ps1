@@ -134,7 +134,7 @@ function New-SNOWUser {
         $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters -Passthru
 
         if($Response.sys_id -and $photo){
-            New-SNOWUserPhoto -SysID $Response.sys_id -filepath $photo
+            Set-SNOWUserPhoto -SysID $Response.sys_id -filepath $photo
         }elseif($PSBoundParameters.AsBatchRequest.IsPresent -and $photo){
             Write-Warning "Ignoring 'photo' param. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto.`nSee: https://github.com/insomniacc/PSServiceNow/blob/main/docs/Batching_New_User_Photos.MD"
         }

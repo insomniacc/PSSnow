@@ -71,7 +71,7 @@ RequiredAssemblies = 'System.Web'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Set-SNOWAuth', 'Get-SNOWObject', 'Get-SNOWUser', 'Remove-SNOWObject', 
                'Set-SNOWObject', 'Set-SNOWUser', 'New-SNOWObject', 'New-SNOWUser', 
-               'Invoke-SNOWBatch', 'New-SNOWUserPhoto', 'Get-SNOWStats', 
+               'Invoke-SNOWBatch', 'Set-SNOWUserPhoto', 'Get-SNOWStats', 
                'New-SNOWAttachment', 'Get-SNOWAttachment', 'Remove-SNOWAttachment', 
                'Get-SNOWSCRequestedItem', 'Get-SNOWSCRequest', 'Get-SNOWSCTask', 
                'Get-SNOWIncident', 'Get-SNOWApprover', 'Get-SNOWChangeRequest', 

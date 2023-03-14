@@ -18,11 +18,11 @@
         [Parameter(Mandatory)]
         [string]
         $Table,
-        [Parameter(ParameterSetName='fields')]
+        [Parameter()]
         [array]
         # List of fields on which to perform each aggregate operation.
         $Fields,
-        [Parameter(ParameterSetName='fields')]
+        [Parameter()]
         [ValidateSet('avg','max','min','sum')]
         [string]
         #The aggregation function to perform on the fields parameter
@@ -43,7 +43,7 @@
         [Parameter()]
         #A ServiceNow encoded query, can be copied directly from the web ui
         $Query,
-        [Parameter(ParameterSetName='having')]
+        [Parameter()]
         [string]
         #Additional query to filter based on an aggregate operation. e.g 'count^priority^>^3' to obtain the number of records within the query results with a priority greater than 3. You can specify multiple queries by separating each with a comma.
         $HavingQuery,

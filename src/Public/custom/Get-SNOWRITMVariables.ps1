@@ -1,4 +1,20 @@
 function Get-SNOWRITMVariables {
+    <#
+    .SYNOPSIS
+        Gets all associated variables for a RITM
+    .DESCRIPTION
+        Returns all the RITM variables and display labels
+    .EXAMPLE
+        Get-SNOWRITMVariables -number "RITM0010001"
+        Returns RITM Variables for RITM0010001
+    .EXAMPLE
+        Get-SNOWRITMVariables -number "RITM0010001" -IncludeLabels
+        Returns RITM Variables for RITM0010001, adding the display label to the output object
+    .EXAMPLE
+        Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariables
+        Returns RITM Variables for RITM0010001
+    #>
+
     [CmdletBinding()]
     [alias('Get-SNOWSCRequestedItemVariables')]
     param (

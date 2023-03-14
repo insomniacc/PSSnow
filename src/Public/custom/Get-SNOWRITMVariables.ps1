@@ -21,7 +21,7 @@ function Get-SNOWRITMVariables {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='number')]
         [string]
         $Number,
-        [Parameter(Mandatory, ParameterSetName='sysid')]
+        [Parameter(Mandatory, ParameterSetName='sys_id')]
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [alias('sysid')]
         [string]
@@ -35,12 +35,15 @@ function Get-SNOWRITMVariables {
         $table = "sc_item_option_mtom"
     }
     process {
-        if($number){
-            $operator = "LIKE"
-            $RITMID = $number
-        }else{
-            $operator = "="
-            $RITMID = $sys_id
+        switch ($PSCmdlet.ParameterSetName) {
+            "number" {
+                $operator = "LIKE"
+                $RITMID = $number
+            }
+            "sys_id" {
+                $operator = "="
+                $RITMID = $sys_id
+            }
         }
         
         $MTOMSplat = @{

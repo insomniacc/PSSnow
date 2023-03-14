@@ -26,7 +26,6 @@ function Remove-SNOWObject {
         $Table,
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='sys_class_name')]
         [ValidateNotNullOrEmpty()]
-        [alias('ParentSysID')]
         [string]
         $sys_class_name,
         [Parameter()]

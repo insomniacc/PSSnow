@@ -27,7 +27,10 @@ Param(
     $FunctionType = 'GET',
     [Parameter()]
     [switch]
-    $AddToManifest
+    $AddToManifest,
+    [Parameter()]
+    [switch]
+    $ParamLengthValidation
 )
 
 begin {
@@ -36,7 +39,7 @@ begin {
 }
 
 process {
-    #todo this script is not pretty but it works, it could do with refactoring.
+    #todo this script is not pretty, in fact it's terrible so don't judge me! it works and serves a purpose for now. It needs a full revise, requirements, pseudo code and full refactor.
 
     if($PSCmdlet.ParameterSetName -eq 'FunctionName'){
         $FunctionType = $FunctionName.split('-')[0]
@@ -82,7 +85,7 @@ process {
         }
         $Indent = "`n        "
         $Params = ""
-        foreach($Column in $Columns){
+        :column foreach($Column in $Columns){
             switch ($FunctionType) {
                 'GET' {
                     $IgnoredTypes = @(
@@ -110,12 +113,12 @@ process {
 
                     if([System.Convert]::ToBoolean($Column.read_only)){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"
-                        Continue
+                        Continue column
                     }
                     
                     if($Column.dynamic_creation -eq "true"){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: DynamicCreation"
-                        Continue
+                        Continue column
                     }
 
                     #Maximum Length
@@ -130,12 +133,17 @@ process {
 
                     if(-not [System.Convert]::ToBoolean($Column.display)){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: Display=false"
-                        Continue
+                        Continue column
+                    }
+
+                    if([System.Convert]::ToBoolean($Column.read_only)){
+                        Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"
+                        Continue column
                     }
 
                     if($Column.dynamic_creation -eq "true"){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: DynamicCreation"
-                        Continue
+                        Continue column
                     }
 
                     #Maximum Length
@@ -165,7 +173,7 @@ process {
 
             if($Column.internal_type.value -in $IgnoredTypes){
                 Write-Verbose "'$($Column.element)' param skipped. Reason: IgnoredTypes [$($Column.internal_type.value)]"
-                Continue
+                Continue column
             }
             
             $Alias = $Column.column_label.ToLower() -Replace '[^0-9A-Z]','_'
@@ -177,8 +185,19 @@ process {
 
             #type mappings
             $PSType = switch ($Column.internal_type.value) {
-                'boolean' {"$Indent[boolean]"}
+                'boolean' {
+                    "$Indent[boolean]"
+                    $ValidateLength = ""
+                }
+                'reference' {
+                    "$Indent[string]"
+                    $ValidateLength = ""
+                }
                 default {"$Indent[string]"}
+            }
+
+            if(-not $ParamLengthValidation.IsPresent){
+                $ValidateLength = ""
             }
             
             $Params += "$Indent[Parameter($Mandatory)]$ValidateLength$Alias$PSType$Indent`$$($Column.element)$DefaultValue,"

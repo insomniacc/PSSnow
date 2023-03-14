@@ -75,7 +75,11 @@ FunctionsToExport = 'Set-SNOWAuth', 'Get-SNOWObject', 'Get-SNOWUser', 'Remove-SN
                'New-SNOWAttachment', 'Get-SNOWAttachment', 'Remove-SNOWAttachment', 
                'Get-SNOWSCRequestedItem', 'Get-SNOWSCRequest', 'Get-SNOWSCTask', 
                'Get-SNOWIncident', 'Get-SNOWApprover', 'Get-SNOWChangeRequest', 
-               'Set-SNOWApprover', 'Set-SNOWIncident'
+               'Set-SNOWApprover', 'Set-SNOWIncident', 'New-SNOWIncident', 
+               'Set-SNOWSCRequest', 'New-SNOWSCRequest', 'Set-SNOWSCRequestedItem', 
+               'New-SNOWSCRequestedItem', 'New-SNOWSCTask', 'Set-SNOWSCTask', 
+               'Set-SNOWChangeRequest', 'New-SNOWChangeRequest', 'New-SNOWTask', 
+               'Set-SNOWTask', 'Get-SNOWTask'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

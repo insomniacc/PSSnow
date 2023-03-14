@@ -75,7 +75,14 @@ process {
         }
 
         $GlobalIgnoredTypes = @()
-        $GlobalIgnoredColumns = @('wf_activity')
+        $GlobalIgnoredColumns = @(
+            'wf_activity'
+            'upon_approval'
+            'upon_reject'
+            'approval_history'
+            'reassignment_count'
+            'universal_request'
+        )
 
         $Columns = $Columns | Where-Object {
             $_.active -eq "true" -and 

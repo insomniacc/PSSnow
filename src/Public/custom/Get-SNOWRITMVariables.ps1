@@ -4,15 +4,19 @@ function Get-SNOWRITMVariables {
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='number')]
         [string]
-        $number,
+        $Number,
         [Parameter(Mandatory, ParameterSetName='sysid')]
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [alias('sysid')]
         [string]
-        $sys_id
+        $Sys_Id,
+        [Parameter()]
+        [switch]
+        $IncludeLabels
     )
     begin {
         Assert-SNOWAuth
+        $table = "sc_item_option_mtom"
     }
     process {
         if($number){
@@ -24,7 +28,7 @@ function Get-SNOWRITMVariables {
         }
         
         $MTOMSplat = @{
-            Table  = "sc_item_option_mtom"
+            Table  = $table
             Query  = "request_item$operator$RITMID"
             Fields =    @( 
                             "sc_item_option.item_option_new.name",
@@ -37,13 +41,23 @@ function Get-SNOWRITMVariables {
         $RITMVariables = Get-SNOWObject @MTOMSplat 
 
         if($RITMVariables){
-            $SelectAliases = @(
-                @{N='label';E={$_."sc_item_option.item_option_new"}},
-                @{N='name';E={$_."sc_item_option.item_option_new.name"}},
-                @{N='value';E={$_."sc_item_option.value"}}
-            )
-            $RITMVariables = $RITMVariables | Select-Object $SelectAliases
-            return $RITMVariables
+            if($IncludeLabels.IsPresent){
+                $OutputObject = [PSCustomObject]@{}
+                Foreach($RITMVariable in $RITMVariables){
+                    $OutputRow = [PSCustomObject]@{
+                        label = $RITMVariable."sc_item_option.item_option_new"
+                        value = $RITMVariable."sc_item_option.value"
+                    }
+                    $OutputObject | Add-Member -MemberType NoteProperty -Name $RITMVariable."sc_item_option.item_option_new.name" -Value $OutputRow
+                }
+            }else{
+                $OutputObject = [PSCustomObject]@{}
+                Foreach($RITMVariable in $RITMVariables){
+                    $OutputObject | Add-Member -MemberType NoteProperty -Name $RITMVariable."sc_item_option.item_option_new.name" -Value $RITMVariable."sc_item_option.value"
+                }
+            }
+    
+            return $OutputObject
         }
     }
 }

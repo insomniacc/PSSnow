@@ -131,10 +131,10 @@ process {
                 'NEW' {
                     $IgnoredTypes = @()
 
-                    if(-not [System.Convert]::ToBoolean($Column.display)){
-                        Write-Verbose "'$($Column.element)' param skipped. Reason: Display=false"
-                        Continue column
-                    }
+                    #if(-not [System.Convert]::ToBoolean($Column.display)){
+                    #    Write-Verbose "'$($Column.element)' param skipped. Reason: Display=false"
+                    #    Continue column
+                    #}
 
                     if([System.Convert]::ToBoolean($Column.read_only)){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"
@@ -158,13 +158,6 @@ process {
                         $Mandatory = "Mandatory"
                     }else{
                         $Mandatory = ""
-                    }
-
-                    #Defaults
-                    if($Column.default_value){
-                        $DefaultValue = " = '$($Column.default_value -replace "'",'"')'"
-                    }else{
-                        $DefaultValue = ""
                     }
                     
                     #todo see if its possible to also leverage the following: dynamic_ref_qual,dependent_on_field,dynamic_creation,dynamic_creation_script,use_dynamic_default,dynamic_default_value,use_reference_qualifier,reference_qual
@@ -200,7 +193,7 @@ process {
                 $ValidateLength = ""
             }
             
-            $Params += "$Indent[Parameter($Mandatory)]$ValidateLength$Alias$PSType$Indent`$$($Column.element)$DefaultValue,"
+            $Params += "$Indent[Parameter($Mandatory)]$ValidateLength$Alias$PSType$Indent`$$($Column.element),"
         }
         $Params = $Params.TrimEnd(',') + "`n    "
         #Write-Verbose "Parameters: $($Columns.element -join ',')"

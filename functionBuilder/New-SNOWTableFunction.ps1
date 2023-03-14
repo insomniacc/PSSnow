@@ -35,7 +35,7 @@ Param(
 
 begin {
     Push-Location -Path $PWD
-    cd $PSScriptRoot
+    Set-Location $PSScriptRoot
 }
 
 process {
@@ -63,7 +63,7 @@ process {
         $Tables = @()
         Do{
             $Tables += $TableLookup
-            $Table = Get-SNOWObject -table "sys_db_object" -Query "name=$TableLookup" -Fields @('name','super_class') -displayvalue True -ExcludeReferenceLinks
+            $Table = Get-SNOWObject -table "sys_db_object" -Query "name=$TableLookup" -Fields @('name','super_class') -DisplayValue True -ExcludeReferenceLinks
             $TableLookup = $Table.super_class
         }while($Table.super_class -NotLike "")
         if($Tables.count -gt 1){
@@ -177,7 +177,7 @@ process {
             }
             
             $Alias = $Column.column_label.ToLower() -Replace '[^0-9A-Z]','_'
-            if($Alias -NotLike $Column.element){
+            if($Alias -notin $Columns.element){
                 $Alias = "$Indent[alias('$Alias')]"
             }else{
                 $Alias = ""

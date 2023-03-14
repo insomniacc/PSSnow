@@ -79,7 +79,7 @@ FunctionsToExport = 'Set-SNOWAuth', 'Get-SNOWObject', 'Get-SNOWUser', 'Remove-SN
                'Set-SNOWSCRequest', 'New-SNOWSCRequest', 'Set-SNOWSCRequestedItem', 
                'New-SNOWSCRequestedItem', 'New-SNOWSCTask', 'Set-SNOWSCTask', 
                'Set-SNOWChangeRequest', 'New-SNOWChangeRequest', 'New-SNOWTask', 
-               'Set-SNOWTask', 'Get-SNOWTask'
+               'Set-SNOWTask', 'Get-SNOWTask', 'Install-RITMVariablesScriptedRestEndpoint'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

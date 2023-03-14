@@ -7,7 +7,7 @@ function Set-SNOWSCRequest {
     .NOTES
         Uses Set-SNOWObject as a template function.
     .OUTPUTS
-        PSCustomObject. The full table record/s (-passthru only).
+        PSCustomObject. The full table record/s (-PassThru only).
     .LINK
         https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
     .EXAMPLE
@@ -210,7 +210,7 @@ function Set-SNOWSCRequest {
         [string]
         $work_start
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" }
 
     Begin {
         $table = "sc_request"

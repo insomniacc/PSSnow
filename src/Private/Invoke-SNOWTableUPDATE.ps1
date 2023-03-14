@@ -12,7 +12,7 @@ function Invoke-SNOWTableUPDATE {
     BEGIN {
         Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
-        $DefaultParameterList = Import-DefaultParams -TemplateFunction "Set-SNOWObject" -AsStringArray
+        $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" -AsStringArray
         $UpdateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
         #todo support oauth
         $AuthSplat = @{Credential = $script:SNOWAuth.Credential}
@@ -50,8 +50,6 @@ function Invoke-SNOWTableUPDATE {
         $Body = Format-Hashtable -Hashtable $Body -KeysToLowerCase
         $Body = $Body | ConvertTo-Json -Depth 10 -Compress
 
-        #todo type conversions from additional parameters; datetimes, switch?, etc
-
         if($Parameters.AsBatchRequest.IsPresent){
             return (ConvertTo-BatchRequest -URI $URI -Method 'PATCH' -Body $Body -ExcludeResponseHeaders)
         }
@@ -59,14 +57,14 @@ function Invoke-SNOWTableUPDATE {
         #? API Call
         try{
             
-            if($PSversiontable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
+            if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                 Write-Verbose $URI
             }
 
             if($PSCmdlet.ShouldProcess("$table/$($Parameters.Sys_ID)","UPDATE")){
                 $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat
 
-                if($Parameters.Passthru.IsPresent){
+                if($Parameters.PassThru.IsPresent){
                     Return $Response.Result
                 }
             }

@@ -45,7 +45,7 @@ function Set-SNOWApprover {
         [string]
         $sysapproval
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" }
 
     Begin {
         $table = "sysapproval_approver"

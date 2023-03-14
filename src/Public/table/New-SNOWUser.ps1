@@ -5,7 +5,7 @@ function New-SNOWUser {
     .DESCRIPTION
         Creates a record in the sys_user table
     .OUTPUTS
-        PSCustomObject. The full table record (requires -passthru).
+        PSCustomObject. The full table record (requires -PassThru).
     .LINK
         https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
     .EXAMPLE
@@ -24,15 +24,15 @@ function New-SNOWUser {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]
-        [alias('firstname')]
+        [alias('FirstName')]
         [string]
         $first_name,
         [Parameter()]
-        [alias('middlename')]
+        [alias('MiddleName')]
         [string]
         $middle_name,
         [Parameter()]
-        [alias('lastname')]
+        [alias('LastName')]
         [string]
         $last_name,
         [Parameter()]
@@ -40,7 +40,7 @@ function New-SNOWUser {
         [string]
         $user_name,
         [Parameter()]
-        [alias('employeenumber')]
+        [alias('EmployeeNumber')]
         [string]
         $employee_number,
         [Parameter()]
@@ -113,7 +113,7 @@ function New-SNOWUser {
         [string]
         $preferred_language
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "New-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "New-SNOWObject" }
 
     Begin {   
         $table = "sys_user"
@@ -139,7 +139,7 @@ function New-SNOWUser {
             Write-Warning "Ignoring 'photo' param. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto.`nSee: https://github.com/insomniacc/PSServiceNow/blob/main/docs/Batching_New_User_Photos.MD"
         }
 
-        if($PSBoundParameters.Passthru.IsPresent -or $PSBoundParameters.AsBatchRequest.IsPresent){
+        if($PSBoundParameters.PassThru.IsPresent -or $PSBoundParameters.AsBatchRequest.IsPresent){
             $Response
         }
     }

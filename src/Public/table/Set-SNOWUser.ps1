@@ -5,7 +5,7 @@ function Set-SNOWUser {
     .DESCRIPTION
         Updates a record in the sys_user table
     .OUTPUTS
-        PSCustomObject. The full table record (requires -passthru).
+        PSCustomObject. The full table record (requires -PassThru).
     .LINK
         https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
     .EXAMPLE
@@ -55,7 +55,7 @@ function Set-SNOWUser {
         [string]
         $user_password
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Set-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" }
 
     Begin {
         $table = "sys_user"

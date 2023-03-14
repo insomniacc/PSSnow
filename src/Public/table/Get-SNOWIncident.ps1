@@ -99,7 +99,7 @@ function Get-SNOWIncident {
         [string]
         $category
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 
     Begin {
         $table = "incident"

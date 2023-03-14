@@ -1,4 +1,4 @@
-function Import-DefaultParams {
+function Import-DefaultParamSet {
     <#
     .SYNOPSIS
         Used to inherit default parameters from a base function
@@ -23,31 +23,34 @@ function Import-DefaultParams {
         [switch]
         $AsStringArray
     )
-    $BaseCommand = Get-Command $TemplateFunction
-    $Common = @(
-                    [System.Management.Automation.PSCmdlet]::CommonParameters;
-                    [System.Management.Automation.PSCmdlet]::OptionalCommonParameters;
-                    $Exclusions
-                )
 
-    if(-not $BaseCommand){
-        Write-Error "Unable to find function $TemplateFunction" -ErrorAction Stop
-    }
-
-    if($AsStringArray.IsPresent){
-        return $BaseCommand.Parameters.Keys
-    }else{
-        $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
-        $BaseCommand.Parameters.GetEnumerator().foreach{
-            $Val = $_.value
-            $Key = $_.key
-            if ($Key -notin $Common)
-            {
-                $param = [RuntimeDefinedParameter]::new(
-                    $key, $val.parameterType, $val.attributes)
-                $ParamDictionary.add($key, $param)
-            }
+    process {
+        $BaseCommand = Get-Command $TemplateFunction
+        $Common = @(
+                        [System.Management.Automation.PSCmdlet]::CommonParameters;
+                        [System.Management.Automation.PSCmdlet]::OptionalCommonParameters;
+                        $Exclusions
+                    )
+    
+        if(-not $BaseCommand){
+            Write-Error "Unable to find function $TemplateFunction" -ErrorAction Stop
         }
-        return $ParamDictionary
+    
+        if($AsStringArray.IsPresent){
+            return $BaseCommand.Parameters.Keys
+        }else{
+            $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
+            $BaseCommand.Parameters.GetEnumerator().foreach{
+                $Val = $_.value
+                $Key = $_.key
+                if ($Key -notin $Common)
+                {
+                    $param = [RuntimeDefinedParameter]::new(
+                        $key, $val.parameterType, $val.attributes)
+                    $ParamDictionary.add($key, $param)
+                }
+            }
+            return $ParamDictionary
+        }
     }
 }

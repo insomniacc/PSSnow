@@ -72,7 +72,7 @@ function Get-SNOWSCTask {
         [string]
         $request_item
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 
     Begin {
         $table = "sc_task"

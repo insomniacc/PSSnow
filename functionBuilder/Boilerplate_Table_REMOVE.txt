@@ -17,7 +17,7 @@ function {{functionname}} {
 
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
     param ()
-    DynamicParam { Import-DefaultParams -TemplateFunction "Remove-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Remove-SNOWObject" }
 
     Begin {
         $table = "{{tablename}}"

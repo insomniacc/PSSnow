@@ -72,7 +72,7 @@ function Get-SNOWSCRequest {
         [string]
         $location
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 
     Begin {
         $table = "sc_request"

@@ -82,7 +82,7 @@ function Get-SNOWSCRequestedItem {
         [string]
         $order_guide
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 
     Begin {
         $table = "sc_req_item"

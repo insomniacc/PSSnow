@@ -60,7 +60,7 @@ function Get-SNOWUser {
         [boolean]
         $locked_out
     )
-    DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 
     Begin {
         $table = "sys_user"

@@ -126,7 +126,7 @@ function Get-SNOWChangeRequest {
                     [boolean]
                     $made_sla          
                 )
-                DynamicParam { Import-DefaultParams -TemplateFunction "Get-SNOWObject" }
+                DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
             
                 Begin {
                     $table = "change_request"

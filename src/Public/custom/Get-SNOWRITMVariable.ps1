@@ -1,22 +1,22 @@
-function Get-SNOWRITMVariables {
+function Get-SNOWRITMVariable {
     <#
     .SYNOPSIS
         Gets all associated variables for a RITM
     .DESCRIPTION
         Returns all the RITM variables and display labels
     .EXAMPLE
-        Get-SNOWRITMVariables -number "RITM0010001"
+        Get-SNOWRITMVariable -number "RITM0010001"
         Returns RITM Variables for RITM0010001
     .EXAMPLE
-        Get-SNOWRITMVariables -number "RITM0010001" -IncludeLabels
+        Get-SNOWRITMVariable -number "RITM0010001" -IncludeLabels
         Returns RITM Variables for RITM0010001, adding the display label to the output object
     .EXAMPLE
-        Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariables
+        Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
         Returns RITM Variables for RITM0010001
     #>
 
     [CmdletBinding()]
-    [alias('Get-SNOWSCRequestedItemVariables')]
+    [alias('Get-SNOWSCRequestedItemVariable')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='number')]
         [string]
@@ -38,17 +38,17 @@ function Get-SNOWRITMVariables {
         switch ($PSCmdlet.ParameterSetName) {
             "number" {
                 $operator = "LIKE"
-                $RITMID = $number
+                $RitmID = $number
             }
             "sys_id" {
                 $operator = "="
-                $RITMID = $sys_id
+                $RitmID = $sys_id
             }
         }
         
         $MTOMSplat = @{
             Table  = $table
-            Query  = "request_item$operator$RITMID"
+            Query  = "request_item$operator$RitmID"
             Fields =    @( 
                             "sc_item_option.item_option_new.name",
                             "sc_item_option.item_option_new",

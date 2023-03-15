@@ -100,7 +100,6 @@ function Set-SNOWSCRequestedItem {
         [string]
         $close_notes,
         [Parameter()]
-        [alias('configuration_item')]
         [string]
         $cmdb_ci,
         [Parameter()]

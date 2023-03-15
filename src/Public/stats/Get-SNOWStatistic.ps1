@@ -1,4 +1,4 @@
-  function Get-SNOWStats {
+  function Get-SNOWStatistic {
     <#
     .SYNOPSIS
         Used to interact with the aggregate API to get statistics on table data
@@ -9,7 +9,7 @@
     .LINK
         https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/c_AggregateAPI
     .EXAMPLE
-        Get-SNOWStats -Table "sys_user" -Query "active=true" -Count
+        Get-SNOWStatistic -Table "sys_user" -Query "active=true" -Count
         Returns the count of active users in the user table
     #>
     

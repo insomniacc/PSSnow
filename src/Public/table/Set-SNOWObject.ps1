@@ -5,7 +5,7 @@ function Set-SNOWObject {
     .DESCRIPTION
         Updates a record in the specified table
     .OUTPUTS
-        PSCustomObject. The full table record (requires -passthru).
+        PSCustomObject. The full table record (requires -PassThru).
     .LINK
         https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
     .EXAMPLE

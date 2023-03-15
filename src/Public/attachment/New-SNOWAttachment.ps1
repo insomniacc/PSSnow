@@ -5,7 +5,7 @@ function New-SNOWAttachment {
     .DESCRIPTION
         Uploads a file as an attachment to a table record
     .NOTES
-        System limitations on uploaded files, such as maximum file size and allowed attachment types are configured within ServiceNow. Default max filesize is 1024MB.
+        System limitations on uploaded files, such as maximum file size and allowed attachment types are configured within ServiceNow. Default max file size is 1024MB.
     .LINK
         https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI
     .EXAMPLE

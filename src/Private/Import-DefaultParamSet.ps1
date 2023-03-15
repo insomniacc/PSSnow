@@ -7,7 +7,7 @@ function Import-DefaultParamSet {
     .NOTES
         Can be used to populate a dynamic parameter block from a proxy function
     .EXAMPLE
-        DynamicParam { Import-DefaultParams }
+        DynamicParam { Import-DefaultParamSet }
         Used in a child function to import the parents parameters
     #>
     

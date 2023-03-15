@@ -12,13 +12,13 @@ function ConvertTo-QueryString {
     $URI = [System.UriBuilder]$BaseURL
 
     if($QueryParameters){
-        if($QueryParameters.gettype().name -eq "Hashtable"){
+        if($QueryParameters.GetType().name -eq "Hashtable"){
             foreach($Property in $QueryParameters.GetEnumerator()){
                 if($Property.Value){
                     $QueryCollection.Add($Property.key,$Property.Value)
                 }
             }
-        }elseif($QueryParameters.gettype().name -in @("DictionaryEntry","Object[]")){
+        }elseif($QueryParameters.GetType().name -in @("DictionaryEntry","Object[]")){
             foreach($Property in $QueryParameters){
                 if($Property.Value){
                     $QueryCollection.Add($Property.key,$Property.Value)

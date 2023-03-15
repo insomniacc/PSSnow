@@ -87,7 +87,6 @@ function New-SNOWSCRequestedItem {
         [string]
         $business_service,
         [Parameter()]
-        [alias('configuration_item')]
         [string]
         $cmdb_ci,
         [Parameter()]
@@ -112,6 +111,7 @@ function New-SNOWSCRequestedItem {
         [Parameter()]
         [string]
         $due_date,
+
         [Parameter()]
         [string]
         $expected_start,

@@ -109,7 +109,8 @@ function Invoke-SNOWBatch {
             })
             
             #? Invoke the script and capture the output
-            $Requests = Invoke-Expression -command $InputScript
+            $InputScript = [scriptblock]::Create($InputScript)
+            $Requests = $InputScript.Invoke()
         } 
     }
     
@@ -129,7 +130,7 @@ function Invoke-SNOWBatch {
         $Offset = 0
         for($i=0;$i -lt $BatchCount;$i++){
             [void]$Batches.add(
-                [pscustomobject]@{
+                [PSCustomObject]@{
                     batch_request_id = "PSServiceNow BATCH $i ($BatchGuid)"
                     rest_requests = @($Requests | Select-Object -first $BatchSize -skip $Offset)
                 }

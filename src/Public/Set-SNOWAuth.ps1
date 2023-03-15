@@ -9,7 +9,7 @@ function Set-SNOWAuth {
         Applies authentication in the current session for instance 'dev123456.service-now.com'
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -17,7 +17,7 @@ function Set-SNOWAuth {
         #Instance name e.g dev123456
         $Instance,
         [Parameter(Mandatory, ParameterSetName = 'Basic')]
-        [pscredential]
+        [PSCredential]
         #Basic Auth
         $Credential,
         [Parameter(ParameterSetName = 'OAuth')]
@@ -42,26 +42,27 @@ function Set-SNOWAuth {
         $instance = $instance.split('.') | Select-Object -first 1
     }
 
-    $script:SNOWAuth = @{
-        Instance = $Instance
-        Credential = $Credential
-    }
+    if($PSCmdlet.ShouldProcess("$instance.service-now.com","Set Auth")){
+        $script:SNOWAuth = @{
+            Instance = $Instance
+            Credential = $Credential
+        }
 
-    switch ($PsCmdlet.ParameterSetName) {
-        'Basic' {
-            $script:SNOWAuth += @{
-                type = "basic"
+        switch ($PsCmdlet.ParameterSetName) {
+            'Basic' {
+                $script:SNOWAuth += @{
+                    type = "basic"
+                }
+            }
+            'OAuth' {
+                #todo get initial token & expiry time, add to auth object - create function for this
+                $script:SNOWAuth += @{
+                    ClientID = $ClientID
+                    ClientSecret = $ClientSecret
+                    Type = "OAuth"
+                }
             }
         }
-        'OAuth' {
-            #todo get initial token & expiry time, add to auth object - create function for this
-            $script:SNOWAuth += @{
-                ClientID = $ClientID
-                ClientSecret = $ClientSecret
-                Type = "OAuth"
-            }
-        }
+        Write-Verbose "Servicenow authentication has been set for $Instance"
     }
-      
-    Write-Verbose "Servicenow authentication has been set for $Instance"
 }

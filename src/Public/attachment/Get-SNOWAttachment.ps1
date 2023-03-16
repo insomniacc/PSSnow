@@ -81,7 +81,9 @@ function Get-SNOWAttachment {
         [ValidateRange(1, [int]::MaxValue)]
         [int]
         $PaginationAmount = 50,
-        [Parameter(DontShow)]
+        [Parameter(ParameterSetName='Attachment')]
+        [Parameter(ParameterSetName='SNOWObject')]
+        [Parameter(ParameterSetName='Query')]
         [switch]
         $DisregardSourceTable
     )

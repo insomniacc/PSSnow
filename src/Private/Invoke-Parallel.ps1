@@ -339,7 +339,7 @@ function Invoke-Parallel {
                         }
 
                         #If runspace isn't null set more to true
-                        ElseIf ($runspace.Runspace -ne $null ) {
+                        ElseIf ($null -ne $runspace.Runspace) {
                             $log = $null
                             $more = $true
                         }
@@ -352,7 +352,7 @@ function Invoke-Parallel {
 
                     #Clean out unused runspace jobs
                     $temphash = $runspaces.clone()
-                    $temphash | Where-Object { $_.runspace -eq $Null } | ForEach-Object {
+                    $temphash | Where-Object {$Null -eq $_.runspace} | ForEach-Object {
                         $Runspaces.remove($_)
                     }
 
@@ -566,7 +566,7 @@ function Invoke-Parallel {
                     }
                 #endregion add scripts to runspace pool
             }
-            Write-Verbose ( "Finish processing the remaining runspace jobs: {0}" -f ( @($runspaces | Where-Object {$_.Runspace -ne $Null}).Count) )
+            Write-Verbose ( "Finish processing the remaining runspace jobs: {0}" -f ( @($runspaces | Where-Object {$Null -ne $_.Runspace}).Count) )
 
             Get-RunspaceData -wait
             if (-not $quiet) {

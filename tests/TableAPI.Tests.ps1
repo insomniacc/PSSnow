@@ -1,13 +1,11 @@
-$global:ScriptRoot = $PSScriptRoot
-$ProjectName = $global:ScriptRoot | Split-Path -parent | Split-Path -leaf
-$global:ModulePath = ($global:ScriptRoot | Split-Path -parent) + "\src"
+$ModulePath = ($PSScriptRoot | Split-Path -parent) + "\src"
+$ProjectName = $PSScriptRoot | Split-Path -parent | Split-Path -leaf
+Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
 
-Import-Module "$global:ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
-
-InModuleScope "PSServicenow" {
+InModuleScope $ProjectName {
     
     BeforeDiscovery {
-        $TableCommands = (Get-ChildItem "$global:ModulePath\Public\table\*" -include "*.ps1").BaseName | ? {$_ -NotLike "*-SNOWObject"}
+        $TableCommands = (Get-ChildItem "$ModulePath\Public\table\*" -include "*.ps1").BaseName | ? {$_ -NotLike "*-SNOWObject"}
 
         $TemplateCommands = @(
             @{
@@ -39,9 +37,9 @@ InModuleScope "PSServicenow" {
 
     BeforeAll {
         #Get mock data
-        $WebRequestResponsePaged = Import-Clixml "$global:ScriptRoot\MockedResponses\Invoke-WebRequest_Paged.xml"
-        $WebRequestResponseNotPaged = Import-Clixml "$global:ScriptRoot\MockedResponses\Invoke-WebRequest_NotPaged.xml"
-        $RestMethodResponse = Import-Clixml "$global:ScriptRoot\MockedResponses\Invoke-RestMethod.xml"
+        $WebRequestResponsePaged = Import-Clixml "$PSScriptRoot\MockedResponses\Invoke-WebRequest_Paged.xml"
+        $WebRequestResponseNotPaged = Import-Clixml "$PSScriptRoot\MockedResponses\Invoke-WebRequest_NotPaged.xml"
+        $RestMethodResponse = Import-Clixml "$PSScriptRoot\MockedResponses\Invoke-RestMethod.xml"
 
         $Username = 'DummyUsername'
         $Password = 'DummyPassword'

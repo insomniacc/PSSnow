@@ -1,10 +1,9 @@
-$global:ScriptRoot = $PSScriptRoot
-$ProjectName = $global:ScriptRoot | Split-Path -parent | Split-Path -leaf
-$global:ModulePath = ($global:ScriptRoot | Split-Path -parent) + "\src"
+$ScriptRoot = $PSScriptRoot
+$ModulePath = ($ScriptRoot | Split-Path -parent) + "\src"
+$ProjectName = $ScriptRoot | Split-Path -parent | Split-Path -leaf
+Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
 
-Import-Module "$global:ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
-
-InModuleScope "PSServicenow" {
+InModuleScope $ProjectName {
     Describe "Authentication" {
         BeforeAll {
             $Username = 'DummyUsername'

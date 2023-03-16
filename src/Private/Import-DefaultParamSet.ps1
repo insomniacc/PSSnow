@@ -21,7 +21,10 @@ function Import-DefaultParamSet {
         $Exclusions = @("table"),
         [Parameter()]
         [switch]
-        $AsStringArray
+        $AsStringArray,
+        [Parameter()]
+        [switch]
+        $IncludeCommon
     )
 
     process {
@@ -37,7 +40,11 @@ function Import-DefaultParamSet {
         }
     
         if($AsStringArray.IsPresent){
-            return $BaseCommand.Parameters.Keys
+            if($IncludeCommon.IsPresent){
+                return $BaseCommand.Parameters.Keys
+            }else{
+                return ($BaseCommand.Parameters.Keys | Where-Object {$_ -notin $Common})
+            }
         }else{
             $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
             $BaseCommand.Parameters.GetEnumerator().foreach{

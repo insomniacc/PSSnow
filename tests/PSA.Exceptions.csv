@@ -1,5 +1,0 @@
-Rule,Reason
-PSShouldProcess,Used in top level functions and inherited down into nested functions where it's applied
-PSAvoidUsingPlainTextForPassword, Until i work out a better way to handle these it's in use within New-SNOWUser
-PSAvoidUsingUsernameAndPasswordParams, In use within New-SNOWUser
-PSReviewUnusedParameter, Not sure why this is flagging on Get-SNOWAttachment - all params are used

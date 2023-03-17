@@ -5,7 +5,9 @@ function Remove-SNOWObject {
     .DESCRIPTION
         Removes a new servicenow record in the specified table
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Remove-SNOWObject -table "sys_user" -sys_id "02826bf03710200044e0bfc8bcbe5d3f" -confirm:$false
         Removes the specified user with the matching sys_id from the sys_user table and bypasses confirmation

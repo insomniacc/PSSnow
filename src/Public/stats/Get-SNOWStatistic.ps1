@@ -7,7 +7,9 @@
     .NOTES
         For Aggregate API requests, you must have read access for all records in the table you query. If an ACL prevents the requesting user from accessing any record in the table, the request returns a 403 Forbidden error.
     .LINK
-        https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/c_AggregateAPI
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWStatistic.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_AggregateAPI.html&version=latest
     .EXAMPLE
         Get-SNOWStatistic -Table "sys_user" -Query "active=true" -Count
         Returns the count of active users in the user table

@@ -8,7 +8,9 @@ function Invoke-SNOWBatch {
     .INPUTS
         An array of 'requests'. These can be collected from supported commands by either issuing the -AsBatchRequest parameter or simply wrapping those commands with Invoke-SNOWBatch -scriptblock { <supported commands go here> }
     .LINK
-        https://docs.servicenow.com/bundle/tokyo-application-development/page/integrate/inbound-rest/concept/batch-api.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Invoke-SNOWBatch.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=batch-api.html&version=latest
     .EXAMPLE
         $Response = Invoke-SNOWBatch -scriptblock {
         1..500 | ForEach-Object {

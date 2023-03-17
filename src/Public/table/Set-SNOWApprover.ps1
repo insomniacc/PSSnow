@@ -9,7 +9,9 @@ function Set-SNOWApprover {
     .OUTPUTS
         PSCustomObject. The full table record/s.
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWApprover.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Set-SNOWApprover -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table sysapproval_approver

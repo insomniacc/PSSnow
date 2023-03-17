@@ -7,7 +7,9 @@ function Set-SNOWUserPhoto {
     .OUTPUTS
         PSCustomObject. The full table record (requires -PassThru).
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWUserPhoto.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE
         New-SNOWUserPhoto -sysID "70c008e047a12110d3e5fa8bd36d436f" -filepath "C:\Users\Insomniac\Desktop\Bruce.jpg"
         Creates a new user called bruce wayne in the sys_user table

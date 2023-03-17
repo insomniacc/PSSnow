@@ -7,7 +7,9 @@ function New-SNOWAttachment {
     .NOTES
         System limitations on uploaded files, such as maximum file size and allowed attachment types are configured within ServiceNow. Default max file size is 1024MB.
     .LINK
-        https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWAttachment.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE
         $response  = Get-SNOWUser -user_name "bruce.wayne" | New-SNOWAttachment -file "C:\temp\test.txt" -PassThru
         Write-Host "File attached: $($response.download_link)"

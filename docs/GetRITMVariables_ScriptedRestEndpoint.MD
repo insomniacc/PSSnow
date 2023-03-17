@@ -1,1 +1,0 @@
-#todo write information on Get-SNOWRITMVariables.

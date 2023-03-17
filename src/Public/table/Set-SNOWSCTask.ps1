@@ -9,7 +9,9 @@ function Set-SNOWSCTask {
     .OUTPUTS
         PSCustomObject. The full table record/s (-PassThru only).
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWSCTask.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Set-SNOWSCTask -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table sc_task

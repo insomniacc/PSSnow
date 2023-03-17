@@ -9,7 +9,9 @@ function Get-SNOWSCRequestedItem {
     .OUTPUTS
         PSCustomObject. The full table record/s.
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCRequestedItem.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Get-SNOWRequestedItem -limit 1 -verbose
         Returns a single RITM from the sc_req_item table

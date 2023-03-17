@@ -9,7 +9,9 @@ function New-SNOWSCRequest {
     .OUTPUTS
         PSCustomObject. The full table record/s (-PassThru only).
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWSCRequest.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         New-SNOWSCRequest -Properties @{"<key>"="<value>"} -PassThru
         Creates a single record in sc_request and returns the new record with SysID

@@ -11,7 +11,9 @@ function Get-SNOWObject {
     .OUTPUTS
         PSCustomObject. The full table record/s.
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWObject.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Get-SNOWObject -table 'sys_user' -limit 1 -verbose
         Returns a single user from the sys_user table

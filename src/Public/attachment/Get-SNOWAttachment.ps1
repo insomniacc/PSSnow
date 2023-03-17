@@ -7,7 +7,9 @@ function Get-SNOWAttachment {
     .NOTES
         System limitations on uploaded files, such as maximum file size and allowed attachment types are configured within ServiceNow. Default max file size is 1024MB.
     .LINK
-        https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWAttachment.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE
         Get-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304
         Provide the sys_id of an attachment to look it up directly

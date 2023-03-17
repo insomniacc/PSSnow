@@ -7,7 +7,9 @@ function Set-SNOWObject {
     .OUTPUTS
         PSCustomObject. The full table record (requires -PassThru).
     .LINK
-        https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWObject.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Get-SNOWObject -table "sys_user" -query "user_name=bruce.wayne^active=true" | Set-SNOWObject -table "sys_user" -middle_name "Thomas"
         Updates the middle_name of the user record bruce.wayne in the sys_user table

@@ -5,11 +5,15 @@ function Set-SNOWAuth {
     .DESCRIPTION
         Applies module scope authentication for PSServiceNow
     .EXAMPLE
-        Set-SNOWAuth -Instance "dev123456" -Credential (get-credential) -Verbose
-        Applies authentication in the current session for instance 'dev123456.service-now.com'
+        Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
+        Applies authentication in the current session for instance 'InstanceName.service-now.com'
+    .LINK
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest
     #>
 
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'Basic')]
     param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -20,11 +24,11 @@ function Set-SNOWAuth {
         [PSCredential]
         #Basic Auth
         $Credential,
-        [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuth')]
         [string]
         #OAuth ClientID
         $ClientID,
-        [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuth')]
         [string]
         #OAuth ClientSecret
         $ClientSecret

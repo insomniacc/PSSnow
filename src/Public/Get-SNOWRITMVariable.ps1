@@ -13,6 +13,8 @@ function Get-SNOWRITMVariable {
     .EXAMPLE
         Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
         Returns RITM Variables for RITM0010001
+    .LINK
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWRITMVariable.md
     #>
 
     [CmdletBinding()]

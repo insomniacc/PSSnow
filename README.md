@@ -29,6 +29,7 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Getting started](docs/GettingStarted.MD)
     - [Batching new user photos](docs/Batching_New_User_Photos.MD)
 - [Function documentation](docs/functions)
+- [Function Builder](docs/functionBuilder.MD)
 
 ## Reporting Issues and Feedback
 - [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose)

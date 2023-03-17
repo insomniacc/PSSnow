@@ -6,7 +6,7 @@
 ### ServiceNow
 [REST API reference](https://docs.servicenow.com/bundle/tokyo-application-development/page/build/applications/concept/api-rest.html)
 ### VSCode
-[Better comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) is used throughout code, it is recommended to install this extension.
+[Better comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) is used throughout this repo, it is recommended to install this extension.
 
 ## Table API
 

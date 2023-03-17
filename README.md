@@ -30,12 +30,11 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Function documentation](docs/functions)
 
 ## Reporting Issues and Feedback
-[Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose) 
-[Support me with BuyACoffee](https://www.buymeacoffee.com/insomniacc)
+- [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose) 
+- [Support me with BuyACoffee](https://www.buymeacoffee.com/insomniacc)
 
 ## Contributing
-Please see [CONTRIBUTING.MD](CONTRIBUTING.MD) for details on design, structure and how to get involved.
+Please see [CONTRIBUTING.MD](/CONTRIBUTING.MD) for details on design, structure and how to get involved.
 
 ## Changelog
-v 0.0.1 - Initial Release  
-Please see [CHANGELOG.md](CHANGELOG.md) for a full release history.
+Please see [CHANGELOG.md](/CHANGELOG.md) for a full release history.

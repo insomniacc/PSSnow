@@ -25,6 +25,15 @@ Below I will cover each of these functions with examples, followed by a table sp
 
 ## Get-SNOWObject
 
+### Direct record lookup
+Every record in ServiceNow has a unique identifier called a sys_id, this can be used to lookup objects directly:
+
+```powershell
+Get-SNOWObject -Table "sys_user" -Sys_ID "7dad954b47a12110d3e5fa8bd36d43a8"
+OR
+Get-SNOWUser -Sys_ID "7dad954b47a12110d3e5fa8bd36d43a8"
+```
+
 ### Queries
 I would recommend familiarizing with the [query operators](https://docs.servicenow.com/csh?topicname=r_OpAvailableFiltersQueries.html&version=latest) in servicenow before proceeding.
 
@@ -160,3 +169,6 @@ Remove-SNOWUser -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 #todo
 ## Batching New User Photos
 #todo
+
+# Function Documentation
+Further documentation can be found [here](functions/)

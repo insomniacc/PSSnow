@@ -2,15 +2,15 @@
 [![Documentation](https://img.shields.io/badge/Documentation-PSServiceNow-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/docs/GettingStarted.MD)
 [![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/LICENSE) 
 [![PSServicenow](https://img.shields.io/powershellgallery/v/PSServiceNow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSServiceNow/)
-[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-5.0-blue.svg)](https://github.com/PowerShell/PSServiceNow)
+![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-5.0-blue.svg)
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
 ## Summary
 A powershell module for interacting with the various ServiceNow REST API's.  
 
-This module tries to build a framework around the Table API allowing it to support any instance.  
+This module has a framework built around the Table API allowing it to support any Service-Now instance.  
 Focusing on the Table API initially for CRUD operations, this module also supports batch, attachment and aggregate API's with more to come in future.  
-I've built this on my own time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSServiceNow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
+I've built this in my spare time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSServiceNow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
 
 <details>
 <summary>A bit more...</summary>

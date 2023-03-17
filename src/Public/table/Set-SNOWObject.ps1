@@ -20,11 +20,12 @@ function Set-SNOWObject {
 
     [CmdletBinding(SupportsShouldProcess)]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
+        [alias("sys_class_name")]
         [string]
         $Table,
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [ValidateScript({
             Confirm-SysID -Sys_ID $_ -ValidateScript
         })]

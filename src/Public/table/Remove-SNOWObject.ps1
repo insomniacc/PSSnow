@@ -22,14 +22,11 @@ function Remove-SNOWObject {
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [string]
         $Sys_ID,
-        [Parameter(Mandatory, ParameterSetName='Table')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
+        [alias("sys_class_name")]
         [string]
         $Table,
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='sys_class_name')]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $sys_class_name,
         [Parameter()]
         [switch]
         $RestrictDomain = $false

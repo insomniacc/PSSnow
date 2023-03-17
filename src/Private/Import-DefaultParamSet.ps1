@@ -18,7 +18,7 @@ function Import-DefaultParamSet {
         $TemplateFunction,
         [Parameter()]
         [array]
-        $Exclusions = @("table","sys_class_name"),
+        $Exclusions = @("table"),
         [Parameter()]
         [switch]
         $AsStringArray,

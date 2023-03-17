@@ -5,7 +5,9 @@ function Remove-SNOWAttachment {
     .DESCRIPTION
         Deletes an attachment from servicenow.
     .LINK
-        https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI
+        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWAttachment.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE
         Remove-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304
         Removes a single attachment by sys_id

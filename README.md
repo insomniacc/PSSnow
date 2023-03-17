@@ -1,15 +1,16 @@
 # PSServiceNow
-
-<!--
-Link to PSGallery module / Badge
--->
+[![Documentation](https://img.shields.io/badge/Documentation-PSServiceNow-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/docs/GettingStarted.MD)
+[![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/LICENSE) 
+[![PSServicenow](https://img.shields.io/powershellgallery/v/PSServiceNow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSServiceNow/)
+[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-5.0-blue.svg)](https://github.com/PowerShell/PowerShellGet)
+<a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
 ## Summary
 A powershell module for interacting with the various ServiceNow REST API's.  
 
 This module tries to build a framework around the Table API allowing it to support any instance.  
 Focusing on the Table API initially for CRUD operations, this module also supports batch, attachment and aggregate API's with more to come in future.  
-I've built this on my own time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSServiceNow/issues/new/choose) or support [BuyMeACoffee](https://www.buymeacoffee.com/insomniacc).
+I've built this on my own time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSServiceNow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
 
 <details>
 <summary>A bit more...</summary>
@@ -30,11 +31,10 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Function documentation](docs/functions)
 
 ## Reporting Issues and Feedback
-- [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose) 
-- [Support me with BuyACoffee](https://www.buymeacoffee.com/insomniacc)
+- [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose)
 
 ## Contributing
-Please see [CONTRIBUTING.MD](/CONTRIBUTING.MD) for details on design, structure and how to get involved.
+Please see [CONTRIBUTING.MD](/CONTRIBUTING.md) for details on design, structure and how to get involved.
 
 ## Changelog
 Please see [CHANGELOG.md](/CHANGELOG.md) for a full release history.

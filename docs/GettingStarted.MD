@@ -16,12 +16,11 @@ There are 4 core functions to use the Table API:
 - [New-SNOWObject](#new-snowobject)
 - [Remove-SNOWObject](#remove-snowobject)
   
-Each function requires that you provide a table name to the -table parameter.  
-All other table functions are based on the above and inherit the same basic parameters.  
-They operate mostly the same way, but without the need for -table.  
+All table functions are based on the above core functions and inherit the same basic parameters.  
+They operate mostly the same way.  
 They also have parameters mapped for properties in each respective table (for example, Get-SNOWUser has a -user_name parameter, amongst others).
 
-Below I will cover each of these functions with examples, followed by a table specific function along side each.
+Below I will cover each of these functions with examples, followed by a table specific function along side.
 
 ## Get-SNOWObject
 
@@ -98,11 +97,11 @@ Each `Get-SNOW*` command has both `-limit` and `-offset` which will allow pagina
 
 ## Set-SNOWObject
 `Set-SNOW*` Commands require a `-sys_id` to indicate which record to modify. This value can be piped by property name.  
-If using `Set-SNOWObject` a `-table` must also be provided.
+If using `Set-SNOWObject` a `-table` must also be provided if the object is not being piped.
 
 ```powershell
 $user = Get-SNOWObject -table "sys_user" -query "user_name=bruce.wayne"
-$user | Set-SNOWObject -table "sys_user" -Properties @{middle_name="Thomas"}
+$user | Set-SNOWObject -Properties @{middle_name="Thomas"}
 OR
 $user = Get-SNOWUser -user_name "bruce.wayne"
 $user | Set-SNOWUser -middle_name "Thomas"
@@ -154,11 +153,11 @@ To set the value of an encrypted field `-InputDisplayValue` must be used.
 ## Remove-SNOWObject
 To remove any object returned from a `Get-SNOW*` table command it can be piped:
 ```powershell
-$NewUser | Remove-SNOWUser
+$NewUser | Remove-SNOWObject
 ```
 Alternatively objects can be removed directly with the table name and sys_id:
 ```powershell
-Remove-SNOWUser -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
+Remove-SNOWObject -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 ```
 
 # Attachment API

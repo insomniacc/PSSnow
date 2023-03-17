@@ -1,13 +1,10 @@
-#$Scriptpath = $PSScriptRoot
-$Scriptpath = 'C:\Users\Insomniac\Documents\git\PSServiceNow'
+$Scriptpath = $PSScriptRoot
 $ModulePath = $Scriptpath + "\src"
 $ProjectName = $Scriptpath | Split-Path -leaf
 Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
 
 
 #? Tests
-
-
 Invoke-ScriptAnalyzer -Path $ModulePath -Recurse -Profile @{
     Severity = @('Error', 'Warning')
     ExcludeRules = @(

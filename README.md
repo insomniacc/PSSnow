@@ -31,13 +31,15 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 ## Usage
 - [Getting started](docs/GettingStarted.MD)
 - [Function documentation](docs/functions)
-- [Function Builder](docs/functionBuilder.MD)
+- [Function builder](docs/functionBuilder.MD)
 
 ## Reporting Issues and Feedback
-- [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose)
+- [File a bug report](https://github.com/insomniacc/PSServiceNow/issues/new?assignees=&labels=bug&template=bug_report.md)
+- [Raise a feature request](https://github.com/insomniacc/PSServiceNow/issues/new?assignees=&labels=enhancement&template=feature_request.md)
+- [Something else](https://github.com/insomniacc/PSServiceNow/issues/new/choose)
 
 ## Contributing
 - [Contributing](/CONTRIBUTING.md)
 
 ## Changelog
-- [CHANGELOG.md](/CHANGELOG.md)
+- [Changelog](/CHANGELOG.md)

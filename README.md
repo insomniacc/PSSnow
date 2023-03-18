@@ -24,8 +24,6 @@ If you do find any bugs, it's still early days, so please help me improve and lo
 I've worked for a few large orgs with vastly different implementations of Service-Now, some more out of the box, others heavily modified. Finding a suitable 'one size fits all' module was quite hard and I ended up building from scratch or improving existing modules in each case. Either way it was very time consuming. Some of the gallery modules out there I found either 1. very lacking in functionality or 2. locked behind a paywall. This repo is hopefully my solution to fill the gap.
 </details>
 
-## Demo
-
 ## Installation
 ```powershell
 Install-Module -Name PSServiceNow -Repository PSGallery -Force

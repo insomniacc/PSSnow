@@ -137,7 +137,7 @@ function Invoke-SNOWBatch {
         for($i=0;$i -lt $BatchCount;$i++){
             [void]$Batches.add(
                 [PSCustomObject]@{
-                    batch_request_id = "PSServiceNow BATCH $i ($BatchGuid)"
+                    batch_request_id = "PSSnow BATCH $i ($BatchGuid)"
                     rest_requests = @($Requests | Select-Object -first $BatchSize -skip $Offset)
                 }
             )

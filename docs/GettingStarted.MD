@@ -1,6 +1,3 @@
-# Summary
-This user guide is quite comprehensive and covers lots of features, however if you are looking for a quick start guide of basic commands please [jump to here](#quickstart)
-
 # Authentication
 Currently only basic auth is supported. OAuth support will be coming in the next version.
 ```powershell
@@ -186,7 +183,7 @@ If you wish to download the file and save with a different filename the followin
 $User | Get-SNOWAttachment -OutputDestination "c:\super_secret_docs\" -OutputFilename "Enemies.csv"
 ```
 
-Uploading user photos is a similar process, however unlike regular attachments they are hidden.
+Uploading user photos is a similar process, however unlike regular attachments they are hidden.  
 Due to this there's a separate function:
 
 ```powershell
@@ -199,12 +196,28 @@ Hidden attachments can still be seen using the `-DisregardSourceTable` parameter
 $User | Get-SNOWAttachment -DisregardSourceTable | Remove-SNOWAttachment
 ```
 
-# Aggregate API
-#todo
 # Batch API
-#todo
-## Batching New User Photos
-#todo
+The Batch API allows sending multiple requests but within the same call, reducing the overhead.  
+All New-SNOW* and Set-SNOW* table commands in this module are supported.  
+Set-SNOWUserPhoto, New-SNOWAttachment are also supported.  
+
+Lets say as an example, we want to update all user email addresses based on first and last names.  
+In my test instance I have 621 users.  
+We could use `Set-SNOWUser` in a loop, and I tried this, but gave up after waiting 43 seconds to only get to the 50th user.
+
+Now lets introduce `Invoke-SNOWBatch`, we can take the same code, and just wrap it with this command:
+
+```powershell
+$Users = Get-SNOWUser
+
+Invoke-SNOWBatch -Scriptblock {
+    ForEach ($User in $Users){
+        $User | Set-SNOWUser -Email "$($User.first_name).$($User.last_name)@CompanyEmail.com"
+    }
+} -Parallel
+```
+Timing the above took only 8 seconds and made only 5 calls to the API.  
+(The default setting is 150 items per batch, however this can be adjusted with `-BatchSize`)
 
 # Function Documentation
 Further documentation can be found [here](functions/)

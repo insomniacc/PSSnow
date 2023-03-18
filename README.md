@@ -15,8 +15,10 @@ I've built this in my spare time, if you do find it useful I would greatly appre
 
 <details>
 <summary>A bit more...</summary>
-This is the first public module I've released so please go easy 😀. As always, ensure you understand any scripts before you run them and make sure to do your own testing. If you do find any bugs, it's still early days, so please help me improve and log an issue.  
-  
+This is the first public module I've released so please go easy 😀.<br>
+As always, ensure you understand any scripts before you run them and make sure to do your own testing. <br>
+If you do find any bugs, it's still early days, so please help me improve and log an issue.  <br>
+<br>
 I've worked for a few large orgs with vastly different implementations of Service-Now, some more out of the box, others heavily modified. Finding a suitable 'one size fits all' module was quite hard and I ended up building from scratch or improving existing modules in each case. Either way it was very time consuming. Some of the gallery modules out there I found either 1. very lacking in functionality or 2. locked behind a paywall. This repo is hopefully my solution to fill the gap.
 </details>
 
@@ -28,7 +30,6 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 ```
 ## Usage
 - [Getting started](docs/GettingStarted.MD)
-    - [Batching new user photos](docs/Batching_New_User_Photos.MD)
 - [Function documentation](docs/functions)
 - [Function Builder](docs/functionBuilder.MD)
 
@@ -36,7 +37,7 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Raise a bug or feature request](https://github.com/insomniacc/PSServiceNow/issues/new/choose)
 
 ## Contributing
-Please see [CONTRIBUTING.MD](/CONTRIBUTING.md) for details on design, structure and how to get involved.
+- [Contributing](/CONTRIBUTING.md)
 
 ## Changelog
-Please see [CHANGELOG.md](/CHANGELOG.md) for a full release history.
+- [CHANGELOG.md](/CHANGELOG.md)

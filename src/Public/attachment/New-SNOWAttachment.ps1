@@ -75,7 +75,7 @@ function New-SNOWAttachment {
         try{
             if($PSVersionTable.PSEdition -eq "Core"){
                 #I'm unsure currently of the best method to get the mime type on core.
-                #Setting to a generic octet stream works for most but this could case issues with with classifications, e.g user photo uploads.
+                #Setting to a generic octet stream is generally accepted for anything but will cause classifications issues, e.g user photo uploads.
                 #For now I've put a simple mapping based on ext
                 $MimeType = switch ($File.Extension) {
                     '.aac' {'audio/aac'}

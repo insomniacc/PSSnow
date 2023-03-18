@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWIncident.md
@@ -32,8 +32,9 @@ Gets a record from the incident table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWIncident -limit 1 -verbose
-Returns a single Incident
 ```
+
+Returns a single Incident
 
 ## PARAMETERS
 
@@ -590,6 +591,8 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWIncident.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWIncident.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

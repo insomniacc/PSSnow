@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Set-SNOWUserPhoto.md
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SNOWUserPhoto
 
 ## SYNOPSIS
-Creates a photo attachment for a user record and sets the photo property on that user
+Attaches a picture to a user record and updates the photo property
 
 ## SYNTAX
 
@@ -18,15 +18,16 @@ Set-SNOWUserPhoto -Filepath <FileInfo> -Sys_ID <String> [-PassThru] [-AsBatchReq
 ```
 
 ## DESCRIPTION
-Using the ecc_queue table and the AttachmentCreator topic, a photo/image is associated to a user record
+This function uses the Attachment API to upload a photo to a user record as a hidden attachment
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-SNOWUserPhoto -sysID "70c008e047a12110d3e5fa8bd36d436f" -filepath "C:\Users\Insomniac\Desktop\Bruce.jpg"
-Creates a new user called bruce wayne in the sys_user table
+$User | Set-SNOWUserPhoto -filepath "C:\Temp\Bruce.jpg"
 ```
+
+Updates a user photo
 
 ## PARAMETERS
 
@@ -56,7 +57,7 @@ Aliases: SysID
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -133,6 +134,8 @@ PSCustomObject. The full table record (requires -PassThru).
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWUserPhoto.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWUserPhoto.md)
+
+[https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest)
 
 

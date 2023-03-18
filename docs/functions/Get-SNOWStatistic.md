@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWStatistic.md
@@ -26,8 +26,9 @@ Retrieves records for the specified table and performs aggregate functions to re
 ### EXAMPLE 1
 ```powershell
 Get-SNOWStatistic -Table "sys_user" -Query "active=true" -Count
-Returns the count of active users in the user table
 ```
+
+Returns the count of active users in the user table
 
 ## PARAMETERS
 
@@ -184,6 +185,8 @@ If an ACL prevents the requesting user from accessing any record in the table, t
 
 ## RELATED LINKS
 
-[https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/c_AggregateAPI](https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/c_AggregateAPI)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWStatistic.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWStatistic.md)
+
+[https://docs.servicenow.com/csh?topicname=c_AggregateAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_AggregateAPI.html&version=latest)
 
 

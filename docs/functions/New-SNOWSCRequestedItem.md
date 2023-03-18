@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/New-SNOWSCRequestedItem.md
@@ -38,8 +38,9 @@ Creates a record in the sc_req_item table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-Creates a single record in sc_req_item and returns the new record with SysID
 ```
+
+Creates a single record in sc_req_item and returns the new record with SysID
 
 ## PARAMETERS
 
@@ -897,6 +898,8 @@ Uses New-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWSCRequestedItem.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWSCRequestedItem.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

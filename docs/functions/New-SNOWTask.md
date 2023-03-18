@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/New-SNOWTask.md
@@ -34,8 +34,9 @@ Creates a record in the task table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-Creates a single record in task and returns the new record with SysID
 ```
+
+Creates a single record in task and returns the new record with SysID
 
 ## PARAMETERS
 
@@ -698,6 +699,8 @@ Uses New-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWTask.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWTask.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

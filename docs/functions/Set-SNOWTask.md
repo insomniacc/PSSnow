@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Set-SNOWTask.md
@@ -38,8 +38,9 @@ Updates a record from the task table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-Updates a specific record in the table task
 ```
+
+Updates a specific record in the table task
 
 ## PARAMETERS
 
@@ -957,6 +958,8 @@ Uses Set-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWTask.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWTask.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

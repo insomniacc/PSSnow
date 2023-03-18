@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWChangeRequest.md
@@ -35,8 +35,9 @@ Gets a record from the change_request table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWChangeRequest -limit 1 -verbose
-Returns a single record from change_request
 ```
+
+Returns a single record from change_request
 
 ## PARAMETERS
 
@@ -713,6 +714,8 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWChangeRequest.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWChangeRequest.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

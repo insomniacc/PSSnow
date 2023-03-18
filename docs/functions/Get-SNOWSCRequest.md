@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWSCRequest.md
@@ -30,8 +30,9 @@ Gets a record from the sc_request table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWRequest -limit 1 -verbose
-Returns a single Request from the sc_request
 ```
+
+Returns a single Request from the sc_request
 
 ## PARAMETERS
 
@@ -453,6 +454,8 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCRequest.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCRequest.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

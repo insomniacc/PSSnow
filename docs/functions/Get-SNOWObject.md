@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWObject.md
@@ -26,14 +26,16 @@ A template function for getting records from the table API
 ### EXAMPLE 1
 ```powershell
 Get-SNOWObject -table 'sys_user' -limit 1 -verbose
-Returns a single user from the sys_user table
 ```
+
+Returns a single user from the sys_user table
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWObject -table 'sc_request' -query 'active=true' -limit 1
-Returns a single user from the sys_user table
 ```
+
+Returns a single user from the sys_user table
 
 ## PARAMETERS
 
@@ -43,12 +45,12 @@ Returns a single user from the sys_user table
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases:
+Aliases: sys_class_name
 
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -203,6 +205,8 @@ Queries can be copied directly from SNOW by right clicking on the end of the que
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWObject.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWObject.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

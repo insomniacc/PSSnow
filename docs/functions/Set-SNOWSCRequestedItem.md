@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Set-SNOWSCRequestedItem.md
@@ -43,8 +43,9 @@ Updates a record from the sc_req_item table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-Updates a specific record in the table sc_req_item
 ```
+
+Updates a specific record in the table sc_req_item
 
 ## PARAMETERS
 
@@ -1172,6 +1173,8 @@ Uses Set-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWSCRequestedItem.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWSCRequestedItem.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

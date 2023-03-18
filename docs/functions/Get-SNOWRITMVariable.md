@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Get-SNOWRITMVariable.md
@@ -30,20 +30,23 @@ Returns all the RITM variables and display labels
 ### EXAMPLE 1
 ```powershell
 Get-SNOWRITMVariable -number "RITM0010001"
-Returns RITM Variables for RITM0010001
 ```
+
+Returns RITM Variables for RITM0010001
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWRITMVariable -number "RITM0010001" -IncludeLabels
-Returns RITM Variables for RITM0010001, adding the display label to the output object
 ```
+
+Returns RITM Variables for RITM0010001, adding the display label to the output object
 
 ### EXAMPLE 3
 ```powershell
 Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
-Returns RITM Variables for RITM0010001
 ```
+
+Returns RITM Variables for RITM0010001
 
 ## PARAMETERS
 
@@ -102,4 +105,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWRITMVariable.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWRITMVariable.md)
+
 

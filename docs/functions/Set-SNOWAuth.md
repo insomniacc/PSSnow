@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Set-SNOWAuth.md
@@ -12,14 +12,14 @@ Sets ServiceNow authentication in the current session.
 
 ## SYNTAX
 
-### Basic
+### Basic (Default)
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### OAuth
 ```
-Set-SNOWAuth -Instance <String> [-ClientID <String>] [-ClientSecret <String>] [-WhatIf] [-Confirm]
+Set-SNOWAuth -Instance <String> -ClientID <String> -ClientSecret <String> [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -30,9 +30,10 @@ Applies module scope authentication for PSServiceNow
 
 ### EXAMPLE 1
 ```powershell
-Set-SNOWAuth -Instance "dev123456" -Credential (get-credential) -Verbose
-Applies authentication in the current session for instance 'dev123456.service-now.com'
+Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
 ```
+
+Applies authentication in the current session for instance 'InstanceName.service-now.com'
 
 ## PARAMETERS
 
@@ -74,7 +75,7 @@ Type: System.String
 Parameter Sets: OAuth
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -89,7 +90,7 @@ Type: System.String
 Parameter Sets: OAuth
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -137,4 +138,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md)
+
+[https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest)
+
 

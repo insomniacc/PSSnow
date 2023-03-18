@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/New-SNOWAttachment.md
@@ -25,17 +25,15 @@ Uploads a file as an attachment to a table record
 ### EXAMPLE 1
 ```powershell
 $response  = Get-SNOWUser -user_name "bruce.wayne" | New-SNOWAttachment -file "C:\temp\test.txt" -PassThru
+```
+
 Write-Host "File attached: $($response.download_link)"
 Attaches test.txt to the user_record for bruce.wayne and returns the download link.
-```
 
 ## PARAMETERS
 
 ### -File
-if($_ | Test-Path -PathType Leaf){
-}else{
-    Throw "Filepath cannot be a directory."
-}
+{{ Fill File Description }}
 
 ```yaml
 Type: System.IO.FileInfo
@@ -168,6 +166,8 @@ Default max file size is 1024MB.
 
 ## RELATED LINKS
 
-[https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI](https://developer.servicenow.com/dev.do#!/reference/api/tokyo/rest/c_AttachmentAPI)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWAttachment.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWAttachment.md)
+
+[https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest)
 
 

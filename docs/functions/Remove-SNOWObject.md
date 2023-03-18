@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSServiceNow-help.xml
 Module Name: PSServiceNow
 online version: docs/functions/Remove-SNOWObject.md
@@ -12,14 +12,8 @@ Removes a new servicenow record in the specified table
 
 ## SYNTAX
 
-### Table
 ```
-Remove-SNOWObject -Sys_ID <String> -Table <String> [-RestrictDomain] [-WhatIf] [-Confirm] [<CommonParameters>]
-```
-
-### sys_class_name
-```
-Remove-SNOWObject -Sys_ID <String> -sys_class_name <String> [-RestrictDomain] [-WhatIf] [-Confirm]
+Remove-SNOWObject [-Sys_ID] <String> [-Table] <String> [-RestrictDomain] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -31,14 +25,16 @@ Removes a new servicenow record in the specified table
 ### EXAMPLE 1
 ```powershell
 Remove-SNOWObject -table "sys_user" -sys_id "02826bf03710200044e0bfc8bcbe5d3f" -confirm:$false
-Removes the specified user with the matching sys_id from the sys_user table and bypasses confirmation
 ```
+
+Removes the specified user with the matching sys_id from the sys_user table and bypasses confirmation
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWUser -user_name 'bruce.wayne9' -limit 1 | Remove-SNOWObject -table 'sys_user'
-Removes the specified user with the matching sys_id from the sys_user table, after prompt confirmation
 ```
+
+Removes the specified user with the matching sys_id from the sys_user table, after prompt confirmation
 
 ## PARAMETERS
 
@@ -51,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -62,26 +58,11 @@ Accept wildcard characters: False
 
 ```yaml
 Type: System.String
-Parameter Sets: Table
-Aliases:
+Parameter Sets: (All)
+Aliases: sys_class_name
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -sys_class_name
-{{ Fill sys_class_name Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: sys_class_name
-Aliases:
-
-Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -144,6 +125,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html](https://docs.servicenow.com/bundle/sandiego-application-development/page/integrate/inbound-rest/concept/c_TableAPI.html)
+[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md)
+
+[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 
 

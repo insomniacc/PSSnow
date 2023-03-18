@@ -98,10 +98,10 @@ function Invoke-SNOWBatch {
             }
 
             # Get a list of all the supported batch commands in the module
-            $ModuleCommands = Get-Command -Module "PSServiceNow"
+            $ModuleCommands = Get-Command -Module "PSSnow"
             $SupportedBatchCommands = ($ModuleCommands | Where-Object {$_.Parameters.ContainsKey('AsBatchRequest')}).Name
 
-            # Get all PSServiceNow module commands within the scriptblock
+            # Get all PSSnow module commands within the scriptblock
             $ScriptBlockCommands = select-string "(?i)([\w]+-SNOW[\w]+)" -InputObject $InputScript -AllMatches 
             $ScriptBlockCommands = $ScriptBlockCommands.Matches.value | Sort-Object -Unique | Where-Object {$_ -in $SupportedBatchCommands}
             if(-not $ScriptBlockCommands){

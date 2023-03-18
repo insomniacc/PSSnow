@@ -3,7 +3,7 @@ function Set-SNOWAuth {
     .SYNOPSIS
         Sets ServiceNow authentication in the current session.
     .DESCRIPTION
-        Applies module scope authentication for PSServiceNow
+        Applies module scope authentication for PSSnow
     .EXAMPLE
         Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
         Applies authentication in the current session for instance 'InstanceName.service-now.com'

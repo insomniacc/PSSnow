@@ -225,12 +225,12 @@ process {
     Write-Verbose "Output to $OutFile"
 
     if($AddToManifest.IsPresent){
-        $ManifestPath = $OutputPath -replace "Public\\table","PSServiceNow.psd1"
+        $ManifestPath = $OutputPath -replace "Public\\table","PSSnow.psd1"
         $ManifestScript = (get-content $ManifestPath | out-string)
         $Manifest = Invoke-Expression -Command $ManifestScript
         Update-ModuleManifest -Path $ManifestPath -FunctionsToExport ($Manifest.FunctionsToExport + $FunctionName)
     }
-    Write-Verbose "Added $FunctionName to PSServiceNow.psd1"
+    Write-Verbose "Added $FunctionName to PSSnow.psd1"
 }
 
 End {

@@ -22,7 +22,7 @@ xxxxxxxxxxxxxx
 A clear and concise description of what you expected to happen.
 
 **Environment (please complete the following information):**
-- PSServiceNow Module Version: [e.g 0.0.1]
+- Module Version: [e.g 0.0.1]
 - Powershell Version: [e.g 5.1 or 7.3.3]
 - OS: [e.g Windows10, Ubuntu etc]
 - Servicenow Version: [e.g. Tokyo]

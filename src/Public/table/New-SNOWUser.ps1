@@ -138,7 +138,7 @@ function New-SNOWUser {
         if($Response.sys_id -and $photo){
             Set-SNOWUserPhoto -SysID $Response.sys_id -filepath $photo
         }elseif($PSBoundParameters.AsBatchRequest.IsPresent -and $photo){
-            Write-Warning "Ignoring 'photo' param. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto.`nSee: https://github.com/insomniacc/PSServiceNow/blob/main/docs/Batching_New_User_Photos.MD"
+            Write-Warning "Ignoring 'photo' param. New-SNOWUser does not support the photo parameter while batching.`nPlease make a separate batch call with New-SNOWUserPhoto."
         }
 
         if($PSBoundParameters.PassThru.IsPresent -or $PSBoundParameters.AsBatchRequest.IsPresent){

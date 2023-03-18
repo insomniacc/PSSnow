@@ -1,7 +1,8 @@
 # PSServiceNow
+[![PSServicenow](https://img.shields.io/powershellgallery/v/PSServiceNow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSServiceNow/)
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSServiceNow?style=plastic)
 [![Documentation](https://img.shields.io/badge/Documentation-PSServiceNow-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/docs/GettingStarted.MD)
 [![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/LICENSE) 
-[![PSServicenow](https://img.shields.io/powershellgallery/v/PSServiceNow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSServiceNow/)
 <img src="https://img.shields.io/badge/Supports PS-5.0-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 

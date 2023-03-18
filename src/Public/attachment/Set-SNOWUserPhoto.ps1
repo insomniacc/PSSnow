@@ -1,9 +1,9 @@
 function Set-SNOWUserPhoto {
     <#
     .SYNOPSIS
-        Creates a photo attachment for a user record and sets the photo property on that user
+        Attaches a picture to a user record and updates the photo property
     .DESCRIPTION
-        Using the ecc_queue table and the AttachmentCreator topic, a photo/image is associated to a user record
+        This function uses the Attachment API to upload a photo to a user record as a hidden attachment
     .OUTPUTS
         PSCustomObject. The full table record (requires -PassThru).
     .LINK
@@ -11,8 +11,8 @@ function Set-SNOWUserPhoto {
     .LINK
         https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE
-        New-SNOWUserPhoto -sysID "70c008e047a12110d3e5fa8bd36d436f" -filepath "C:\Users\Insomniac\Desktop\Bruce.jpg"
-        Creates a new user called bruce wayne in the sys_user table
+        $User | Set-SNOWUserPhoto -filepath "C:\Temp\Bruce.jpg"
+        Updates a user photo
     #> 
 
     [CmdletBinding(SupportsShouldProcess)]
@@ -36,7 +36,7 @@ function Set-SNOWUserPhoto {
         })]
         [System.IO.FileInfo]
         $Filepath,
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [alias('SysID')]
         [ValidateScript({
             if($_ -match "^[0-9a-f]{32}$"){

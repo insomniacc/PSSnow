@@ -71,6 +71,8 @@ function Get-SNOWAttachment {
         [string]
         $OutputDestination,
         [Parameter(ParameterSetName='Attachment')]
+        [Parameter(ParameterSetName='SNOWObject')]
+        [Parameter(ParameterSetName='Query')]
         [string]
         $OutputFilename,
         [Parameter(ParameterSetName='Attachment')]
@@ -201,14 +203,14 @@ function Get-SNOWAttachment {
         if($PassThru.IsPresent){
             #? Show progress for file downloads
             $ProgressPreference = "Continue"
-            $Attachments = $Attachments.ForEach({
+            $Attachments = Foreach($Attachment in $Attachments){
                 if(-not $OutputDestination){
                     $OutputDestination = $PWD
                 }
                 $OutFilepath = if($OutputFilename){
                     Join-Path -Path $OutputDestination -ChildPath $OutputFilename
                 }else{
-                    Join-Path -Path $OutputDestination -ChildPath $_.file_name
+                    Join-Path -Path $OutputDestination -ChildPath $Attachment.file_name
                 }
 
                 if($Force.IsPresent){
@@ -216,14 +218,14 @@ function Get-SNOWAttachment {
                 }
 
                 if($PSBoundParameters.OutputDestination -or $PSBoundParameters.OutputFilename){
-                    $_ | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath
-                    Invoke-RestMethod -URI $_.download_link -Credential $Script:SNOWAuth.Credential -OutFile $OutFilepath
-                    $_
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath
+                    Invoke-RestMethod -URI $Attachment.download_link -Credential $Script:SNOWAuth.Credential -OutFile $OutFilepath
+                    $Attachment
                 }else{
-                    $_ | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $_.download_link -Credential $Script:SNOWAuth.Credential)
-                    $_
-                }                
-            })
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link -Credential $Script:SNOWAuth.Credential)
+                    $Attachment
+                }   
+            }
         }
         
         Return $Attachments

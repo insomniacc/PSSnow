@@ -37,9 +37,9 @@ Get-SNOWUser -Sys_ID "7dad954b47a12110d3e5fa8bd36d43a8"
 I would recommend familiarizing with the [query operators](https://docs.servicenow.com/csh?topicname=r_OpAvailableFiltersQueries.html&version=latest) in servicenow before proceeding.
 
 ```powershell
-Get-SNOWObject -Table "sys_user" -Query "user_name=bruce.wayne^active=true"
+Get-SNOWObject -Table "sys_user" -Query "active=true^ORDERBYsys_updated_on"
 OR
-Get-SNOWUser -Query "user_name=bruce.wayne^active=true"
+Get-SNOWUser -Query "active=true^ORDERBYDESCsys_updated_on"
 ```
 
 Alternatively queries can be copy pasted straight from the GUI into any `Get-SNOW*` command:
@@ -144,8 +144,8 @@ $NewUser = New-SNOWUser @UserProperties -PassThru -Verbose
 ```
 
 In the example above, `New-SNOWObject` only performs the basic 'create' action, this can be limited in some respects.  
-Table specific functions can be developed with quality of life improvements.  
-In this case, the `photo` parameter on `New-SNOWUser` actually makes a second call to attach the photo to the new user object after it has been created.
+New-SNOWUser on the other hand has been developed with quality of life improvements.  
+In this case, the `photo` param makes a second call to attach the photo to the new user object after it has been created.
 
 ### Encrypted fields
 To set the value of an encrypted field `-InputDisplayValue` must be used.
@@ -161,7 +161,44 @@ Remove-SNOWObject -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 ```
 
 # Attachment API
-#todo
+Please see the below example to upload an attachment, this can be applied to any table command that supports attachments:
+```powershell
+Get-SNOWUser -user_name "Bruce.Wayne" | New-SNOWAttachment -File "C:\temp\BatmanEnemies.csv"
+```
+
+Attachments can also be retrieved a simmilar way:
+```powershell
+Get-SNOWUser -user_name "Bruce.Wayne" | Get-SNOWAttachment -PassThru
+```
+Omitting `-PassThru` will return the attachment record, but not the attachment itself.  
+While adding `-PassThru` will add the content into another property with the returned object.  
+
+Alternatively if you wish to download the attachment directly to a file you can use the following:
+
+```powershell
+$User | Get-SNOWAttachment -OutputDestination "c:\super_secret_docs\" -Force
+```
+This will save the file into the destination folder with the original filename.   
+Appending `-Force` will create the directory if it does not already exist.
+
+If you wish to download the file and save with a different filename the following syntax can be used:
+```powershell
+$User | Get-SNOWAttachment -OutputDestination "c:\super_secret_docs\" -OutputFilename "Enemies.csv"
+```
+
+Uploading user photos is a similar process, however unlike regular attachments they are hidden.
+Due to this there's a separate function:
+
+```powershell
+$User | Set-SNOWUserPhoto -Filepath "C:\temp\Bruce.jpg"
+```
+
+Hidden attachments can still be seen using the `-DisregardSourceTable` parameter:
+
+```powershell
+$User | Get-SNOWAttachment -DisregardSourceTable | Remove-SNOWAttachment
+```
+
 # Aggregate API
 #todo
 # Batch API

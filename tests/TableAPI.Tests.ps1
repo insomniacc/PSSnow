@@ -28,7 +28,7 @@ InModuleScope $ProjectName {
             }
             @{
                 CommandName = "Remove-SNOWObject"
-                ExpectedParameters = @('RestrictDomain','sys_class_name','Sys_ID','Table')
+                ExpectedParameters = @('RestrictDomain','Sys_ID','Table')
                 Arguments = '-sys_id 02826bf03710200044e0bfc8bcbe5d3f -confirm:$false'
                 ExpectsOutput = $false
             }

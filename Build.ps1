@@ -58,7 +58,7 @@ Get-ChildItem -Path "$scriptpath\docs\functions" -Filter "*.md" -Recurse | Forea
     #Fix input/output
     $StringDoc = $StringDoc -replace "(## .*PUTS\r\n\r\n)### ", "`$1"
 
-    #Powershell syntaxi highlighting
+    #Powershell syntax highlighting
     $StringDoc = $StringDoc -replace "(### EXAMPLE \d)\r\n``````", "`$1`r`n``````powershell" | Set-Content `
         -Path $DocPath -Encoding utf8 -Force
 }

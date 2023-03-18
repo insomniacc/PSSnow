@@ -6,6 +6,8 @@
 <img src="https://img.shields.io/badge/Supports PS-5.0-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
+> ⚠️ **Please note this is module is currently an ALPHA release**
+
 ## Summary
 A powershell module for interacting with the various ServiceNow REST API's.  
 
@@ -43,3 +45,6 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 
 ## Changelog
 - [Changelog](/CHANGELOG.md)
+
+## Roadmap
+- [ALPHA - v0.0.2](https://github.com/insomniacc/PSServiceNow/milestone/2)

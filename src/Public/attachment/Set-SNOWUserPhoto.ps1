@@ -57,6 +57,14 @@ function Set-SNOWUserPhoto {
     )
     
     process {
+        #? Check for existing user photo
+        if(-not $AsBatchRequest.IsPresent){
+            $ExistingPhotos = Get-SNOWAttachment -Query "table_sys_id=a52eb6cf47e52110d3e5fa8bd36d432a^file_name=photo^table_name=ZZ_YYsys_user"
+            Foreach($Photo in $ExistingPhotos){
+                $Photo | Remove-SNOWAttachment -Confirm:$false
+            }
+        }
+
         $AttachmentSplat = @{
             File = $Filepath
             Sys_ID = $Sys_ID

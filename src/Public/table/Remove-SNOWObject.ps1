@@ -5,7 +5,7 @@ function Remove-SNOWObject {
     .DESCRIPTION
         Removes a new servicenow record in the specified table
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Remove-SNOWObject.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE

@@ -9,7 +9,7 @@ function Get-SNOWSCRequestedItem {
     .OUTPUTS
         PSCustomObject. The full table record/s.
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCRequestedItem.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWSCRequestedItem.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE

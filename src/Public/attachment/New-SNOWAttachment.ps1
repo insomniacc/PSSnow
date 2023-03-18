@@ -7,7 +7,7 @@ function New-SNOWAttachment {
     .NOTES
         System limitations on uploaded files, such as maximum file size and allowed attachment types are configured within ServiceNow. Default max file size is 1024MB.
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWAttachment.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWAttachment.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest
     .EXAMPLE

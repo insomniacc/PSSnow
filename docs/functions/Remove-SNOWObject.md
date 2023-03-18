@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Remove-SNOWObject.md
 schema: 2.0.0
 ---
@@ -25,16 +25,14 @@ Removes a new servicenow record in the specified table
 ### EXAMPLE 1
 ```powershell
 Remove-SNOWObject -table "sys_user" -sys_id "02826bf03710200044e0bfc8bcbe5d3f" -confirm:$false
-```
-
 Removes the specified user with the matching sys_id from the sys_user table and bypasses confirmation
+```
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWUser -user_name 'bruce.wayne9' -limit 1 | Remove-SNOWObject -table 'sys_user'
-```
-
 Removes the specified user with the matching sys_id from the sys_user table, after prompt confirmation
+```
 
 ## PARAMETERS
 
@@ -125,7 +123,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Remove-SNOWObject.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Remove-SNOWObject.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Remove-SNOWObject.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

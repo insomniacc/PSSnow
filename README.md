@@ -1,8 +1,8 @@
-# PSServiceNow
-[![PSServicenow](https://img.shields.io/powershellgallery/v/PSServiceNow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSServiceNow/)
-![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSServiceNow?style=plastic)
-[![Documentation](https://img.shields.io/badge/Documentation-PSServiceNow-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/docs/GettingStarted.MD)
-[![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSServiceNow/blob/main/LICENSE) 
+# PSSnow
+[![PSSnow](https://img.shields.io/powershellgallery/v/PSSnow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSSnow/)
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSSnow?style=plastic)
+[![Documentation](https://img.shields.io/badge/Documentation-PSSnow-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/docs/GettingStarted.MD)
+[![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/LICENSE) 
 <img src="https://img.shields.io/badge/Supports PS-5.0-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
@@ -13,7 +13,7 @@ A powershell module for interacting with the various ServiceNow REST API's.
 
 This module has a framework built around the Table API allowing it to support any Service-Now instance.  
 Focusing on the Table API initially for CRUD operations, this module also supports batch, attachment and aggregate API's with more to come in future.  
-I've built this in my spare time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSServiceNow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
+I've built this in my spare time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSSnow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
 
 <details>
 <summary>A bit more...</summary>
@@ -26,7 +26,7 @@ I've worked for a few large orgs with vastly different implementations of Servic
 
 ## Installation
 ```powershell
-Install-Module -Name PSServiceNow -Repository PSGallery -Force
+Install-Module -Name PSSnow -Repository PSGallery -Force
 ```
 ## Usage
 - [Getting started](docs/GettingStarted.MD)
@@ -34,9 +34,9 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Function builder](docs/functionBuilder.MD)
 
 ## Reporting Issues and Feedback
-- [File a bug report](https://github.com/insomniacc/PSServiceNow/issues/new?assignees=&labels=bug&template=bug_report.md)
-- [Raise a feature request](https://github.com/insomniacc/PSServiceNow/issues/new?assignees=&labels=enhancement&template=feature_request.md)
-- [Something else](https://github.com/insomniacc/PSServiceNow/issues/new/choose)
+- [File a bug report](https://github.com/insomniacc/PSSnow/issues/new?assignees=&labels=bug&template=bug_report.md)
+- [Raise a feature request](https://github.com/insomniacc/PSSnow/issues/new?assignees=&labels=enhancement&template=feature_request.md)
+- [Something else](https://github.com/insomniacc/PSSnow/issues/new/choose)
 
 ## Contributing
 - [Contributing](/CONTRIBUTING.md)
@@ -45,4 +45,4 @@ Install-Module -Name PSServiceNow -Repository PSGallery -Force
 - [Changelog](/CHANGELOG.md)
 
 ## Roadmap
-- [ALPHA - v0.0.2](https://github.com/insomniacc/PSServiceNow/milestone/2)
+- [ALPHA - v0.0.2](https://github.com/insomniacc/PSSnow/milestone/2)

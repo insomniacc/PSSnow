@@ -9,7 +9,7 @@ function New-SNOWSCRequest {
     .OUTPUTS
         PSCustomObject. The full table record/s (-PassThru only).
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWSCRequest.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWSCRequest.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE

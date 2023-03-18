@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Get-SNOWSCTask.md
 schema: 2.0.0
 ---
@@ -30,9 +30,8 @@ Gets a record from the sc_task table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWTask -limit 1 -verbose
-```
-
 Returns a single Task from the sc_task table
+```
 
 ## PARAMETERS
 
@@ -454,7 +453,7 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCTask.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWSCTask.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWSCTask.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWSCTask.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

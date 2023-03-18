@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Get-SNOWObject.md
 schema: 2.0.0
 ---
@@ -26,16 +26,14 @@ A template function for getting records from the table API
 ### EXAMPLE 1
 ```powershell
 Get-SNOWObject -table 'sys_user' -limit 1 -verbose
-```
-
 Returns a single user from the sys_user table
+```
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWObject -table 'sc_request' -query 'active=true' -limit 1
-```
-
 Returns a single user from the sys_user table
+```
 
 ## PARAMETERS
 
@@ -205,7 +203,7 @@ Queries can be copied directly from SNOW by right clicking on the end of the que
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWObject.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWObject.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWObject.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWObject.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

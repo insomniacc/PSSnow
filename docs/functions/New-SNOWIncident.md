@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/New-SNOWIncident.md
 schema: 2.0.0
 ---
@@ -43,9 +43,8 @@ Creates a record in the incident table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-```
-
 Creates a single record in incident and returns the new record with SysID
+```
 
 ## PARAMETERS
 
@@ -1158,7 +1157,7 @@ Uses New-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWIncident.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/New-SNOWIncident.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWIncident.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWIncident.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

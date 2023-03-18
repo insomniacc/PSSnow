@@ -7,7 +7,7 @@ function Set-SNOWObject {
     .OUTPUTS
         PSCustomObject. The full table record (requires -PassThru).
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWObject.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWObject.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE

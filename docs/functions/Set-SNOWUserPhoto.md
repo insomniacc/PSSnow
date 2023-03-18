@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Set-SNOWUserPhoto.md
 schema: 2.0.0
 ---
@@ -25,9 +25,8 @@ This function uses the Attachment API to upload a photo to a user record as a hi
 ### EXAMPLE 1
 ```powershell
 $User | Set-SNOWUserPhoto -filepath "C:\Temp\Bruce.jpg"
-```
-
 Updates a user photo
+```
 
 ## PARAMETERS
 
@@ -134,7 +133,7 @@ PSCustomObject. The full table record (requires -PassThru).
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWUserPhoto.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWUserPhoto.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWUserPhoto.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWUserPhoto.md)
 
 [https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_AttachmentAPI.html&version=latest)
 

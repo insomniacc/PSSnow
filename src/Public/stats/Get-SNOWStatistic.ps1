@@ -7,7 +7,7 @@
     .NOTES
         For Aggregate API requests, you must have read access for all records in the table you query. If an ACL prevents the requesting user from accessing any record in the table, the request returns a 403 Forbidden error.
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWStatistic.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWStatistic.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_AggregateAPI.html&version=latest
     .EXAMPLE

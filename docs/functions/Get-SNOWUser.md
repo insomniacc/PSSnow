@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Get-SNOWUser.md
 schema: 2.0.0
 ---
@@ -28,23 +28,20 @@ Gets a record from the sys_user table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWUser -limit 1 -verbose
-```
-
 Returns a single user from the sys_user table
+```
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWUser -user_name 'bruce.wayne' -active $true
-```
-
 Returns any active user records with the username bruce.wayne
+```
 
 ### EXAMPLE 3
 ```powershell
 Get-SNOWUser -query 'first_name=bruce^last_name=wayne^active=true'
-```
-
 Returns any active user records with the name bruce wayne
+```
 
 ## PARAMETERS
 
@@ -347,7 +344,7 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWUser.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWUser.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWUser.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWUser.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

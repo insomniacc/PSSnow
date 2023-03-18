@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Get-SNOWApprover.md
 schema: 2.0.0
 ---
@@ -27,9 +27,8 @@ Gets a record from the sysapproval_approver table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWApprover -limit 1 -verbose
-```
-
 Returns a single record from sysapproval_approver
+```
 
 ## PARAMETERS
 
@@ -286,7 +285,7 @@ Uses Get-SNOWObject as a template function.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWApprover.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWApprover.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWApprover.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWApprover.md)
 
 [https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
 

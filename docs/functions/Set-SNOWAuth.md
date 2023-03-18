@@ -1,6 +1,6 @@
-﻿---
-external help file: PSServiceNow-help.xml
-Module Name: PSServiceNow
+---
+external help file: PSSnow-help.xml
+Module Name: PSSnow
 online version: docs/functions/Set-SNOWAuth.md
 schema: 2.0.0
 ---
@@ -31,9 +31,8 @@ Applies module scope authentication for PSServiceNow
 ### EXAMPLE 1
 ```powershell
 Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-```
-
 Applies authentication in the current session for instance 'InstanceName.service-now.com'
+```
 
 ## PARAMETERS
 
@@ -139,7 +138,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md](https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md)
 
 [https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest)
 

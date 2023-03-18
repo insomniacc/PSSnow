@@ -14,7 +14,7 @@ function Get-SNOWRITMVariable {
         Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
         Returns RITM Variables for RITM0010001
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Get-SNOWRITMVariable.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariable.md
     #>
 
     [CmdletBinding()]

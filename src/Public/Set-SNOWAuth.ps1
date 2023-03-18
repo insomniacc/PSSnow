@@ -8,7 +8,7 @@ function Set-SNOWAuth {
         Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
         Applies authentication in the current session for instance 'InstanceName.service-now.com'
     .LINK
-        https://github.com/insomniacc/PSServiceNow/blob/main/docs/functions/Set-SNOWAuth.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest
     #>

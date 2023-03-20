@@ -65,6 +65,8 @@ function New-SNOWAttachment {
     }
     
     process {
+        $Headers = Get-AuthHeader
+
         if($AttachedFilename){
             $Filename = $AttachedFilename
         }else{
@@ -187,16 +189,16 @@ function New-SNOWAttachment {
             }
         }
         
-        if($PSCmdlet.ShouldProcess($URI,$RestMethod)){   
+        if($PSCmdlet.ShouldProcess($URI,$RestMethod)){
+            $Headers += @{
+                'Content-Type' = $MimeType
+                'Accept' = 'application/json'
+            }
             $RestSplat = @{
-                Headers    = @{
-                    'Content-Type' = $MimeType
-                    'Accept' = 'application/json'
-                }
+                Headers    = $Headers
                 Method     = $RestMethod
                 URI        = $URI
                 Body       = $Body
-                Credential = $Script:SNOWAuth.Credential
             }
 
             if($PSVersionTable.PSEdition -eq "Core"){

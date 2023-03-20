@@ -196,6 +196,18 @@ Hidden attachments can still be seen using the `-DisregardSourceTable` parameter
 $User | Get-SNOWAttachment -DisregardSourceTable | Remove-SNOWAttachment
 ```
 
+# RITM Variables
+You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into a separate table from the RITM itself.  
+As such there's a separate command to make retrieval of these variables much easier.  
+This command will get all the variables associated to a single RITM.
+
+```powershell
+$RITM = Get-SNOWRITM -number RITM0010001
+$RITM | Get-SNOWRITMVariableSet
+OR
+Get-SNOWRITMVariableSet -number RITM0010001
+```
+
 # Batch API
 The Batch API allows sending multiple requests but within the same call, reducing the overhead.  
 All New-SNOW* and Set-SNOW* table commands in this module are supported.  

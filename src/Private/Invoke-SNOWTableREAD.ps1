@@ -21,7 +21,8 @@ function Invoke-SNOWTableREAD {
         $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
         $QueryParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
         #todo support oauth
-        $AuthSplat = @{Credential = $script:SNOWAuth.Credential}
+
+        $AuthSplat = @{Headers = Get-AuthHeader}
 
         $Results = [System.Collections.ArrayList]@()
         #Removes GUI and increases performance

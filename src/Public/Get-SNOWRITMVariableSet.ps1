@@ -1,4 +1,4 @@
-function Get-SNOWRITMVariable {
+function Get-SNOWRITMVariableSet {
     <#
     .SYNOPSIS
         Gets all associated variables for a RITM
@@ -17,13 +17,13 @@ function Get-SNOWRITMVariable {
         https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariable.md
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='number')]
     [alias('Get-SNOWSCRequestedItemVariable')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='number')]
         [string]
         $Number,
-        [Parameter(Mandatory, ParameterSetName='sys_id')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='sys_id')]
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [alias('sysid')]
         [string]
@@ -75,6 +75,15 @@ function Get-SNOWRITMVariable {
                 $OutputObject = [PSCustomObject]@{}
                 Foreach($RITMVariable in $RITMVariables){
                     $OutputObject | Add-Member -MemberType NoteProperty -Name $RITMVariable."sc_item_option.item_option_new.name" -Value $RITMVariable."sc_item_option.value"
+                }
+            }
+
+            switch ($PSCmdlet.ParameterSetName) {
+                "number" {
+                    $OutputObject | Add-Member -MemberType NoteProperty -Name "number" -Value $number
+                }
+                "sys_id" {
+                    $OutputObject | Add-Member -MemberType NoteProperty -Name "sys_id" -Value $sys_id
                 }
             }
     

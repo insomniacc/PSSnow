@@ -15,7 +15,7 @@ function New-SNOWImport {
     )
 
     Begin {
-        #Assert-SNOWAuth
+        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.Instance).service-now.com/api/now/import/"
         $AuthSplat = @{Headers = Get-AuthHeader}
     }

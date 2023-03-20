@@ -6,7 +6,7 @@ function Set-SNOWAuth {
         Applies module scope authentication for PSSnow
     .EXAMPLE
         Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-        Applies authentication in the current session for instance 'InstanceName.service-now.com'
+        Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
     .LINK
         https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md
     .LINK
@@ -21,6 +21,7 @@ function Set-SNOWAuth {
         #Instance name e.g dev123456
         $Instance,
         [Parameter(Mandatory, ParameterSetName = 'Basic')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuth')]
         [PSCredential]
         #Basic Auth
         $Credential,
@@ -49,24 +50,35 @@ function Set-SNOWAuth {
     if($PSCmdlet.ShouldProcess("$instance.service-now.com","Set Auth")){
         $script:SNOWAuth = @{
             Instance = $Instance
-            Credential = $Credential
         }
 
         switch ($PsCmdlet.ParameterSetName) {
             'Basic' {
                 $script:SNOWAuth += @{
                     type = "basic"
+                    Credential = $Credential
                 }
             }
             'OAuth' {
-                #todo get initial token & expiry time, add to auth object - create function for this
+                #? Get Token
+                $Body = @{
+                    grant_type= "password"
+                    client_id = $ClientID
+                    client_secret = $ClientSecret
+                    username = $Credential.UserName
+                    password = $Credential.GetNetworkCredential().Password
+                }
+                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false
+                
                 $script:SNOWAuth += @{
                     ClientID = $ClientID
-                    ClientSecret = $ClientSecret
-                    Type = "OAuth"
+                    ClientSecret = ($ClientSecret | ConvertTo-SecureString -AsPlainText -Force)
+                    Token = $Token
+                    Expires = (get-date).AddSeconds($Token.expires_in)
+                    Type = "oauth"
                 }
             }
         }
-        Write-Verbose "Servicenow authentication has been set for $Instance"
+        Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
     }
 }

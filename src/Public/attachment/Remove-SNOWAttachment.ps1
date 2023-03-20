@@ -22,25 +22,25 @@ function Remove-SNOWAttachment {
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
         [string]
         #The SysID of the attachment record to be deleted
-        $Sys_ID
+        $Sys_ID,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]
+        $file_name
     )
     
     begin {
         Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment/"
-
-        $AuthSplat = @{
-            Credential = $Script:SNOWAuth.Credential
-        }
+        $AuthSplat = @{Headers = Get-AuthHeader}
     }
     
     process {
         try{
-            if($PSCmdlet.ShouldProcess($URI,'DELETE')){
+            if($PSCmdlet.ShouldProcess($file_name,'DELETE')){
                 Invoke-RestMethod -URI "$BaseURL$Sys_ID" -Method "DELETE" @AuthSplat
             }
         }catch{
-            Write-Error "$($_.Exception.Message) [$URI]"
+            Write-Error "$($_.Exception.Message) [$BaseURL$Sys_ID]"
         }
     }
 }

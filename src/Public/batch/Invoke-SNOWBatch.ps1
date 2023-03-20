@@ -87,9 +87,7 @@ function Invoke-SNOWBatch {
         # This will be used as an identifier across split batches
         $BatchGUID = (New-Guid).Guid
         
-        $RestHeaders = @{
-            Authorization = "Basic $([Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($script:SNOWAuth.Credential.Username):$($script:SNOWAuth.Credential.GetNetworkCredential().Password)")))"
-        }
+        $RestHeaders = Get-AuthHeader
 
         if($PSBoundParameters.ContainsKey('ScriptBlock')){
             $InputScript = $ScriptBlock.ToString()

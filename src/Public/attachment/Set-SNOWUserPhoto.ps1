@@ -65,14 +65,16 @@ function Set-SNOWUserPhoto {
             }
         }
 
-        $AttachmentSplat = @{
-            File = $Filepath
-            Sys_ID = $Sys_ID
-            Sys_Class_Name = "ZZ_YYsys_user"
-            PassThru = $PassThru.IsPresent
-            AttachedFilename = "photo"
-            AsBatchRequest = $AsBatchRequest.IsPresent
+        if($PSCmdlet.ShouldProcess($Sys_ID,"SET")){
+            $AttachmentSplat = @{
+                File = $Filepath
+                Sys_ID = $Sys_ID
+                Sys_Class_Name = "ZZ_YYsys_user"
+                PassThru = $PassThru.IsPresent
+                AttachedFilename = "photo"
+                AsBatchRequest = $AsBatchRequest.IsPresent
+            }
+            New-SNOWAttachment @AttachmentSplat
         }
-        New-SNOWAttachment @AttachmentSplat
     }
 }

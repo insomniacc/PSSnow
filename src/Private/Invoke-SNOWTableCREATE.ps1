@@ -17,8 +17,7 @@ function Invoke-SNOWTableCREATE {
         $URI = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "New-SNOWObject" -AsStringArray -IncludeCommon
         $CreateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
-        #todo support oauth
-        $AuthSplat = @{Credential = $script:SNOWAuth.Credential}
+        $AuthSplat = @{Headers = Get-AuthHeader}
 
         #Removes GUI and increases performance
         $ProgressPreference = "SilentlyContinue"

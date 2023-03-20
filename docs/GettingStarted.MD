@@ -231,5 +231,31 @@ Invoke-SNOWBatch -Scriptblock {
 Timing the above took only 8 seconds and made only 5 calls to the API.  
 (The default setting is 150 items per batch, however this can be adjusted with `-BatchSize`)
 
+# Import API
+Staging tables are often used as a way for importing data and creating transform maps into other tables.  
+As an example, I have a CSV with 10 fictional movies and their key properties.  
+In servicenow I have a  staging table, or import table called 'u_moviesimport' with a transform map which loads that data into a table with different column headings called u_custom_demo_table:
+
+```powershell
+$Movies = import-csv -Path "C:\temp\movies.csv"
+$Imports = ForEach($Movie in ($Movies | select -first 2)){
+    $MovieProperties = @{
+        u_title = $Movie."Movie Title"
+        u_director = $Movie.Director
+        u_actor = $Movie."Lead Actor"
+        u_genre = $Movie.Genre
+    }
+    New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
+}
+$Imports.result | Group-Object status | Select Count,Name
+
+# OUTPUT:
+Count Name
+----- ----
+    2 inserted
+```
+
+`New-SNOWImport` also supports the batching method shown above.
+
 # Function Documentation
 Further documentation can be found [here](functions/)

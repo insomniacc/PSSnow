@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Import API support: New-SNOWImport
+- Oauth support (auto refreshes token)
 - number/sys_id added to Get-SNOWRITMVariableSet output
 
 ### Changed

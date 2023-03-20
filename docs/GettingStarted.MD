@@ -1,3 +1,16 @@
+# Table of contents
+- [Authentication](#authentication)
+- [Table API](#table-api)
+    - [Get-SNOWObject](#get-snowobject)
+    - [Set-SNOWObject](#set-snowobject)
+    - [New-SNOWObject](#new-snowobject)
+    - [Remove-SNOWObject](#remove-snowobject)
+- [Attachment API](#attachment-api)
+- [RITM Variables](#ritm-variables)
+- [Batch API](#batch-api)
+- [Import API](#import-api)
+- [All Functions](#all-functions)
+  
 # Authentication
 Currently only basic auth is supported. OAuth support will be coming in the next version.
 ```powershell

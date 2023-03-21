@@ -29,7 +29,7 @@ I've worked for a few large orgs with vastly different implementations of Servic
 Install-Module -Name PSSnow -Repository PSGallery -Force
 ```
 ## Usage
-- [Getting started](docs/GettingStarted.MD)
+- [User Guide](docs/UserGuide.MD)
 - [Function documentation](docs/functions)
 - [Function builder](docs/functionBuilder.MD)
 

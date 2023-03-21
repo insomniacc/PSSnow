@@ -28,6 +28,9 @@ function Get-SNOWUser {
     [CmdletBinding()]
     param (
         [Parameter()]
+        [string]
+        $name,
+        [Parameter()]
         [alias('FirstName')]
         [string]
         $first_name,

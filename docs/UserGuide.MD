@@ -287,6 +287,9 @@ Count Name
 There are many benefits of creating a request via the service catalog API, rather than say, just creating a request via the table API.  
 For one, if you do it via the table API, you would have to create the request, requested item, any tasks that should be generated, set all the properties, assignment group and so on.  
 Creating the same type of request via the service catalog however, would be just like a user logging that request through the portal, any workflows in the background will trigger normally, request, requested items, tasks will all spawn automatically as they normally would do.  
+  
+In this example, I'm opening a whitelist ip firewall request.  
+The `-sys_id` provided to New-SNOWSCCartItem can be obtained by navigating to the desired catalog form in your web browser and copying the sys_id from the URL.  
 
 ```powershell
 New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{

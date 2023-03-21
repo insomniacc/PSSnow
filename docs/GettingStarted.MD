@@ -12,10 +12,21 @@
 - [All Functions](#all-functions)
   
 # Authentication
-Currently only basic auth is supported. OAuth support will be coming in the next version.
+## Basic
 ```powershell
 Set-SNOWAuth -Instance "InstanceName" -Credential (Get-Credential)
 ```
+
+## OAuth
+```powershell
+$Credential = (get-credential)
+$ClientID = "5370b72a1afc4212bdeee1ff81d91bf3"
+$ClientSecret = "myClientSecret" | ConvertTo-SecureString -Force -AsPlainText
+Set-SNOWAuth -Instance "InstanceName" -Credential $SnowCred -ClientId $clientID  -ClientSecret $ClientSecret -verbose
+```
+OAuth authentication works by initially making a request with credentials to get an access token.  
+The access token is then stored in script scope.  Once it expires a refresh token is automatically used to obtain a new access token.
+[More information can be seen here.](https://www.servicenow.com/community/developer-articles/video-how-to-authenticate-to-servicenow-rest-apis-using-oauth/ta-p/2330464)
 
 # Table API
 The Table API is one of the most commonly used, it supports [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on any table within the platform.  

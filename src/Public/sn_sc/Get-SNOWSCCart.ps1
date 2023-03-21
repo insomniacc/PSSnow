@@ -19,7 +19,7 @@ function Get-SNOWSCCart {
     $URI = "https://$($Script:SNOWAuth.Instance).service-now.com/api/sn_sc/servicecatalog/cart"
     $Headers = Get-AuthHeader
 
-    $Response = Invoke-RestMethod -Uri $URI -Headers $Headers
+    $Response = Invoke-RestMethod -Method "GET" -Uri $URI -Headers $Headers
     if($Response){
         return $Response.Result
     }

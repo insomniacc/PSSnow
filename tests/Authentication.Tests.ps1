@@ -52,6 +52,20 @@ InModuleScope $ProjectName {
                 $script:SNOWAuth.type | Should -BeExactly 'oauth'
                 Should -Invoke Invoke-RestMethod -Exactly 1
             }
+
+            It "Should renew the token on expiry [oauth]" {
+                Set-SNOWAuth -Instance $Instance -Credential $Credential -ClientId $ClientID -ClientSecret $ClientSecret
+                Assert-SNOWAuth
+                $OriginalExpiry = $script:SNOWAuth.Expires
+                $ForcedExpiry = (get-date).AddMinutes(-5)
+                $script:SNOWAuth.Expires = $ForcedExpiry
+                Assert-SNOWAuth
+
+                $script:SNOWAuth.Expires | Should -BeOfType DateTime
+                $script:SNOWAuth.Expires | Should -BeGreaterThan $OriginalExpiry
+                $script:SNOWAuth.Expires | Should -BeGreaterThan $ForcedExpiry
+                Should -Invoke Invoke-RestMethod -Exactly 2
+            }
         }
     }
 }

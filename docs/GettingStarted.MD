@@ -258,7 +258,7 @@ Timing the above took only 8 seconds and made only 5 calls to the API.
 # Import API
 Staging tables are often used as a way for importing data and creating transform maps into other tables.  
 As an example, I have a CSV with 10 fictional movies and their key properties.  
-In servicenow I have a  staging table, or import table called 'u_moviesimport' with a transform map which loads that data into a table with different column headings called u_custom_demo_table:
+In servicenow I have a  staging table, or import table called 'u_moviesimport' with a transform map which loads that data into a table with different column headings called 'u_custom_demo_table':
 
 ```powershell
 $Movies = import-csv -Path "C:\temp\movies.csv"
@@ -280,6 +280,34 @@ Count Name
 ```
 
 `New-SNOWImport` also supports the batching method shown above.
+
+# ServiceCatalog API
+The service catalog or service portal, can be interacted with via API.  
+There are many benefits of creating a request via the service catalog API, rather than say, just creating a request via the table API.  
+For one, if you do it via the table API, you would have to create the request, requested item, any tasks that should be generated, set all the properties, assignment group and so on.  
+Creating the same type of request via the service catalog however, would be just like a user logging that request through the portal, any workflows in the background will trigger normally, request, requested items, tasks will all spawn automatically as they normally would do.  
+
+```powershell
+New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{
+    primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
+    cost_center      = "a581ab703710200044e0bfc8bcbe5de8"
+    ip_range         = "127.0.0.1"
+    business_purpose = "testing"
+} -Checkout -PassThru
+```
+
+Other examples to interact with the service catalog cart:
+
+```powershell
+#View the cart
+Get-SNOWSCCart
+
+#Checkout the cart
+Invoke-SNOWSCCart -Checkout -PassThru
+
+#Empty the cart
+Invoke-SNOWSCCart -Empty
+```
 
 # Function Documentation
 Further documentation can be found [here](functions/)

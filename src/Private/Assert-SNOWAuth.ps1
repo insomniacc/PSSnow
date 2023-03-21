@@ -21,7 +21,7 @@ function Assert-SNOWAuth() {
                 client_secret = [System.Net.NetworkCredential]::new('dummy', $script:SNOWAuth.ClientSecret).Password
                 refresh_token = $script:SNOWAuth.token.refresh_token
             }
-            $Token = Invoke-RestMethod -Method POST -uri "https://dev142397.service-now.com/oauth_token.do" -Body $Body
+            $Token = Invoke-RestMethod -Method POST -uri "https://$($Script:SNOWAuth.Instance).service-now.com/oauth_token.do" -Body $Body
 
             $script:SNOWAuth.token = $token
             $script:SNOWAuth.Expires = (get-date).AddSeconds($Token.expires_in)

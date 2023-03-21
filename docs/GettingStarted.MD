@@ -251,7 +251,7 @@ In servicenow I have a  staging table, or import table called 'u_moviesimport' w
 
 ```powershell
 $Movies = import-csv -Path "C:\temp\movies.csv"
-$Imports = ForEach($Movie in ($Movies | select -first 2)){
+$Imports = ForEach($Movie in $Movies){
     $MovieProperties = @{
         u_title = $Movie."Movie Title"
         u_director = $Movie.Director
@@ -260,7 +260,7 @@ $Imports = ForEach($Movie in ($Movies | select -first 2)){
     }
     New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
 }
-$Imports.result | Group-Object status | Select Count,Name
+$Imports.result | Group-Object status | Select Count, Name
 
 # OUTPUT:
 Count Name

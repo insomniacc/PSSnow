@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Remove-SNOWAttachment.md
@@ -24,14 +24,16 @@ Deletes an attachment from servicenow.
 ### EXAMPLE 1
 ```powershell
 Remove-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304
-Removes a single attachment by sys_id
 ```
+
+Removes a single attachment by sys_id
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWUser -user_name "bruce.wayne" | Get-SNOWAttachment | Remove-SNOWAttachment -Verbose
-Removes all attachments on the associated parent object
 ```
+
+Removes all attachments on the associated parent object
 
 ## PARAMETERS
 

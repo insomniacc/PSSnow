@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWChangeRequest.md
@@ -47,8 +47,9 @@ Creates a record in the change_request table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-Creates a single record in change_request and returns the new record with SysID
 ```
+
+Creates a single record in change_request and returns the new record with SysID
 
 ## PARAMETERS
 

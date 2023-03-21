@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWIncident.md
@@ -43,8 +43,9 @@ Creates a record in the incident table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-Creates a single record in incident and returns the new record with SysID
 ```
+
+Creates a single record in incident and returns the new record with SysID
 
 ## PARAMETERS
 

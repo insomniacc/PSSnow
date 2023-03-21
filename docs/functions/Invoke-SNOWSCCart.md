@@ -1,94 +1,94 @@
 ﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
-online version: docs/functions/Set-SNOWObject.md
+online version: docs/functions/Invoke-SNOWSCCart.md
 schema: 2.0.0
 ---
 
-# Set-SNOWObject
+# Invoke-SNOWSCCart
 
 ## SYNOPSIS
-Updates a new servicenow record
+Can be used to checkout or empty a cart
 
 ## SYNTAX
 
+### checkout (Default)
 ```
-Set-SNOWObject [-Table] <String> [-Sys_ID] <String> [[-Properties] <Hashtable>] [-InputDisplayValue]
- [-PassThru] [-AsBatchRequest] [-WhatIf] [-Confirm] [<CommonParameters>]
+Invoke-SNOWSCCart [-Checkout] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### empty
+```
+Invoke-SNOWSCCart [-Sys_id <String>] [-Empty] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Updates a record in the specified table
+either processes a cart or clears the contents depending on paramters
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-SNOWObject -table "sys_user" -query "user_name=bruce.wayne^active=true" | Set-SNOWObject -table "sys_user" -middle_name "Thomas"
+New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{
 ```
 
-Updates the middle_name of the user record bruce.wayne in the sys_user table
+primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
+    cost_center      = "a581ab703710200044e0bfc8bcbe5de8"
+    ip_range         = "127.0.0.1"
+    business_purpose = "testing"
+}
+Invoke-SNOWSCCart -Checkout -PassThru
 
 ### EXAMPLE 2
 ```powershell
-Set-SNOWObject -table "sys_user" -sys_id '02826bf03710200044e0bfc8bcbe5d3f' -properties @{middle_name="Thomas"}
+New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{
 ```
 
-Updates the middle_name of the user record bruce.wayne in the sys_user table
+primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
+    cost_center      = "a581ab703710200044e0bfc8bcbe5de8"
+    ip_range         = "127.0.0.1"
+    business_purpose = "testing"
+}
+Invoke-SNOWSCCart -Empty
 
 ## PARAMETERS
 
-### -Table
-{{ Fill Table Description }}
+### -Sys_id
+{{ Fill Sys_id Description }}
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
-Aliases: sys_class_name
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Sys_ID
-{{ Fill Sys_ID Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases: SysID
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Properties
-{{ Fill Properties Description }}
-
-```yaml
-Type: System.Collections.Hashtable
-Parameter Sets: (All)
+Parameter Sets: empty
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputDisplayValue
-{{ Fill InputDisplayValue Description }}
+### -Empty
+{{ Fill Empty Description }}
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: empty
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Checkout
+{{ Fill Checkout Description }}
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: checkout
 Aliases:
 
 Required: False
@@ -103,22 +103,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AsBatchRequest
-{{ Fill AsBatchRequest Description }}
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: checkout
 Aliases:
 
 Required: False
@@ -166,13 +151,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-PSCustomObject. The full table record (requires -PassThru).
 ## NOTES
+If one-step checkout, the method checks out (saves) the cart and returns the request number and the request order ID. 
+If two-step checkout, the method returns the cart order status and all the information required for two-step checkout.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWObject.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWObject.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWSCCart.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWSCCart.md)
 
-[https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest)
+[https://docs.servicenow.com/csh?topicname=c_ServiceCatalogAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_ServiceCatalogAPI.html&version=latest)
 
 

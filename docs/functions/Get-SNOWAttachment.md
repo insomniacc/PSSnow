@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWAttachment.md
@@ -39,38 +39,44 @@ Retrieves attachment records or binary data from either a direct lookup, parent 
 ### EXAMPLE 1
 ```powershell
 Get-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304
-Provide the sys_id of an attachment to look it up directly
 ```
+
+Provide the sys_id of an attachment to look it up directly
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304 -PassThru
-Downloads and returns the binary data for the attachment
 ```
+
+Downloads and returns the binary data for the attachment
 
 ### EXAMPLE 3
 ```powershell
 Get-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304 -PassThru -OutputDestination "c:\temp"
-Downloads and saves the attachment into the specified destination folder with the original filename
 ```
+
+Downloads and saves the attachment into the specified destination folder with the original filename
 
 ### EXAMPLE 4
 ```powershell
 Get-SNOWAttachment -Sys_ID a73f6d2447292110d3e5fa8bd36d4304 -PassThru -OutputDestination "c:\temp" -OutputFilename "NewFilename.jpg"
-Downloads and saves the attachment into the specified destination with a different filename.
 ```
+
+Downloads and saves the attachment into the specified destination with a different filename.
 
 ### EXAMPLE 5
 ```powershell
 Get-SNOWUser -user_name "bruce.wayne" | Get-SNOWAttachment -PassThru -OutputDestination "c:\temp"
-Pipe any Get-SNOW* table command to get all the associated attachments and save them into the output destination
 ```
+
+Pipe any Get-SNOW* table command to get all the associated attachments and save them into the output destination
 
 ### EXAMPLE 6
 ```powershell
 Get-SNOWUser -user_name "bruce.wayne" | Get-SNOWAttachment
-Pipe any Get-SNOW* table command to get all the associated attachment records
 ```
+
+Pipe any Get-SNOW* table command to get all the associated attachment records
 
 ## PARAMETERS
 

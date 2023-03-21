@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWUser.md
@@ -13,7 +13,7 @@ Retrieves a servicenow user record
 ## SYNTAX
 
 ```
-Get-SNOWUser [[-first_name] <String>] [[-last_name] <String>] [[-user_name] <String>]
+Get-SNOWUser [[-name] <String>] [[-first_name] <String>] [[-last_name] <String>] [[-user_name] <String>]
  [[-employee_number] <String>] [[-email] <String>] [[-active] <Boolean>] [[-company] <String>]
  [[-department] <String>] [[-manager] <String>] [[-locked_out] <Boolean>] [-Sys_ID <String>] [-Query <String>]
  [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>]
@@ -28,22 +28,40 @@ Gets a record from the sys_user table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWUser -limit 1 -verbose
-Returns a single user from the sys_user table
 ```
+
+Returns a single user from the sys_user table
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWUser -user_name 'bruce.wayne' -active $true
-Returns any active user records with the username bruce.wayne
 ```
+
+Returns any active user records with the username bruce.wayne
 
 ### EXAMPLE 3
 ```powershell
 Get-SNOWUser -query 'first_name=bruce^last_name=wayne^active=true'
-Returns any active user records with the name bruce wayne
 ```
 
+Returns any active user records with the name bruce wayne
+
 ## PARAMETERS
+
+### -name
+{{ Fill name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -first_name
 {{ Fill first_name Description }}
@@ -54,7 +72,7 @@ Parameter Sets: (All)
 Aliases: FirstName
 
 Required: False
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,7 +87,7 @@ Parameter Sets: (All)
 Aliases: LastName
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,7 +102,7 @@ Parameter Sets: (All)
 Aliases: Username
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,7 +117,7 @@ Parameter Sets: (All)
 Aliases: EmployeeNumber
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -114,7 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -129,7 +147,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -144,7 +162,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -159,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -174,7 +192,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -189,7 +207,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

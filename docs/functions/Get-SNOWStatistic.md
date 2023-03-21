@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWStatistic.md
@@ -26,8 +26,9 @@ Retrieves records for the specified table and performs aggregate functions to re
 ### EXAMPLE 1
 ```powershell
 Get-SNOWStatistic -Table "sys_user" -Query "active=true" -Count
-Returns the count of active users in the user table
 ```
+
+Returns the count of active users in the user table
 
 ## PARAMETERS
 

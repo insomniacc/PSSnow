@@ -1,47 +1,38 @@
 ﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
-online version: docs/functions/New-SNOWImport.md
+online version: docs/functions/New-SNOWSCCartItem.md
 schema: 2.0.0
 ---
 
-# New-SNOWImport
+# New-SNOWSCCartItem
 
 ## SYNOPSIS
-Sends a new record to the import API
+Adds the specified item to the cart of the current user
 
 ## SYNTAX
 
 ```
-New-SNOWImport [-Table] <String> [-Properties] <Hashtable> [-PassThru] [-AsBatchRequest] [-WhatIf] [-Confirm]
+New-SNOWSCCartItem [-Sys_ID] <String> [[-Properties] <Hashtable>] [[-Quantity] <Int32>]
+ [[-RequestedFor] <String>] [[-AlsoRequestFor] <Array>] [-Checkout] [-PassThru] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The import API can be used to push data into staging tables with transform maps
+Adds an item to the service catalog cart.
+Checkout can also be initiated using -checkout.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-$Movies = import-csv -Path "C:\temp\movies.csv"
+#todo
 ```
-
-$Imports = ForEach($Movie in $Movies){
-    $MovieProperties = @{
-        u_title = $Movie."Movie Title"
-        u_director = $Movie.Director
-        u_actor = $Movie."Lead Actor"
-        u_genre = $Movie.Genre
-    }
-    New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
-}
-$Imports.result | Group-Object status | Select Count,Name
 
 ## PARAMETERS
 
-### -Table
-{{ Fill Table Description }}
+### -Sys_ID
+The sys_id for the catalog item
 
 ```yaml
 Type: System.String
@@ -63,15 +54,61 @@ Type: System.Collections.Hashtable
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PassThru
-{{ Fill PassThru Description }}
+### -Quantity
+{{ Fill Quantity Description }}
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestedFor
+{{ Fill RequestedFor Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AlsoRequestFor
+An array of sys_id's to order the item for.
+If the associated item does not have the requested_for variable set, the request is rejected.
+
+```yaml
+Type: System.Array
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Checkout
+{{ Fill Checkout Description }}
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
@@ -85,8 +122,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsBatchRequest
-{{ Fill AsBatchRequest Description }}
+### -PassThru
+{{ Fill PassThru Description }}
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
@@ -139,11 +176,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+While using this function it is possible to bypass any validation that may be present on the web form.
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWImport.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWImport.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWSCCartItem.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWSCCartItem.md)
 
-[https://docs.servicenow.com/csh?topicname=c_ImportSetAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_ImportSetAPI.html&version=latest)
+[https://docs.servicenow.com/csh?topicname=c_ServiceCatalogAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_ServiceCatalogAPI.html&version=latest)
 
 

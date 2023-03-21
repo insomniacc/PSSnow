@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Invoke-SNOWBatch.md
@@ -33,6 +33,8 @@ This lightens API usage but also speeds up much lager calls against lots of reco
 ### EXAMPLE 1
 ```powershell
 $Response = Invoke-SNOWBatch -scriptblock {
+```
+
 1..500 | ForEach-Object {
         $num = $_
         $Properties = @{
@@ -50,11 +52,12 @@ $Response = Invoke-SNOWBatch -scriptblock {
 }
 $Response.serviced_requests | Group-Object -Property status_text
 Creates 500 users in the sys_user table called bruce.wayne, instead of making 500 calls, the requests are split into batches of 150 (default) at a time.
-```
 
 ### EXAMPLE 2
 ```powershell
 $Response = Invoke-SNOWBatch -scriptblock {
+```
+
 1..100 | ForEach-Object {
         $num = $_
         $Properties = @{
@@ -72,15 +75,15 @@ $Response = Invoke-SNOWBatch -scriptblock {
 } -BatchSize 50  -Parallel
 $Response.serviced_requests | Group-Object -Property status_text
 Creates 100 users in the sys_user table called bruce.wayne, only 2 API calls (batches) are made to do this, both in parallel.
-```
 
 ### EXAMPLE 3
 ```powershell
 $UsersToDisable = Get-SNOWUser -active $true -department "Product Management"
+```
+
 $SNOWRequests = $UsersToDisable | Set-SNOWUser -active $false -AsBatchRequest
 Invoke-SNOWBatch -Requests $SNOWRequests
 Gets all the active users from a specific department, creates requests (as an array) to disable them all, passes that array into the Invoke-SNOWBatch to make the calls via the Batch API.
-```
 
 ## PARAMETERS
 

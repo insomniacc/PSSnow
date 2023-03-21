@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWUserPhoto.md
@@ -25,8 +25,9 @@ This function uses the Attachment API to upload a photo to a user record as a hi
 ### EXAMPLE 1
 ```powershell
 $User | Set-SNOWUserPhoto -filepath "C:\Temp\Bruce.jpg"
-Updates a user photo
 ```
+
+Updates a user photo
 
 ## PARAMETERS
 

@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWApprover.md
@@ -27,8 +27,9 @@ Updates a record from the sysapproval_approver table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-Updates a specific record in the table sysapproval_approver
 ```
+
+Updates a specific record in the table sysapproval_approver
 
 ## PARAMETERS
 

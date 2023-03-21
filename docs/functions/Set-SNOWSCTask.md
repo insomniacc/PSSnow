@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWSCTask.md
@@ -39,8 +39,9 @@ Updates a record from the sc_task table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-Updates a specific record in the table sc_task
 ```
+
+Updates a specific record in the table sc_task
 
 ## PARAMETERS
 

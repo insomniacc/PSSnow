@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWIncident.md
@@ -44,8 +44,9 @@ Updates a record from the incident table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-Updates a specific record in the table incident
 ```
+
+Updates a specific record in the table incident
 
 ## PARAMETERS
 

@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWUser.md
@@ -30,7 +30,9 @@ Creates a record in the sys_user table
 ### EXAMPLE 1
 ```powershell
 $Properties = @{
-    user_name = "bruce.wayne"
+```
+
+user_name = "bruce.wayne"
     title = "Director"
     first_name = "Bruce"
     last_name = "Wayne"
@@ -39,7 +41,6 @@ $Properties = @{
 }
 New-SNOWUser @Properties -PassThru
 Creates a new user called bruce wayne in the sys_user table
-```
 
 ## PARAMETERS
 

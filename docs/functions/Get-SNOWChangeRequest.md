@@ -1,4 +1,4 @@
----
+﻿---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWChangeRequest.md
@@ -35,8 +35,9 @@ Gets a record from the change_request table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWChangeRequest -limit 1 -verbose
-Returns a single record from change_request
 ```
+
+Returns a single record from change_request
 
 ## PARAMETERS
 

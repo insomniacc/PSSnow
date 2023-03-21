@@ -17,6 +17,7 @@ Invoke-ScriptAnalyzer -Path $ModulePath -Recurse -Profile @{
 }
 
 write-verbose "Running Pester Tests"
+
 Invoke-Pester #-Output Detailed
 
 

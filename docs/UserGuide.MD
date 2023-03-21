@@ -5,8 +5,8 @@
     - [Set-SNOWObject](#set-snowobject)
     - [New-SNOWObject](#new-snowobject)
     - [Remove-SNOWObject](#remove-snowobject)
-- [Attachment API](#attachment-api)
 - [RITM Variables](#ritm-variables)
+- [Attachment API](#attachment-api)
 - [Batch API](#batch-api)
 - [Import API](#import-api)
 - [ServiceCatalog API](#servicecatalog-api)
@@ -182,6 +182,18 @@ Alternatively objects can be removed directly with the table name and sys_id:
 Remove-SNOWObject -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 ```
 
+# RITM Variables
+You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into a separate table from the RITM itself.  
+As such there's a separate command to make retrieval of these variables much easier.  
+This command will get all the variables associated to a single RITM.
+
+```powershell
+$RITM = Get-SNOWRITM -number RITM0010001
+$RITM | Get-SNOWRITMVariableSet
+OR
+Get-SNOWRITMVariableSet -number RITM0010001
+```
+
 # Attachment API
 Please see the below example to upload an attachment, this can be applied to any table command that supports attachments:
 ```powershell
@@ -221,17 +233,6 @@ Hidden attachments can still be seen using the `-DisregardSourceTable` parameter
 $User | Get-SNOWAttachment -DisregardSourceTable | Remove-SNOWAttachment
 ```
 
-# RITM Variables
-You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into a separate table from the RITM itself.  
-As such there's a separate command to make retrieval of these variables much easier.  
-This command will get all the variables associated to a single RITM.
-
-```powershell
-$RITM = Get-SNOWRITM -number RITM0010001
-$RITM | Get-SNOWRITMVariableSet
-OR
-Get-SNOWRITMVariableSet -number RITM0010001
-```
 
 # Batch API
 The Batch API allows sending multiple requests but within the same call, reducing the overhead.  

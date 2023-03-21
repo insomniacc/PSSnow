@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWSCCartItem.md

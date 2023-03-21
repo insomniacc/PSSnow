@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWAttachment.md
@@ -25,10 +25,9 @@ Uploads a file as an attachment to a table record
 ### EXAMPLE 1
 ```powershell
 $response  = Get-SNOWUser -user_name "bruce.wayne" | New-SNOWAttachment -file "C:\temp\test.txt" -PassThru
-```
-
 Write-Host "File attached: $($response.download_link)"
 Attaches test.txt to the user_record for bruce.wayne and returns the download link.
+```
 
 ## PARAMETERS
 

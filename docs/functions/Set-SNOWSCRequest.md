@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWSCRequest.md
@@ -41,9 +41,8 @@ Updates a record from the sc_request table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-```
-
 Updates a specific record in the table sc_request
+```
 
 ## PARAMETERS
 

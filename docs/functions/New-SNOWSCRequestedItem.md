@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWSCRequestedItem.md
@@ -38,9 +38,8 @@ Creates a record in the sc_req_item table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-```
-
 Creates a single record in sc_req_item and returns the new record with SysID
+```
 
 ## PARAMETERS
 

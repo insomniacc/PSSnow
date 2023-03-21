@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWObject.md
@@ -26,16 +26,14 @@ A template function for getting records from the table API
 ### EXAMPLE 1
 ```powershell
 Get-SNOWObject -table 'sys_user' -limit 1 -verbose
-```
-
 Returns a single user from the sys_user table
+```
 
 ### EXAMPLE 2
 ```powershell
 Get-SNOWObject -table 'sc_request' -query 'active=true' -limit 1
-```
-
 Returns a single user from the sys_user table
+```
 
 ## PARAMETERS
 

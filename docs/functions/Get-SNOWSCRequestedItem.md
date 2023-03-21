@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWSCRequestedItem.md
@@ -31,9 +31,8 @@ Gets a record from the sc_req_item table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWRequestedItem -limit 1 -verbose
-```
-
 Returns a single RITM from the sc_req_item table
+```
 
 ## PARAMETERS
 

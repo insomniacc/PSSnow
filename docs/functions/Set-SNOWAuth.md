@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWAuth.md
@@ -31,9 +31,8 @@ Applies module scope authentication for PSSnow
 ### EXAMPLE 1
 ```powershell
 Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-```
-
 Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+```
 
 ## PARAMETERS
 

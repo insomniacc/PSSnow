@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Invoke-SNOWSCCart.md
@@ -30,26 +30,24 @@ either processes a cart or clears the contents depending on paramters
 ### EXAMPLE 1
 ```powershell
 New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{
-```
-
-primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
+    primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
     cost_center      = "a581ab703710200044e0bfc8bcbe5de8"
     ip_range         = "127.0.0.1"
     business_purpose = "testing"
 }
 Invoke-SNOWSCCart -Checkout -PassThru
+```
 
 ### EXAMPLE 2
 ```powershell
 New-SNOWSCCartItem -Sys_ID "e91336da4fff0200086eeed18110c7a3" -Properties @{
-```
-
-primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
+    primary_contact  = "a8f98bb0eb32010045e1a5115206fe3a"
     cost_center      = "a581ab703710200044e0bfc8bcbe5de8"
     ip_range         = "127.0.0.1"
     business_purpose = "testing"
 }
 Invoke-SNOWSCCart -Empty
+```
 
 ## PARAMETERS
 

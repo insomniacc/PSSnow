@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWApprover.md
@@ -27,9 +27,8 @@ Gets a record from the sysapproval_approver table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWApprover -limit 1 -verbose
-```
-
 Returns a single record from sysapproval_approver
+```
 
 ## PARAMETERS
 

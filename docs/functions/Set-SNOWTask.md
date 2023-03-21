@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWTask.md
@@ -38,9 +38,8 @@ Updates a record from the task table
 ### EXAMPLE 1
 ```powershell
 " -Properties @{"<key>"="<value>"} -verbose
-```
-
 Updates a specific record in the table task
+```
 
 ## PARAMETERS
 

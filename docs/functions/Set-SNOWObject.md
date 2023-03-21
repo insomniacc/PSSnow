@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Set-SNOWObject.md
@@ -25,16 +25,14 @@ Updates a record in the specified table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWObject -table "sys_user" -query "user_name=bruce.wayne^active=true" | Set-SNOWObject -table "sys_user" -middle_name "Thomas"
-```
-
 Updates the middle_name of the user record bruce.wayne in the sys_user table
+```
 
 ### EXAMPLE 2
 ```powershell
 Set-SNOWObject -table "sys_user" -sys_id '02826bf03710200044e0bfc8bcbe5d3f' -properties @{middle_name="Thomas"}
-```
-
 Updates the middle_name of the user record bruce.wayne in the sys_user table
+```
 
 ## PARAMETERS
 

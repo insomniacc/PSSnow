@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWImport.md
@@ -25,8 +25,6 @@ The import API can be used to push data into staging tables with transform maps
 ### EXAMPLE 1
 ```powershell
 $Movies = import-csv -Path "C:\temp\movies.csv"
-```
-
 $Imports = ForEach($Movie in $Movies){
     $MovieProperties = @{
         u_title = $Movie."Movie Title"
@@ -37,6 +35,7 @@ $Imports = ForEach($Movie in $Movies){
     New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
 }
 $Imports.result | Group-Object status | Select Count,Name
+```
 
 ## PARAMETERS
 

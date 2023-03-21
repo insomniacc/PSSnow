@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/New-SNOWTask.md
@@ -34,9 +34,8 @@ Creates a record in the task table
 ### EXAMPLE 1
 ```powershell
 "="<value>"} -PassThru
-```
-
 Creates a single record in task and returns the new record with SysID
+```
 
 ## PARAMETERS
 

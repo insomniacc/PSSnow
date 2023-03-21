@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWIncident.md
@@ -32,9 +32,8 @@ Gets a record from the incident table
 ### EXAMPLE 1
 ```powershell
 Get-SNOWIncident -limit 1 -verbose
-```
-
 Returns a single Incident
+```
 
 ## PARAMETERS
 

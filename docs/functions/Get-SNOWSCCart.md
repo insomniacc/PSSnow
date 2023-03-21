@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
 online version: docs/functions/Get-SNOWSCCart.md
@@ -24,9 +24,8 @@ returns the current cart properties
 ### EXAMPLE 1
 ```powershell
 Get-SNOWSCCart
-```
-
 returns the cart object, no parameters required.
+```
 
 ## PARAMETERS
 

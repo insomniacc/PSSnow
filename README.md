@@ -12,7 +12,7 @@
 A powershell module for interacting with the various ServiceNow REST API's.  
 
 This module has a framework built around the Table API allowing it to support any Service-Now instance.  
-Focusing on the Table API initially for CRUD operations, this module also supports batch, attachment and aggregate API's with more to come in future.  
+Focusing on the Table API initially for CRUD operations, this module also supports batch, attachment, import, service catalog and aggregate API's with more to come in future.  
 I've built this in my spare time, if you do find it useful I would greatly appreciate any [feedback](https://github.com/insomniacc/PSSnow/issues/new/choose) or [support](https://www.buymeacoffee.com/insomniacc).
 
 <details>

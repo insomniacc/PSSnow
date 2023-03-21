@@ -9,6 +9,7 @@
 - [RITM Variables](#ritm-variables)
 - [Batch API](#batch-api)
 - [Import API](#import-api)
+- [ServiceCatalog API](#servicecatalog-api)
 - [All Functions](#all-functions)
   
 # Authentication

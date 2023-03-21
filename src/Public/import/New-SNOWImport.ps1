@@ -1,4 +1,27 @@
 function New-SNOWImport {
+    <#
+    .SYNOPSIS
+        Sends a new record to the import API
+    .DESCRIPTION
+        The import API can be used to push data into staging tables with transform maps
+    .EXAMPLE
+        $Movies = import-csv -Path "C:\temp\movies.csv"
+        $Imports = ForEach($Movie in $Movies){
+            $MovieProperties = @{
+                u_title = $Movie."Movie Title"
+                u_director = $Movie.Director
+                u_actor = $Movie."Lead Actor"
+                u_genre = $Movie.Genre
+            }
+            New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
+        }
+        $Imports.result | Group-Object status | Select Count,Name
+    .LINK
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWImport.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_ImportSetAPI.html&version=latest
+    #>
+
     [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory)]

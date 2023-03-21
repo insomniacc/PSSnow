@@ -1,25 +1,25 @@
 ---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
-online version: docs/functions/Get-SNOWRITMVariable.md
+online version: docs/functions/Get-SNOWRITMVariableSet.md
 schema: 2.0.0
 ---
 
-# Get-SNOWRITMVariable
+# Get-SNOWRITMVariableSet
 
 ## SYNOPSIS
 Gets all associated variables for a RITM
 
 ## SYNTAX
 
-### number
+### number (Default)
 ```
-Get-SNOWRITMVariable -Number <String> [-IncludeLabels] [<CommonParameters>]
+Get-SNOWRITMVariableSet -Number <String> [-IncludeLabels] [<CommonParameters>]
 ```
 
 ### sys_id
 ```
-Get-SNOWRITMVariable -Sys_Id <String> [-IncludeLabels] [<CommonParameters>]
+Get-SNOWRITMVariableSet -Sys_Id <String> [-IncludeLabels] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,7 +73,7 @@ Aliases: sysid
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

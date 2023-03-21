@@ -1,43 +1,46 @@
 ---
 external help file: PSSnow-help.xml
 Module Name: PSSnow
-online version: docs/functions/Set-SNOWAuth.md
+online version: docs/functions/New-SNOWImport.md
 schema: 2.0.0
 ---
 
-# Set-SNOWAuth
+# New-SNOWImport
 
 ## SYNOPSIS
-Sets ServiceNow authentication in the current session.
+Sends a new record to the import API
 
 ## SYNTAX
 
-### Basic (Default)
 ```
-Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-WhatIf] [-Confirm] [<CommonParameters>]
-```
-
-### OAuth
-```
-Set-SNOWAuth -Instance <String> -Credential <PSCredential> -ClientID <String> -ClientSecret <SecureString>
- [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SNOWImport [-Table] <String> [-Properties] <Hashtable> [-PassThru] [-AsBatchRequest] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Applies module scope authentication for PSSnow
+The import API can be used to push data into staging tables with transform maps
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+$Movies = import-csv -Path "C:\temp\movies.csv"
+$Imports = ForEach($Movie in $Movies){
+    $MovieProperties = @{
+        u_title = $Movie."Movie Title"
+        u_director = $Movie.Director
+        u_actor = $Movie."Lead Actor"
+        u_genre = $Movie.Genre
+    }
+    New-SNOWImport -table "u_moviesimport" -properties $MovieProperties
+}
+$Imports.result | Group-Object status | Select Count,Name
 ```
 
 ## PARAMETERS
 
-### -Instance
-Instance name e.g dev123456
+### -Table
+{{ Fill Table Description }}
 
 ```yaml
 Type: System.String
@@ -45,53 +48,53 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Credential
-Basic Auth
+### -Properties
+{{ Fill Properties Description }}
 
 ```yaml
-Type: System.Management.Automation.PSCredential
+Type: System.Collections.Hashtable
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -PassThru
+{{ Fill PassThru Description }}
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ClientID
-OAuth ClientID
+### -AsBatchRequest
+{{ Fill AsBatchRequest Description }}
 
 ```yaml
-Type: System.String
-Parameter Sets: OAuth
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ClientSecret
-OAuth ClientSecret
-
-```yaml
-Type: System.Security.SecureString
-Parameter Sets: OAuth
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -138,8 +141,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWImport.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWImport.md)
 
-[https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest)
+[https://docs.servicenow.com/csh?topicname=c_ImportSetAPI.html&version=latest](https://docs.servicenow.com/csh?topicname=c_ImportSetAPI.html&version=latest)
 
 

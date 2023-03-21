@@ -13,7 +13,7 @@ Removes attachments from servicenow.
 ## SYNTAX
 
 ```
-Remove-SNOWAttachment [-Sys_ID] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-SNOWAttachment [-Sys_ID] <String> [[-file_name] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,21 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -file_name
+{{ Fill file_name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

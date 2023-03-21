@@ -30,7 +30,7 @@ function Set-SNOWAuth {
         #OAuth ClientID
         $ClientID,
         [Parameter(Mandatory, ParameterSetName = 'OAuth')]
-        [string]
+        [SecureString]
         #OAuth ClientSecret
         $ClientSecret
     )
@@ -64,7 +64,7 @@ function Set-SNOWAuth {
                 $Body = @{
                     grant_type= "password"
                     client_id = $ClientID
-                    client_secret = $ClientSecret
+                    client_secret = [System.Net.NetworkCredential]::new('dummy', $ClientSecret).Password
                     username = $Credential.UserName
                     password = $Credential.GetNetworkCredential().Password
                 }
@@ -72,7 +72,7 @@ function Set-SNOWAuth {
                 
                 $script:SNOWAuth += @{
                     ClientID = $ClientID
-                    ClientSecret = ($ClientSecret | ConvertTo-SecureString -AsPlainText -Force)
+                    ClientSecret = $ClientSecret
                     Token = $Token
                     Expires = (get-date).AddSeconds($Token.expires_in)
                     Type = "oauth"

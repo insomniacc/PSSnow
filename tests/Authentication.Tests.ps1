@@ -12,7 +12,7 @@ InModuleScope $ProjectName {
             $Password = 'DummyPassword'
             $Instance = 'DummyInstance'
             $ClientID = "DummyClientID"
-            $ClientSecret = "DummyClientSecret"
+            $ClientSecret = "DummyClientSecret" | ConvertTo-SecureString -AsPlainText -Force
             $SSPassword = $Password | ConvertTo-SecureString -AsPlainText -Force
             $Credential = New-Object PSCredential ($Username, $SSPassword)
             $Command = Get-Command Set-SNOWAuth
@@ -41,7 +41,7 @@ InModuleScope $ProjectName {
             }
 
             It "Should set authentication in script scope [oauth]" {
-                Set-SNOWAuth -Instance $Instance -Credential $Credential -ClientId $ClientID -ClientSecret $ClientSecret -verbose
+                Set-SNOWAuth -Instance $Instance -Credential $Credential -ClientId $ClientID -ClientSecret $ClientSecret
 
                 $script:SNOWAuth | Should -BeOfType Hashtable
                 $script:SNOWAuth.Instance | Should -BeExactly $Instance

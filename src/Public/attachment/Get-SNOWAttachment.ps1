@@ -30,7 +30,7 @@ function Get-SNOWAttachment {
         Pipe any Get-SNOW* table command to get all the associated attachment records
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess,ConfirmImpact="High")]
     param (
         [Parameter(ParameterSetName='Attachment', Mandatory)]
         [ValidateScript({ $_ | Confirm-SysID -ValidateScript })]
@@ -168,30 +168,30 @@ function Get-SNOWAttachment {
 
         try{
             $Attachments = [System.Collections.ArrayList]@()
-            $Attachments = if($EnablePagination){
-                if($Limit){
-                    For($Offset = 0; $Offset -lt $Limit; $Offset+=$PaginationAmount){
-                        $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
-                        [void]$Attachments.Add($Response)
-                    }
-                    @($Attachments | ForEach-Object {$_}) | Select-Object -first $Limit
-                }else{
-                    $Offset = 0
-                    Do{
-                        $Response = Invoke-WebRequest -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
-                        [void]$Attachments.Add(($Response.content | ConvertFrom-Json).Result)
-                        $Offset += $PaginationAmount
-                    }While($Response.Headers.Link -like "*rel=`"next`"*")
-                    @($Attachments | ForEach-Object {$_})
-                }
-            }else{
-                #? If this is a direct 'attachment' lookup, we already have the full attachment object, and PassThru is specified then we don't need to get the record again.
-                if(-not ($PSCmdlet.ParameterSetName -eq 'SNOWObject' -and $LookupType -eq 'Attachment' -and $PassThru.IsPresent)){
-                    (Invoke-RestMethod -URI $URI @AuthSplat).Result
-                }else{
-                    $SNOWObject
-                }
-            }
+            $Attachments =  if($EnablePagination){
+                                if($Limit){
+                                    For($Offset = 0; $Offset -lt $Limit; $Offset+=$PaginationAmount){
+                                        $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
+                                        [void]$Attachments.Add($Response)
+                                    }
+                                    @($Attachments | ForEach-Object {$_}) | Select-Object -first $Limit
+                                }else{
+                                    $Offset = 0
+                                    Do{
+                                        $Response = Invoke-WebRequest -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
+                                        [void]$Attachments.Add(($Response.content | ConvertFrom-Json).Result)
+                                        $Offset += $PaginationAmount
+                                    }While($Response.Headers.Link -like "*rel=`"next`"*")
+                                    @($Attachments | ForEach-Object {$_})
+                                }
+                            }else{
+                                #? If this is a direct 'attachment' lookup, we already have the full attachment object, and PassThru is specified then we don't need to get the record again.
+                                if(-not ($PSCmdlet.ParameterSetName -eq 'SNOWObject' -and $LookupType -eq 'Attachment' -and $PassThru.IsPresent)){
+                                    (Invoke-RestMethod -URI $URI @AuthSplat).Result
+                                }else{
+                                    $SNOWObject
+                                }
+                            }
         }catch{
             Write-Error "Unable to get attachment record/s. $($_.Exception.message)"
             Return
@@ -214,12 +214,17 @@ function Get-SNOWAttachment {
                     [void](New-Item $OutputDestination -Force -ItemType "Directory" -Verbose:$False)
                 }
 
-                if($PSBoundParameters.OutputDestination -or $PSBoundParameters.OutputFilename){
+                if($PSBoundParameters.OutputDestination -or $PSBoundParameters.OutputFilename){                    
+                    if(-not $Force.IsPresent){
+                        if(Test-Path $OutFilepath){
+                            $PSCmdlet.ShouldProcess($OutFilepath,'Overwrite existing file')
+                        }
+                    }
                     $Attachment | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath
-                    Invoke-RestMethod -URI $Attachment.download_link -Credential $Script:SNOWAuth.Credential -OutFile $OutFilepath
+                    Invoke-RestMethod -URI $Attachment.download_link @AuthSplat -OutFile $OutFilepath
                     $Attachment
                 }else{
-                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link -Credential $Script:SNOWAuth.Credential)
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link @AuthSplat)
                     $Attachment
                 }   
             }

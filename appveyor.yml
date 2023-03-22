@@ -1,3 +1,5 @@
+os: WMF 5
+
 skip_commits:
   files:
     - README.md
@@ -16,22 +18,30 @@ test_script:
         $ErrorActionPreference = 'Stop'
 
         Write-Host 'Adding PsScriptAnalyzer test'
-        Add-AppveyorTest -Name 'PsScriptAnalyzer' -Outcome Running
+        Add-AppveyorTest -Name 'PsScriptAnalyzer' -Filename 'PsScriptAnalyzer' -Outcome Running
         Write-Host 'Performing PSScriptAnalyzer tests'
-
+        $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
         $Results = Invoke-ScriptAnalyzer -Path ".\src" -Recurse -Profile @{Severity = @('Error', 'Warning')}
+        $stopwatch.Stop()
+        
+        $AppveyorTestSplat = @{
+          Name = 'PsScriptAnalyzer'
+          Filename = 'PsScriptAnalyzer'
+          Duration = [int]$stopwatch.elapsed.TotalMilliseconds
+        }
+
 
         if ($Results) {
           Write-Host 'PSScriptAnalyzer returned errors/warnings that need to be addressed.'
           $ResultString = $Results | Out-String
           Write-Warning $ResultString
           Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error/Warning' severity. Check the 'Tests' tab of this build for more details." -Category Error
-          Update-AppveyorTest -Name 'PsScriptAnalyzer' -Outcome Failed -ErrorMessage $ResultString
+          Update-AppveyorTest @AppveyorTestSplat -Outcome Failed -ErrorMessage $ResultString
           
           throw 'Build failed'
         } else {
           Write-Host 'PSScriptAnalyzer returned nothing that needs to be addressed.'
-          Update-AppveyorTest -Name 'PsScriptAnalyzer' -Outcome Passed
+          Update-AppveyorTest @AppveyorTestSplat -Outcome Passed
         }
 
         Write-Host 'Performing Pester tests'

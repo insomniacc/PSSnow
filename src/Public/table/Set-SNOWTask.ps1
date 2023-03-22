@@ -16,7 +16,7 @@ function Set-SNOWTask {
         Set-SNOWTask -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table task
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

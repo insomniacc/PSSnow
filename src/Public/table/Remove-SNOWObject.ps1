@@ -15,7 +15,7 @@ function Remove-SNOWObject {
         Get-SNOWUser -user_name 'bruce.wayne9' -limit 1 | Remove-SNOWObject -table 'sys_user'
         Removes the specified user with the matching sys_id from the sys_user table, after prompt confirmation
     #> 
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
     param (      
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]

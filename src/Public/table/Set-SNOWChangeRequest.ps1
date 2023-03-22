@@ -16,7 +16,7 @@ function Set-SNOWChangeRequest {
         Set-SNOWChangeRequest -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table change_request
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

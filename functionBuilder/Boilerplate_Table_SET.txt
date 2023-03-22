@@ -16,7 +16,7 @@ function {{functionname}} {
         {{functionname}} -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table {{tablename}}
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "")]
     [CmdletBinding(SupportsShouldProcess)]
     param ({{params}})
     DynamicParam { Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" }

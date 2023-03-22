@@ -16,7 +16,7 @@ function New-SNOWSCTask {
         New-SNOWSCTask -Properties @{"<key>"="<value>"} -PassThru
         Creates a single record in sc_task and returns the new record with SysID
     #>   
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

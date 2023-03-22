@@ -16,7 +16,7 @@ function {{functionname}} {
         {{functionname}} -Sys_ID "<sys_id>"
         Removes a specific record in the table {{tablename}}
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "")]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='High')]
     param ()
     DynamicParam { Import-DefaultParamSet -TemplateFunction "Remove-SNOWObject" }

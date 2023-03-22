@@ -16,7 +16,7 @@ function Set-SNOWApprover {
         Set-SNOWApprover -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table sysapproval_approver
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

@@ -16,7 +16,7 @@ function Set-SNOWSCRequestedItem {
         Set-SNOWSCRequestedItem -Sys_ID "<sys_id>" -Properties @{"<key>"="<value>"} -verbose
         Updates a specific record in the table sc_req_item
     #>  
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

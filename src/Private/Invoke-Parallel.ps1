@@ -27,6 +27,8 @@ SOFTWARE.
 #>
 
 function Invoke-Parallel {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
     <#
     .SYNOPSIS
         Function to control parallel processing using runspaces

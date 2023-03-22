@@ -22,7 +22,7 @@ function New-SNOWUser {
         New-SNOWUser @Properties -PassThru
         Creates a new user called bruce wayne in the sys_user table
     #> 
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

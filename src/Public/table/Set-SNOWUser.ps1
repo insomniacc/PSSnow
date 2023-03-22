@@ -17,7 +17,9 @@ function Set-SNOWUser {
         Set-SNOWUser -middle_name "Thomas" -sys_id 02826bf03710200044e0bfc8bcbe5d3f
         Updates the middle_name of the user record bruce.wayne in the sys_user table
     #> 
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', '')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingUsernameAndPasswordParams', '')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

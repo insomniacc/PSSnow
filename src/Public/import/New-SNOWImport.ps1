@@ -31,8 +31,6 @@ function New-SNOWImport {
         [ValidateCount(1, [int]::MaxValue)]
         [hashtable]
         $Properties,
-        [Parameter()]
-        [switch]$PassThru,
         [Parameter(DontShow)]
         [switch]$AsBatchRequest
     )

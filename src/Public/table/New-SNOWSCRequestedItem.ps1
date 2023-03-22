@@ -16,7 +16,7 @@ function New-SNOWSCRequestedItem {
         New-SNOWSCRequestedItem -Properties @{"<key>"="<value>"} -PassThru
         Creates a single record in sc_req_item and returns the new record with SysID
     #>   
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter()]

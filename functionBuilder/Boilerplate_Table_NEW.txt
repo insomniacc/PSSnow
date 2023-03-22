@@ -16,7 +16,7 @@ function {{functionname}} {
         {{functionname}} -Properties @{"<key>"="<value>"} -PassThru
         Creates a single record in {{tablename}} and returns the new record with SysID
     #>   
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "")]
     [CmdletBinding(SupportsShouldProcess)]
     param ({{params}})
     DynamicParam { Import-DefaultParamSet -TemplateFunction "New-SNOWObject" }

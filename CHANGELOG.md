@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ServiceCatalog API: Invoke-SNOWSCCart
 - ServiceCatalog API: Get-SNOWSCCart
 
+### Fixed
+- Issue with Set-SNOWUserPhoto posting to a static record
+- Get-SNOWAttachment Oauth issue for -passthru requests
+
 ## [0.0.3] - 2023-03-21
 ### Fixed
 - Oauth token auto refresh issue

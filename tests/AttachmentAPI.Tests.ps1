@@ -10,33 +10,55 @@ InModuleScope $ProjectName {
         $SSPassword = $Password | ConvertTo-SecureString -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SSPassword)
         Set-SNOWAuth -instance $Instance -credential $Credential
+
+
+
+        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+            $URI -like '*/v1/attachment/*' -and
+            $Method -eq "DELETE"
+        } -MockWith {}
+
+        #Get mock data
+        $NewAttachment = Import-Clixml "$PSScriptRoot\MockedResponses\New-SNOWAttachment.xml"
+
+        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+            $URI -like '*/attachment/file*' -and
+            $URI -notlike "*/file" -and 
+            $Method -eq "POST"
+        } -MockWith {$NewAttachment}
+
+        #Generic get attachment call
+        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+            $URI -like '*/attachment*' -and
+            $URI -notlike "*/file" -and 
+            $Method -eq "GET"
+        } -MockWith {$AttachmentRestMethod}
+
+        #paged get attachment call
+        Mock -CommandName Invoke-WebRequest -ParameterFilter { 
+            $URI -like '*/attachment*' -and
+            $Method -eq "GET"
+        } -MockWith {$AttachmentWebRequest}
+
+        #Download attachment to file
+        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+            $URI -like '*/attachment*' -and
+            $URI -like "*/file" -and
+            $null -ne $OutFile -and
+            $Method -eq "GET"
+        } -MockWith {}
+
+        #Return attachment Content
+        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+            $URI -like '*/attachment*' -and
+            $URI -like "*/file" -and
+            $Method -eq "GET"
+        } -MockWith {"Dummy File Content"}
     }
 
     Describe "Get-SNOWAttachment" {
         BeforeAll {
-            #Generic get attachment call
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { 
-                $URI -like '*/attachment*' -and
-                $URI -notlike "*/file"
-            } -MockWith {$AttachmentRestMethod}
 
-            #paged get attachment call
-            Mock -CommandName Invoke-WebRequest -ParameterFilter { 
-                $URI -like '*/attachment*'
-            } -MockWith {$AttachmentWebRequest}
-
-            #Download attachment to file
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { 
-                $URI -like '*/attachment*' -and
-                $URI -like "*/file" -and
-                $null -ne $OutFile
-            } -MockWith {}
-
-            #Return attachment Content
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { 
-                $URI -like '*/attachment*' -and
-                $URI -like "*/file"
-            } -MockWith {"Dummy File Content"}
         }
 
         BeforeEach {
@@ -149,15 +171,6 @@ InModuleScope $ProjectName {
 
     Describe "New-SNOWAttachment" {
         BeforeAll {
-            #Get mock data
-            $NewAttachment = Import-Clixml "$PSScriptRoot\MockedResponses\New-SNOWAttachment.xml"
-
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { 
-                $Method -eq "POST" -and
-                $URI -like '*/attachment/file*' -and
-                $URI -notlike "*/file"
-            } -MockWith {$NewAttachment}
-
             $TestFile = "TestDrive:\HotPotato.txt"
             Set-Content $TestFile -value "BakedPotato"
         }
@@ -239,7 +252,99 @@ InModuleScope $ProjectName {
             Should -Invoke Invoke-RestMethod -Exactly 0
         }
     }
-    Describe "Set-SNOWAttachment" {}
-    Describe "Remove-SNOWAttachment" {}
-    Describe "Set-SNOWUserPhoto" {}
+
+    Describe "Remove-SNOWAttachment" {
+        It "Should delete an attachment" {
+            $Output = Remove-SNOWAttachment -Sys_ID "231018bfc0664604b5b2573578e537f6" -Confirm:$false
+
+            $Output | Should -BeNullOrEmpty
+            Should -Invoke Invoke-RestMethod -Exactly 1 -ParameterFilter {
+                $URI -like "*v1/attachment/231018bfc0664604b5b2573578e537f6" -and
+                $Method -eq "DELETE"
+            }
+        }
+    }
+
+    Describe "Set-SNOWUserPhoto" {
+        BeforeAll {
+            $TestFile = "TestDrive:\UglyMug.csv"
+            Set-Content $TestFile -value "UglyMug.csv"
+            $TestPicture = "TestDrive:\UglyMug.jpg"
+            Set-Content $TestPicture -value "UglyMug.jpg"
+
+            Mock Get-SNOWAttachment -MockWith {[PSCustomObject]@{sys_id=$SNOWGUID}}
+        }
+        BeforeEach {
+            $SNOWGUID = (new-guid) -replace "-"
+        }
+
+        It "Should reject the wrong filetype" {
+            $PhotoSplat = @{
+                Filepath = "$TestDrive\UglyMug.csv"
+                Sys_ID = $SNOWGUID
+            }
+            $ShouldSplat = @{
+                Throw           = $true
+                ExpectedMessage = "Cannot validate argument on parameter 'Filepath'. Incorrect filetype, must be one of the following: .jpg,.png,.bmp,.gif,.jpeg,.ico,.svg"
+                ExceptionType   = ([System.Management.Automation.ParameterBindingException])
+            }
+            {Set-SNOWUserPhoto @PhotoSplat} | Should @ShouldSplat
+        }
+
+        It "Should set a new user photo" {
+            $PhotoSplat = @{
+                Filepath = "$TestDrive\UglyMug.jpg"
+                Sys_ID = $SNOWGUID
+            }
+            Set-SNOWUserPhoto @PhotoSplat
+
+            Should -Invoke Get-SNOWAttachment -Exactly 1
+
+            Should -Invoke Invoke-RestMethod -ParameterFilter {
+                $Method -eq "DELETE"
+            } -Exactly 1
+
+            Should -Invoke Invoke-RestMethod -ParameterFilter {
+                $Method -eq "POST"
+            } -Exactly 1
+        }
+
+        It "Should set a new user photo and return output [-PassThru]" {
+            $PhotoSplat = @{
+                Filepath = "$TestDrive\UglyMug.jpg"
+                Sys_ID = $SNOWGUID
+                PassThru = $true
+            }
+            $output = Set-SNOWUserPhoto @PhotoSplat
+
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -BeOfType PSCustomObject
+
+            Should -Invoke Get-SNOWAttachment -Exactly 1
+
+            Should -Invoke Invoke-RestMethod -ParameterFilter {
+                $Method -eq "DELETE"
+            } -Exactly 1
+
+            Should -Invoke Invoke-RestMethod -ParameterFilter {
+                $Method -eq "POST"
+            } -Exactly 1
+        }
+
+        It "Should return a batch request" {
+            $PhotoSplat = @{
+                Filepath = "$TestDrive\UglyMug.jpg"
+                Sys_ID = $SNOWGUID
+                AsBatchRequest = $true
+            }
+            $output = Set-SNOWUserPhoto @PhotoSplat
+
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -BeOfType Hashtable
+
+            Should -Invoke Get-SNOWAttachment -Exactly 0
+            Should -Invoke Invoke-RestMethod -Exactly 0
+        }
+
+    }
 }

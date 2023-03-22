@@ -97,6 +97,7 @@ function Get-SNOWAttachment {
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment"      
         $EnablePagination = $True
         $AuthSplat = @{Headers = Get-AuthHeader}
+        $AuthSplat.Add('Method','GET')
 
         #Removes GUI and increases performance
         $ProgressPreference = "SilentlyContinue"      

@@ -96,7 +96,8 @@ function Invoke-SNOWBatch {
             }
 
             # Get a list of all the supported batch commands in the module
-            $ModuleCommands = Get-Command -Module "PSSnow"
+            $ModuleName = (Get-Command "Invoke-SNOWBatch").Source
+            $ModuleCommands = Get-Command -Module $ModuleName
             $SupportedBatchCommands = ($ModuleCommands | Where-Object {$_.Parameters.ContainsKey('AsBatchRequest')}).Name
 
             # Get all PSSnow module commands within the scriptblock

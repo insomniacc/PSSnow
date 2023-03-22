@@ -2,7 +2,7 @@ skip_commits:
   files:
     - README.md
     - CHANGELOG.md
-  message: /updated readme.*|update readme.*s|update docs.*|update version.*|update appveyor.*/
+  message: /updated readme.*|update readme.*s|updated docs.*|updated documentation.*|updated version.*|updated appveyor.*/
 
 install:
   - cinst pester

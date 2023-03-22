@@ -146,21 +146,97 @@ InModuleScope $ProjectName {
             }
         }
     }
-    Describe "New-SNOWAttachment" {
-        BeforeEach {
-            #Get mock data
-            $AttachmentWebRequest = Import-Clixml "$PSScriptRoot\MockedResponses\Get-SNOWAttachment_WebRequest.xml"
-            $AttachmentRestMethod = Import-Clixml "$PSScriptRoot\MockedResponses\Get-SNOWAttachment_RestMethod.xml"
 
-            #Generic get attachment call
+    Describe "New-SNOWAttachment" {
+        BeforeAll {
+            #Get mock data
+            $NewAttachment = Import-Clixml "$PSScriptRoot\MockedResponses\New-SNOWAttachment.xml"
+
             Mock -CommandName Invoke-RestMethod -ParameterFilter { 
-                $URI -like '*/attachment*' -and
+                $Method -eq "POST" -and
+                $URI -like '*/attachment/file*' -and
                 $URI -notlike "*/file"
-            } -MockWith {$AttachmentRestMethod}
+            } -MockWith {$NewAttachment}
+
+            $TestFile = "TestDrive:\HotPotato.txt"
+            Set-Content $TestFile -value "BakedPotato"
         }
 
-        It "Should create a new attachment" {
+        It "Should throw when file is not found" {
+            $AttachmentSplat = @{
+                Sys_ID = "a52eb6cf47e52110d3e5fa8bd36d432a"
+                Sys_Class_Name = "sys_user"
+                File = "$TestDrive\NoPotato.txt"
+            }
+            $ShouldSplat = @{
+                Throw           = $true
+                ExpectedMessage = "Cannot validate argument on parameter 'File'. Unable to find file."
+                ExceptionType   = ([System.Management.Automation.ParameterBindingException])
+            }
 
+            {New-SNOWAttachment @AttachmentSplat} | Should @ShouldSplat
+        }
+
+        It "Should create an attachment" {
+            $AttachmentSplat = @{
+                Sys_ID = "a52eb6cf47e52110d3e5fa8bd36d432a"
+                Sys_Class_Name = "sys_user"
+                File = "$TestDrive\HotPotato.txt"
+            }
+            $Output = New-SNOWAttachment @AttachmentSplat
+
+            $Output | Should -BeNullOrEmpty
+            Should -Invoke Invoke-RestMethod -Exactly 1 -ParameterFilter {
+                $Method -eq "POST"
+                $URI -like "*v1/attachment/file?file_name=HotPotato.txt&table_name=sys_user&table_sys_id=a52eb6cf47e52110d3e5fa8bd36d432a"
+            }
+        }
+
+        It "Should create an attachment with an alternative filename" {
+            $AttachmentSplat = @{
+                Sys_ID = "a52eb6cf47e52110d3e5fa8bd36d432a"
+                Sys_Class_Name = "sys_user"
+                File = "$TestDrive\HotPotato.txt"
+                AttachedFilename = "ColdPotato.docx"
+            }
+            $Output = New-SNOWAttachment @AttachmentSplat
+
+            $Output | Should -BeNullOrEmpty
+            Should -Invoke Invoke-RestMethod -Exactly 1 -ParameterFilter {
+                $Method -eq "POST"
+                $URI -like "*v1/attachment/file?file_name=ColdPotato.docx&table_name=sys_user&table_sys_id=a52eb6cf47e52110d3e5fa8bd36d432a"
+            }
+        }
+
+        It "Should create an attachment and return output [-PassThru]" {
+            $AttachmentSplat = @{
+                Sys_ID = "a52eb6cf47e52110d3e5fa8bd36d432a"
+                Sys_Class_Name = "sys_user"
+                File = "$TestDrive\HotPotato.txt"
+                PassThru = $true
+            }
+            $Output = New-SNOWAttachment @AttachmentSplat
+            
+            $Output | Should -Not -BeNullOrEmpty
+            $Output | Should -BeOfType PsCustomObject
+            Should -Invoke Invoke-RestMethod -Exactly 1 -ParameterFilter {
+                $Method -eq "POST"
+                $URI -like "*v1/attachment/file?file_name=HotPotato.txt&table_name=sys_user&table_sys_id=a52eb6cf47e52110d3e5fa8bd36d432a"
+            }
+        }
+
+        It "Should return a batch request" {
+            $AttachmentSplat = @{
+                Sys_ID = "a52eb6cf47e52110d3e5fa8bd36d432a"
+                Sys_Class_Name = "sys_user"
+                File = "$TestDrive\HotPotato.txt"
+                AsBatchRequest = $true
+            }
+            $Output = New-SNOWAttachment @AttachmentSplat
+
+            $Output | Should -Not -BeNullOrEmpty
+            $Output | Should -BeOfType Hashtable
+            Should -Invoke Invoke-RestMethod -Exactly 0
         }
     }
     Describe "Set-SNOWAttachment" {}

@@ -2,7 +2,6 @@
 [![Build](https://ci.appveyor.com/api/projects/status/60udsra4fombbq7g/branch/main?svg=true)](https://ci.appveyor.com/project/insomniacc/pssnow/branch/main)
 [![PSSnow](https://img.shields.io/powershellgallery/v/PSSnow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSSnow/)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSSnow?style=plastic)
-[![Documentation](https://img.shields.io/badge/Documentation-PSSnow-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/docs/GettingStarted.MD)
 [![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/LICENSE) 
 <img src="https://img.shields.io/badge/Supports PS-5.0-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>

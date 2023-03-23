@@ -1,13 +1,11 @@
 function Get-SNOWUser {
     <#
     .SYNOPSIS
-        Retrieves a servicenow user record
+        Retrieves a sys_user record from SNOW
     .DESCRIPTION
         Gets a record from the sys_user table
     .NOTES
         Uses Get-SNOWObject as a template function.
-    .INPUTS
-        String. Any servicenow object with a sys_id property.
     .OUTPUTS
         PSCustomObject. The full table record/s.
     .LINK
@@ -16,54 +14,143 @@ function Get-SNOWUser {
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
         Get-SNOWUser -limit 1 -verbose
-        Returns a single user from the sys_user table
-    .EXAMPLE
-        Get-SNOWUser -user_name 'bruce.wayne' -active $true
-        Returns any active user records with the username bruce.wayne
-    .EXAMPLE
-        Get-SNOWUser -query 'first_name=bruce^last_name=wayne^active=true'
-        Returns any active user records with the name bruce wayne
+        Returns a single record from sys_user
     #>   
 
     [CmdletBinding()]
     param (
         [Parameter()]
-        [string]
-        $name,
-        [Parameter()]
-        [alias('FirstName')]
-        [string]
-        $first_name,
-        [Parameter()]
-        [alias('LastName')]
-        [string]
-        $last_name,
-        [Parameter()]
-        [alias('Username')]
-        [string]
-        $user_name,
-        [Parameter()]
-        [alias('EmployeeNumber')]
-        [string]
-        $employee_number,
-        [Parameter()]
-        [string]
-        $email,
-        [Parameter()]
         [boolean]
         $active,
+        [Parameter()]
+        [string]
+        $building,
+        [Parameter()]
+        [string]
+        $city,
         [Parameter()]
         [string]
         $company,
         [Parameter()]
         [string]
+        $cost_center,
+        [Parameter()]
+        [alias('country_code')]
+        [string]
+        $country,
+        [Parameter()]
+        [string]
         $department,
+        [Parameter()]
+        [string]
+        $email,
+        [Parameter()]
+        [string]
+        $employee_number,
+        [Parameter()]
+        [alias('enable_multifactor_authentication')]
+        [boolean]
+        $enable_multifactor_authn,
+        [Parameter()]
+        [alias('failed_login_attempts')]
+        [string]
+        $failed_attempts,
+        [Parameter()]
+        [string]
+        $first_name,
+        [Parameter()]
+        [string]
+        $gender,
+        [Parameter()]
+        [string]
+        $home_phone,
+        [Parameter()]
+        [boolean]
+        $internal_integration_user,
+        [Parameter()]
+        [alias('prefix')]
+        [string]
+        $introduction,
+        [Parameter()]
+        [string]
+        $last_name,
+        [Parameter()]
+        [string]
+        $ldap_server,
+        [Parameter()]
+        [string]
+        $location,
+        [Parameter()]
+        [boolean]
+        $locked_out,
         [Parameter()]
         [string]
         $manager,
         [Parameter()]
+        [string]
+        $middle_name,
+        [Parameter()]
+        [string]
+        $mobile_phone,
+        [Parameter()]
+        [string]
+        $name,
+        [Parameter()]
+        [string]
+        $notification,
+        [Parameter()]
         [boolean]
-        $locked_out
+        $password_needs_reset,
+        [Parameter()]
+        [alias('business_phone')]
+        [string]
+        $phone,
+        [Parameter()]
+        [string]
+        $photo,
+        [Parameter()]
+        [alias('language')]
+        [string]
+        $preferred_language,
+        [Parameter()]
+        [string]
+        $roles,
+        [Parameter()]
+        [string]
+        $schedule,
+        [Parameter()]
+        [string]
+        $source,
+        [Parameter()]
+        [alias('state___province')]
+        [string]
+        $state,
+        [Parameter()]
+        [string]
+        $street,
+        [Parameter()]
+        [string]
+        $time_format,
+        [Parameter()]
+        [string]
+        $time_zone,
+        [Parameter()]
+        [string]
+        $title,
+        [Parameter()]
+        [alias('user_id')]
+        [string]
+        $user_name,
+        [Parameter()]
+        [boolean]
+        $vip,
+        [Parameter()]
+        [boolean]
+        $web_service_access_only,
+        [Parameter()]
+        [alias('zip___postal_code')]
+        [string]
+        $zip
     )
     DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
 

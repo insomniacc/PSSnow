@@ -1,93 +1,133 @@
 function New-SNOWUser {
     <#
     .SYNOPSIS
-        Creates a new servicenow user record
+        Creates a sys_user record in SNOW
     .DESCRIPTION
         Creates a record in the sys_user table
+    .NOTES
+        Uses New-SNOWObject as a template function.
     .OUTPUTS
-        PSCustomObject. The full table record (requires -PassThru).
+        PSCustomObject. The full table record/s (-PassThru only).
     .LINK
         https://github.com/insomniacc/PSSnow/blob/main/docs/functions/New-SNOWUser.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
     .EXAMPLE
-        $Properties = @{
-            user_name = "bruce.wayne"
-            title = "Director"
-            first_name = "Bruce"
-            last_name = "Wayne"
-            department = "Finance"
-            email = "Bruce@WayneIndustries.com"
-        }
-        New-SNOWUser @Properties -PassThru
-        Creates a new user called bruce wayne in the sys_user table
-    #> 
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
+        New-SNOWUser -Properties @{"<key>"="<value>"} -PassThru
+        Creates a single record in sys_user and returns the new record with SysID
+    #>   
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', '')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingUsernameAndPasswordParams', '')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "")]
     [CmdletBinding(SupportsShouldProcess)]
     param (
-        [Parameter()]
-        [alias('FirstName')]
-        [string]
-        $first_name,
-        [Parameter()]
-        [alias('MiddleName')]
-        [string]
-        $middle_name,
-        [Parameter()]
-        [alias('LastName')]
-        [string]
-        $last_name,
-        [Parameter()]
-        [alias('Username')]
-        [string]
-        $user_name,
-        [Parameter()]
-        [alias('EmployeeNumber')]
-        [string]
-        $employee_number,
-        [Parameter()]
-        [string]
-        $email,
         [Parameter()]
         [boolean]
         $active,
         [Parameter()]
-        [Boolean]
-        $locked_out,
-        [Parameter()]
         [string]
-        $Company,
-        [Parameter()]
-        [string]
-        $Department,
-        [Parameter()]
-        [string]
-        $Manager,
-        [Parameter()]
-        [Boolean]
-        $enable_multifactor_authn,
-        [Parameter()]
-        [Boolean]
-        $web_service_access_only,
-        [Parameter()]
-        [alias('business_phone')]
-        [string]
-        $phone,
-        [Parameter()]
-        [string]
-        $mobile_phone,
-        [Parameter()]
-        [boolean]
-        $password_needs_reset,
+        $building,
         [Parameter()]
         [string]
         $city,
         [Parameter()]
         [string]
-        $title,
+        $company,
+        [Parameter()]
+        [string]
+        $cost_center,
+        [Parameter()]
+        [alias('country_code')]
+        [string]
+        $country,
+        [Parameter()]
+        [string]
+        $department,
+        [Parameter()]
+        [string]
+        $email,
+        [Parameter()]
+        [string]
+        $employee_number,
+        [Parameter()]
+        [string]
+        $first_name,
+        [Parameter()]
+        [string]
+        $gender,
+        [Parameter()]
+        [string]
+        $home_phone,
+        [Parameter()]
+        [alias('prefix')]
+        [string]
+        $introduction,
+        [Parameter()]
+        [string]
+        $last_name,
+        [Parameter()]
+        [string]
+        $location,
+        [Parameter()]
+        [string]
+        $manager,
+        [Parameter()]
+        [string]
+        $middle_name,
+        [Parameter()]
+        [string]
+        $mobile_phone,
+        [Parameter()]
+        [string]
+        $name,
+        [Parameter()]
+        [string]
+        $notification,
+        [Parameter()]
+        [boolean]
+        $password_needs_reset,
+        [Parameter()]
+        [alias('business_phone')]
+        [string]
+        $phone,
+        [Parameter()]
+        [alias('language')]
+        [string]
+        $preferred_language,
+        [Parameter()]
+        [alias('province')]
+        [string]
+        $state,
         [Parameter()]
         [string]
         $street,
+        [Parameter()]
+        [string]
+        $time_format,
+        [Parameter()]
+        [string]
+        $time_zone,
+        [Parameter()]
+        [string]
+        $title,
+        [Parameter()]
+        [alias('user_id')]
+        [string]
+        $user_name,
+        [Parameter()]
+        [alias('password')]
+        [string]
+        $user_password,
+        [Parameter()]
+        [boolean]
+        $vip,
+        [Parameter()]
+        [boolean]
+        $web_service_access_only,
+        [Parameter()]
+        [alias('zip___postal_code')]
+        [string]
+        $zip,
         [Parameter()]
         [ValidateScript({
             if($_ | Test-Path){
@@ -106,20 +146,14 @@ function New-SNOWUser {
             }
         })]
         [System.IO.FileInfo]
-        $photo,
-        [Parameter()]
-        [string]
-        $time_zone,
-        [Parameter()]
-        [alias('Language')]
-        [string]
-        $preferred_language
+        $photo
     )
     DynamicParam { Import-DefaultParamSet -TemplateFunction "New-SNOWObject" }
 
-    Begin {   
+    Begin {
         $table = "sys_user"
-
+    }
+    Process {
         if($photo){
             <#
                 Adding photos to a user record is done in a second API call to a different endpoint (attachment API),
@@ -131,8 +165,13 @@ function New-SNOWUser {
             #? Photo requires a separate rest call, so we'll remove it from the bound parameters
             [void]$PSBoundParameters.Remove('photo')
         }
-    }
-    Process {          
+
+        if($PSBoundParameters.ContainsKey('user_password') -and -not $PSBoundParameters.ContainsKey('InputDisplayValue')){
+            # This is required for setting encrypted fields
+            $PSBoundParameters.add('InputDisplayValue',$True)
+        }
+
+
         $Response = Invoke-SNOWTableCREATE -table $table -Parameters $PSBoundParameters -Passthru
 
         if($Response.sys_id -and $photo){

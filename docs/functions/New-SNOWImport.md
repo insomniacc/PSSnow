@@ -13,7 +13,7 @@ Sends a new record to the import API
 ## SYNTAX
 
 ```
-New-SNOWImport [-Table] <String> [-Properties] <Hashtable> [-PassThru] [-AsBatchRequest] [-WhatIf] [-Confirm]
+New-SNOWImport [-Table] <String> [-Properties] <Hashtable> [-AsBatchRequest] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -66,21 +66,6 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -PassThru
-{{ Fill PassThru Description }}
-
-```yaml
-Type: System.Management.Automation.SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

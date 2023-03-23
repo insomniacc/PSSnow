@@ -15,20 +15,21 @@ Gets attachments from servicenow.
 ### Attachment
 ```
 Get-SNOWAttachment -Sys_ID <String> [-PassThru] [-OutputDestination <String>] [-OutputFilename <String>]
- [-Force] [-DisregardSourceTable] [<CommonParameters>]
+ [-Force] [-DisregardSourceTable] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### SNOWObject
 ```
 Get-SNOWAttachment -SNOWObject <PSObject> [-Offset <Int32>] [-Limit <Int32>] [-PassThru]
  [-OutputDestination <String>] [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>]
- [-DisregardSourceTable] [<CommonParameters>]
+ [-DisregardSourceTable] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Query
 ```
 Get-SNOWAttachment -Query <String> [-Offset <Int32>] [-Limit <Int32>] [-PassThru] [-OutputDestination <String>]
- [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>] [-DisregardSourceTable] [<CommonParameters>]
+ [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>] [-DisregardSourceTable] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -235,6 +236,37 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -8,18 +8,21 @@ schema: 2.0.0
 # New-SNOWUser
 
 ## SYNOPSIS
-Creates a new servicenow user record
+Creates a sys_user record in SNOW
 
 ## SYNTAX
 
 ```
-New-SNOWUser [[-first_name] <String>] [[-middle_name] <String>] [[-last_name] <String>] [[-user_name] <String>]
- [[-employee_number] <String>] [[-email] <String>] [[-active] <Boolean>] [[-locked_out] <Boolean>]
- [[-Company] <String>] [[-Department] <String>] [[-Manager] <String>] [[-enable_multifactor_authn] <Boolean>]
- [[-web_service_access_only] <Boolean>] [[-phone] <String>] [[-mobile_phone] <String>]
- [[-password_needs_reset] <Boolean>] [[-city] <String>] [[-title] <String>] [[-street] <String>]
- [[-photo] <FileInfo>] [[-time_zone] <String>] [[-preferred_language] <String>] [-WhatIf] [-Confirm]
- [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
+New-SNOWUser [[-active] <Boolean>] [[-building] <String>] [[-city] <String>] [[-company] <String>]
+ [[-cost_center] <String>] [[-country] <String>] [[-department] <String>] [[-email] <String>]
+ [[-employee_number] <String>] [[-first_name] <String>] [[-gender] <String>] [[-home_phone] <String>]
+ [[-introduction] <String>] [[-last_name] <String>] [[-location] <String>] [[-manager] <String>]
+ [[-middle_name] <String>] [[-mobile_phone] <String>] [[-name] <String>] [[-notification] <String>]
+ [[-password_needs_reset] <Boolean>] [[-phone] <String>] [[-preferred_language] <String>] [[-state] <String>]
+ [[-street] <String>] [[-time_format] <String>] [[-time_zone] <String>] [[-title] <String>]
+ [[-user_name] <String>] [[-user_password] <String>] [[-vip] <Boolean>] [[-web_service_access_only] <Boolean>]
+ [[-zip] <String>] [[-photo] <FileInfo>] [-WhatIf] [-Confirm] [-Properties <Hashtable>] [-InputDisplayValue]
+ [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,42 +32,34 @@ Creates a record in the sys_user table
 
 ### EXAMPLE 1
 ```powershell
-$Properties = @{
-    user_name = "bruce.wayne"
-    title = "Director"
-    first_name = "Bruce"
-    last_name = "Wayne"
-    department = "Finance"
-    email = "Bruce@WayneIndustries.com"
-}
-New-SNOWUser @Properties -PassThru
-Creates a new user called bruce wayne in the sys_user table
+"="<value>"} -PassThru
+Creates a single record in sys_user and returns the new record with SysID
 ```
 
 ## PARAMETERS
 
-### -first_name
-{{ Fill first_name Description }}
+### -active
+{{ Fill active Description }}
 
 ```yaml
-Type: System.String
+Type: System.Boolean
 Parameter Sets: (All)
-Aliases: FirstName
+Aliases:
 
 Required: False
 Position: 1
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -middle_name
-{{ Fill middle_name Description }}
+### -building
+{{ Fill building Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: MiddleName
+Aliases:
 
 Required: False
 Position: 2
@@ -73,13 +68,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -last_name
-{{ Fill last_name Description }}
+### -city
+{{ Fill city Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: LastName
+Aliases:
 
 Required: False
 Position: 3
@@ -88,13 +83,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -user_name
-{{ Fill user_name Description }}
+### -company
+{{ Fill company Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: Username
+Aliases:
 
 Required: False
 Position: 4
@@ -103,16 +98,46 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -employee_number
-{{ Fill employee_number Description }}
+### -cost_center
+{{ Fill cost_center Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: EmployeeNumber
+Aliases:
 
 Required: False
 Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -country
+{{ Fill country Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: country_code
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -department
+{{ Fill department Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -127,44 +152,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -active
-{{ Fill active Description }}
-
-```yaml
-Type: System.Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -locked_out
-{{ Fill locked_out Description }}
-
-```yaml
-Type: System.Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Company
-{{ Fill Company Description }}
+### -employee_number
+{{ Fill employee_number Description }}
 
 ```yaml
 Type: System.String
@@ -178,8 +173,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Department
-{{ Fill Department Description }}
+### -first_name
+{{ Fill first_name Description }}
 
 ```yaml
 Type: System.String
@@ -193,8 +188,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Manager
-{{ Fill Manager Description }}
+### -gender
+{{ Fill gender Description }}
 
 ```yaml
 Type: System.String
@@ -208,46 +203,91 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -enable_multifactor_authn
-{{ Fill enable_multifactor_authn Description }}
+### -home_phone
+{{ Fill home_phone Description }}
 
 ```yaml
-Type: System.Boolean
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 12
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -web_service_access_only
-{{ Fill web_service_access_only Description }}
-
-```yaml
-Type: System.Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 13
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -phone
-{{ Fill phone Description }}
+### -introduction
+{{ Fill introduction Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: business_phone
+Aliases: prefix
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -last_name
+{{ Fill last_name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -location
+{{ Fill location Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -manager
+{{ Fill manager Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -middle_name
+{{ Fill middle_name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -262,7 +302,37 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 18
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -name
+{{ Fill name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -notification
+{{ Fill notification Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -277,37 +347,52 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 21
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -city
-{{ Fill city Description }}
+### -phone
+{{ Fill phone Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases:
+Aliases: business_phone
 
 Required: False
-Position: 17
+Position: 22
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -title
-{{ Fill title Description }}
+### -preferred_language
+{{ Fill preferred_language Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases:
+Aliases: language
 
 Required: False
-Position: 18
+Position: 23
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -state
+{{ Fill state Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: province
+
+Required: False
+Position: 24
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -322,22 +407,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 19
+Position: 25
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -photo
-{{ Fill photo Description }}
+### -time_format
+{{ Fill time_format Description }}
 
 ```yaml
-Type: System.IO.FileInfo
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 26
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -352,22 +437,112 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 27
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -preferred_language
-{{ Fill preferred_language Description }}
+### -title
+{{ Fill title Description }}
 
 ```yaml
 Type: System.String
 Parameter Sets: (All)
-Aliases: Language
+Aliases:
 
 Required: False
-Position: 22
+Position: 28
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -user_name
+{{ Fill user_name Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: user_id
+
+Required: False
+Position: 29
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -user_password
+{{ Fill user_password Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: password
+
+Required: False
+Position: 30
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -vip
+{{ Fill vip Description }}
+
+```yaml
+Type: System.Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 31
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -web_service_access_only
+{{ Fill web_service_access_only Description }}
+
+```yaml
+Type: System.Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 32
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -zip
+{{ Fill zip Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: zip___postal_code
+
+Required: False
+Position: 33
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -photo
+{{ Fill photo Description }}
+
+```yaml
+Type: System.IO.FileInfo
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 34
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -471,8 +646,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-PSCustomObject. The full table record (requires -PassThru).
+PSCustomObject. The full table record/s (-PassThru only).
 ## NOTES
+Uses New-SNOWObject as a template function.
 
 ## RELATED LINKS
 

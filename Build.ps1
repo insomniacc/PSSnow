@@ -1,19 +1,11 @@
 param(
-    [Parameter(ParameterSetName="NoVersionChange")]
-    [Parameter(ParameterSetName="Bump")]
-    [Parameter(ParameterSetName="Specific")]
     [switch]
     $Test,
-    [Parameter(ParameterSetName="NoVersionChange")]
-    [Parameter(ParameterSetName="Bump")]
-    [Parameter(ParameterSetName="Specific")]
     [switch]
     $Documentation,
-    [Parameter(ParameterSetName="Bump")]
     [ValidateSet('Major','Minor','Patch')]
     [string]
     $BumpVersion = "Patch",
-    [Parameter(ParameterSetName="Specific")]
     [version]
     $SpecificVersion
 )

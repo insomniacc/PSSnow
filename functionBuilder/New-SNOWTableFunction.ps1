@@ -1,9 +1,9 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory,ValueFromPipeline)]
+    [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
     [string]
     $TableName,
-    [Parameter(ParameterSetName='FunctionName')]
+    [Parameter(ParameterSetName='FunctionName',ValueFromPipelineByPropertyName)]
     [ValidateScript({
         if($_ -like "*-*"){
             $AllowedVerbs =  @('Get','New','Remove','Set')
@@ -30,7 +30,10 @@ Param(
     $AddToManifest,
     [Parameter()]
     [switch]
-    $ParamLengthValidation
+    $ParamLengthValidation,
+    [Parameter()]
+    [switch]
+    $Force
 )
 
 begin {
@@ -215,22 +218,28 @@ process {
     #? Output new function
     $OutFile = Join-Path -Path $OutputPath -ChildPath "$FunctionName.ps1"
     if(Test-Path $OutFile){
-        Throw "$OutFile already exists"
-    }else{
-        $ForceSplat = @{
-            Force = $true
+        if(-not $Force.IsPresent){
+            Throw "$OutFile already exists"
+        }else{
+            Write-Verbose "Overwriting $OutFile"
         }
     }
-    Set-Content -Path $OutFile -Value $Boilerplate @ForceSplat
+    
+    Set-Content -Path $OutFile -Value $Boilerplate -Force
     Write-Verbose "Output to $OutFile"
 
     if($AddToManifest.IsPresent){
         $ManifestPath = $OutputPath -replace "Public\\table","PSSnow.psd1"
         $ManifestScript = (get-content $ManifestPath | out-string)
         $Manifest = Invoke-Expression -Command $ManifestScript
-        Update-ModuleManifest -Path $ManifestPath -FunctionsToExport ($Manifest.FunctionsToExport + $FunctionName)
+
+        if($Manifest.FunctionsToExport -Contains $FunctionName){
+            Write-Verbose "$FunctionName is already listed in the manifest"
+        }else{
+            Update-ModuleManifest -Path $ManifestPath -FunctionsToExport ($Manifest.FunctionsToExport + $FunctionName)
+            Write-Verbose "Added $FunctionName to PSSnow.psd1"
+        }
     }
-    Write-Verbose "Added $FunctionName to PSSnow.psd1"
 }
 
 End {

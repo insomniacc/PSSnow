@@ -1,8 +1,21 @@
 param(
+    [Parameter(ParameterSetName="NoVersionChange")]
+    [Parameter(ParameterSetName="Bump")]
+    [Parameter(ParameterSetName="Specific")]
     [switch]
     $Test,
+    [Parameter(ParameterSetName="NoVersionChange")]
+    [Parameter(ParameterSetName="Bump")]
+    [Parameter(ParameterSetName="Specific")]
     [switch]
-    $Documentation
+    $Documentation,
+    [Parameter(ParameterSetName="Bump")]
+    [ValidateSet('Major','Minor','Patch')]
+    [string]
+    $BumpVersion = "Patch",
+    [Parameter(ParameterSetName="Specific")]
+    [version]
+    $SpecificVersion
 )
 
 $Scriptpath = $PSScriptRoot
@@ -75,4 +88,28 @@ if($Documentation.IsPresent){
         $StringDoc = $StringDoc -replace "(### EXAMPLE \d)\r\n``````", "`$1`r`n``````powershell" | Set-Content `
             -Path $DocPath -Encoding utf8 -Force
     }
+}
+
+if($PSCmdlet.ParameterSetName -in @('Bump','Specific')){
+    $ManifestPath = "$ModulePath\$ProjectName.psd1"
+    $Manifest = Test-ModuleManifest $ManifestPath -ErrorAction Stop
+    [System.Version]$version = $Manifest.Version
+
+    if($PSCmdlet.ParameterSetName -eq "Bump"){
+        [String]$NewVersion = switch ($BumpVersion){
+            "Major" {
+                New-Object -TypeName System.Version -ArgumentList ($version.Major, 0, 0)
+            }
+            "Minor" {
+                New-Object -TypeName System.Version -ArgumentList ($version.Major, ($version.Minor+1), 0)
+            }
+            "Patch" {
+                New-Object -TypeName System.Version -ArgumentList ($version.Major, $version.Minor, ($version.Build+1))
+            }
+        }
+    }elseif($PSCmdlet.ParameterSetName -eq "Specific"){
+        [String]$NewVersion = $SpecificVersion
+    }
+
+    Update-ModuleManifest -Path $ManifestPath -ModuleVersion $NewVersion
 }

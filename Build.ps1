@@ -5,20 +5,8 @@ Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
 
 
 #? Tests
-Invoke-ScriptAnalyzer -Path $ModulePath -Recurse -Profile @{
-    Severity = @('Error', 'Warning')
-    ExcludeRules = @(
-        'PSShouldProcess'	#Used in top level functions and inherited down into nested functions where it's applied
-        'PSAvoidUsingPlainTextForPassword'	 #Until i work out a better way to handle these it's in use within New-SNOWUser
-        'PSAvoidUsingUsernameAndPasswordParams'	 #In use within New-SNOWUser - params match field names
-        'PSReviewUnusedParameter'	 #Occasionally causes false flags
-        'PSUseDeclaredVarsMoreThanAssignments' #Getting a false flag with this too
-    )
-}
-
-write-verbose "Running Pester Tests"
-
-Invoke-Pester #-Output Detailed
+Invoke-ScriptAnalyzer -Path $ModulePath -Recurse -Profile @{Severity = @('Error', 'Warning')}
+Invoke-Pester
 
 
 #? Docs

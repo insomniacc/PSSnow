@@ -20,8 +20,6 @@ function Invoke-SNOWTableREAD {
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" -AsStringArray -IncludeCommon
         $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
         $QueryParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
-        #todo support oauth
-
         $AuthSplat = @{Headers = Get-AuthHeader}
 
         $Results = [System.Collections.ArrayList]@()

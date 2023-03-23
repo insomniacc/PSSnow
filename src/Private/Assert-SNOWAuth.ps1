@@ -13,7 +13,7 @@ function Assert-SNOWAuth() {
 
     if($script:SNOWAuth.Type -eq "OAuth"){
         $CurrentTime = (get-date).AddSeconds(-$OauthExpiryBuffer)
-        if($script:SNOWAuth.Expires -le $CurrentTime){
+        if($script:SNOWAuth.Expires -ge $CurrentTime){
             #? Get a new token
             $Body = @{
                 grant_type="refresh_token"
@@ -21,7 +21,7 @@ function Assert-SNOWAuth() {
                 client_secret = [System.Net.NetworkCredential]::new('dummy', $script:SNOWAuth.ClientSecret).Password
                 refresh_token = $script:SNOWAuth.token.refresh_token
             }
-            $Token = Invoke-RestMethod -Method POST -uri "https://$($Script:SNOWAuth.Instance).service-now.com/oauth_token.do" -Body $Body
+            $Token = Invoke-RestMethod -Method POST -uri "https://$($Script:SNOWAuth.Instance).service-now.com/oauth_token.do" -Body $Body -Verbose:$false
 
             $script:SNOWAuth.token = $token
             $script:SNOWAuth.Expires = (get-date).AddSeconds($Token.expires_in)

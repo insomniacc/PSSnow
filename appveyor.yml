@@ -1,5 +1,7 @@
 os: WMF 5
 
+skip_non_tags: true
+
 skip_commits:
   files:
     - README.md

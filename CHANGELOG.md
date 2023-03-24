@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2023-03-24
+### Fixed
+- Oauth auto refresh
+
 ## [0.0.4] - 2023-03-22
 ### Added
 - PsScriptAnalyzer rule suppression for known exceptions
@@ -42,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TABLE API support with Get/New/Set/Remove-SNOWObject (these core functions provide the template for all other table functions)
 - TABLE API framework with private functions supporting CRUD operations.
 
-[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v0.0.4..HEAD
+[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v1.0.0..HEAD
+[1.0.0]: https://github.com/insomniacc/PSSnow/compare/v0.0.4..v1.0.0
 [0.0.4]: https://github.com/insomniacc/PSSnow/compare/v0.0.3..v0.0.4
 [0.0.3]: https://github.com/insomniacc/PSSnow/compare/v0.0.2..v0.0.3
 [0.0.2]: https://github.com/insomniacc/PSSnow/releases/tag/v0.0.2

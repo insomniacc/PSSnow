@@ -257,6 +257,9 @@ Invoke-SNOWBatch -Scriptblock {
 Timing the above took only 8 seconds and made only 5 calls to the API.  
 (The default setting is 150 items per batch, however this can be adjusted with `-BatchSize`)
 
+Note:  
+`-parallel` uses a bundled [Invoke-Parallel](https://github.com/RamblingCookieMonster/PowerShell/blob/master/Invoke-Parallel.ps1) all credit on that goes to [RamblingCookieMonster](https://github.com/RamblingCookieMonster)  
+
 # Import API
 Staging tables are often used as a way for importing data and creating transform maps into other tables.  
 As an example, I have a CSV with 10 fictional movies and their key properties.  

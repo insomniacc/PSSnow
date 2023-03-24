@@ -54,6 +54,8 @@ function Invoke-SNOWBatch {
         $SNOWRequests = $UsersToDisable | Set-SNOWUser -active $false -AsBatchRequest
         Invoke-SNOWBatch -Requests $SNOWRequests
         Gets all the active users from a specific department, creates requests (as an array) to disable them all, passes that array into the Invoke-SNOWBatch to make the calls via the Batch API.
+    .NOTES
+        -Parallel uses Invoke-Parallel by RamblingCookieMonster: https://github.com/RamblingCookieMonster/PowerShell/blob/master/Invoke-Parallel.ps1
     #> 
 
     [CmdletBinding(SupportsShouldProcess)]

@@ -12,8 +12,9 @@ function Assert-SNOWAuth() {
     }
 
     if($script:SNOWAuth.Type -eq "OAuth"){
-        $CurrentTime = (get-date).AddSeconds(-$OauthExpiryBuffer)
-        if($script:SNOWAuth.Expires -ge $CurrentTime){
+        $CurrentTime = Get-Date
+        $ExpiryTime = $script:SNOWAuth.Expires.AddSeconds(-$OauthExpiryBuffer)
+        if($ExpiryTime -le $CurrentTime){
             #? Get a new token
             $Body = @{
                 grant_type="refresh_token"

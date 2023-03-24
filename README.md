@@ -4,6 +4,7 @@
 ![powershell gallery](https://img.shields.io/powershellgallery/dt/PSSnow)
 [![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/LICENSE) 
 <img src="https://img.shields.io/badge/supports ps-5.0-blue.svg"></img>
+<img src="https://img.shields.io/badge/supports ps-core-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
 > ⚠️ **Please note this is module is currently an ALPHA release**

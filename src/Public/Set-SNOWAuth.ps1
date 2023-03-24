@@ -12,7 +12,7 @@ function Set-SNOWAuth {
     .LINK
         https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest
     #>
-
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
     [CmdletBinding(DefaultParameterSetName = 'Basic')]
     param (
         [Parameter(Mandatory)]

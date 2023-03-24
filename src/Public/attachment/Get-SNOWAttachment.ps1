@@ -221,11 +221,11 @@ function Get-SNOWAttachment {
                             $PSCmdlet.ShouldProcess($OutFilepath,'Overwrite existing file')
                         }
                     }
-                    $Attachment | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath -Force
                     Invoke-RestMethod -URI $Attachment.download_link @AuthSplat -OutFile $OutFilepath
                     $Attachment
                 }else{
-                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link @AuthSplat)
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link @AuthSplat) -Force
                     $Attachment
                 }   
             }

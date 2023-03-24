@@ -13,7 +13,7 @@ function Set-SNOWAuth {
         https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest
     #>
 
-    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'Basic')]
+    [CmdletBinding(DefaultParameterSetName = 'Basic')]
     param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -47,38 +47,36 @@ function Set-SNOWAuth {
         $instance = $instance.split('.') | Select-Object -first 1
     }
 
-    if($PSCmdlet.ShouldProcess("$instance.service-now.com","Set Auth")){
-        $script:SNOWAuth = @{
-            Instance = $Instance
-        }
-
-        switch ($PsCmdlet.ParameterSetName) {
-            'Basic' {
-                $script:SNOWAuth += @{
-                    type = "basic"
-                    Credential = $Credential
-                }
-            }
-            'OAuth' {
-                #? Get Token
-                $Body = @{
-                    grant_type= "password"
-                    client_id = $ClientID
-                    client_secret = [System.Net.NetworkCredential]::new('dummy', $ClientSecret).Password
-                    username = $Credential.UserName
-                    password = $Credential.GetNetworkCredential().Password
-                }
-                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false
-                
-                $script:SNOWAuth += @{
-                    ClientID = $ClientID
-                    ClientSecret = $ClientSecret
-                    Token = $Token
-                    Expires = (get-date).AddSeconds($Token.expires_in)
-                    Type = "oauth"
-                }
-            }
-        }
-        Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
+    $script:SNOWAuth = @{
+        Instance = $Instance
     }
+
+    switch ($PsCmdlet.ParameterSetName) {
+        'Basic' {
+            $script:SNOWAuth += @{
+                type = "basic"
+                Credential = $Credential
+            }
+        }
+        'OAuth' {
+            #? Get Token
+            $Body = @{
+                grant_type= "password"
+                client_id = $ClientID
+                client_secret = [System.Net.NetworkCredential]::new('dummy', $ClientSecret).Password
+                username = $Credential.UserName
+                password = $Credential.GetNetworkCredential().Password
+            }
+            $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false
+            
+            $script:SNOWAuth += @{
+                ClientID = $ClientID
+                ClientSecret = $ClientSecret
+                Token = $Token
+                Expires = (get-date).AddSeconds($Token.expires_in)
+                Type = "oauth"
+            }
+        }
+    }
+    Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
 }

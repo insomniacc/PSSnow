@@ -122,7 +122,7 @@ PrivateData = @{
         ReleaseNotes = 'https://github.com/insomniacc/PSSnow/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
-        Prerelease = 'Alpha'
+        # Prerelease = ''
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

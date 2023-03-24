@@ -201,6 +201,7 @@ An array of 'requests'. These can be collected from supported commands by either
 ## OUTPUTS
 
 ## NOTES
+-Parallel uses Invoke-Parallel by RamblingCookieMonster: https://github.com/RamblingCookieMonster/PowerShell/blob/master/Invoke-Parallel.ps1
 
 ## RELATED LINKS
 

@@ -13,6 +13,10 @@
 - [All Functions](#all-functions)
   
 # Authentication
+Please see [REST API Security](https://docs.servicenow.com/bundle/tokyo-application-development/page/integrate/inbound-rest/concept/c_RESTAPI.html#d704019e666) for more information on permissions.  
+The relevant ACLs/permissions will be required before being able to use the REST API.  
+Some tables also require individual permissions depending on configuration.  
+  
 ## Basic
 ```powershell
 Set-SNOWAuth -Instance "InstanceName" -Credential (Get-Credential)
@@ -28,6 +32,8 @@ Set-SNOWAuth -Instance "InstanceName" -Credential $SnowCred -ClientId $clientID 
 OAuth authentication works by initially making a request with credentials to get an access token.  
 The access token is then stored in script scope.  Once it expires a refresh token is automatically used to obtain a new access token.
 [More information can be seen here.](https://www.servicenow.com/community/developer-articles/video-how-to-authenticate-to-servicenow-rest-apis-using-oauth/ta-p/2330464)
+
+> ❕ Please note that access token lifetimes should be no less than 5minutes (By default they are 30mins). This is due to a buffer period (for long running calls) being added in to the Assert-SNOWAuth private function.
 
 # Table API
 The Table API is one of the most commonly used, it supports [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on any table within the platform.  

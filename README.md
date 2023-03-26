@@ -53,4 +53,4 @@ Install-Module -Name PSSnow -Repository PSGallery -Force
 - [Changelog](/CHANGELOG.md)
 
 ## Roadmap
-- [v1.0.0](https://github.com/insomniacc/PSSnow/milestone/4)
+- [v1.0.1](https://github.com/insomniacc/PSSnow/milestone/5)

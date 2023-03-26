@@ -1,20 +1,15 @@
 #Contributing
-
-## Summary
-
 ## References & External Documentation
 ### ServiceNow
 [REST API reference](https://docs.servicenow.com/bundle/tokyo-application-development/page/build/applications/concept/api-rest.html)
 ### VSCode
 [Better comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) is used throughout this repo, it is recommended to install this extension.
 
-## Table API
-
-## Function Builder
-
+## Authentication
+All commands initiating either an `Invoke-WebRequest` or `Invoke-RestMethod` against servicenow must have `Assert-SNOWAuth`.
 ## Testing
-Currently pester testing is run manually although I will setup a pipeline for this in due course.  
-All non table API functions must have their own pester tests.
+Please ensure pester tests pass and correct any flagged error/warning rules by script analyzer.  
+All TableAPI functions have pester tests already, but any new functionality out side the normal framework will also need to be tested separately.  
 
 ## Commits & Versioning
 The module is released following [Semantic Versioning](https://semver.org/). E.g Major.Minor.Patch  
@@ -23,6 +18,4 @@ Also please see [ChangeLogManagement](https://github.com/natescherer/ChangelogMa
 
 ## Pull Requests / Merging
 Currently I don't have any formal process in place, until I've ironed out tests, build, ci/cd etc.
-If you do want to contribute before that's all setup, please create a feature request with a link to your fork/branch.
-Once you think it's ready just tag me in the feature and I'll review, test, and merge.
-As things are still changing rapidly and I've still got quite a few todo list items, it may be best waiting until this is at v1.0.0 and I've got all the functionality I set out to implement in the original version.
+If you do want to contribute before that's all setup, I'll be happy to review any requests.

@@ -19,6 +19,11 @@ While relatively simple, this process still takes time, working out the properti
 
 ## How-To
 
+### Video Demo
+[![Function Builder Demo](https://img.youtube.com/vi/-KzV9Ao9Hsc/0.jpg)](https://www.youtube.com/watch?v=-KzV9Ao9Hsc)
+  
+### Steps
+
 1. Clone this repo and navigate to `\PSSnow\functionBuilder`
 2. `Import-Module "..\src\PSSnow.psd1" -Force`
 3. `Set-SNOWAuth` with either credentials or OAuth

@@ -23,14 +23,27 @@ If you do find any bugs, it's still early days, so please help me improve and lo
 I've worked for a few large orgs with vastly different implementations of Service-Now, some more out of the box, others heavily modified. Finding a suitable 'one size fits all' module was quite hard and I ended up building from scratch or improving existing modules in each case. Either way it was very time consuming. Some of the gallery modules out there I found either 1. very lacking in functionality or 2. locked behind a paywall. This repo is hopefully my solution to fill the gap.
 </details>
 
-## API Support
+## Key Features
 
- - Table API
- - Batch API
- - Import API
- - Attachment API
- - Aggregate API
- - ServiceCatalog API
+- Handles OAuth auto token renewal
+- Pagination is handled automatically
+- Provides generic 'template' functions to interact with all tables
+- Provides table specific functions with auto-complete
+- Batching is as easy as wrapping your existing code with a scriptblock
+- Attachments can be passed through without the need to interact with the filesystem
+- Service Catalog requests and incidents can be automated
+- Filters/Queries can be copied directly from ServiceNow and used in table GET commands
+- Dot walking across tables is possible
+- Get the variables for a specified RITM  
+(values for all fields logged in a request form)
+
+Currently supports following APIs:
+ - Table
+ - Batch
+ - Import
+ - Attachment
+ - Aggregate
+ - ServiceCatalog
 
 ## Installation
 ```powershell

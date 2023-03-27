@@ -32,7 +32,7 @@ While relatively simple, this process still takes time, working out the properti
 add `-Force` if you wish to replace an existing function of the same name.   
 6. Repeat the above step using the verbs `Set-` and `New-` if required.  
 Typically `Remove-` is not used as `Remove-SNOWObject` can be used against any returned record.  
-7. Your new functions will generated under the `src\Public\table\` folder and added to the module manifest.
+7. Your new functions will be generated under the `src\Public\table\` folder and added to the module manifest.
 8. Edit the newly generated .ps1 function files, scan through the parameters and validate.  
 Remove any parameters that you feel are unnecessary and save.  
 Add any additional functionality to the begin or process blocks where required.

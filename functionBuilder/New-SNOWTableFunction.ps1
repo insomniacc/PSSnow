@@ -121,6 +121,10 @@ process {
                 'SET' {
                     $IgnoredTypes = @()
 
+                    if($Column.sys_name -eq "number" -and $Column.use_dynamic_default -eq "true"){
+                        Continue column
+                    }
+
                     if([System.Convert]::ToBoolean($Column.read_only)){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"
                         Continue column
@@ -145,6 +149,10 @@ process {
                     #    Write-Verbose "'$($Column.element)' param skipped. Reason: Display=false"
                     #    Continue column
                     #}
+
+                    if($Column.sys_name -eq "number" -and $Column.use_dynamic_default -eq "true"){
+                        Continue column
+                    }
 
                     if([System.Convert]::ToBoolean($Column.read_only)){
                         Write-Verbose "'$($Column.element)' param skipped. Reason: ReadOnly"

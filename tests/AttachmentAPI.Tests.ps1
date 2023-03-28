@@ -9,7 +9,11 @@ InModuleScope $ProjectName {
         $Instance = 'DummyInstance'
         $SSPassword = $Password | ConvertTo-SecureString -AsPlainText -Force
         $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SSPassword)
-        Set-SNOWAuth -instance $Instance -credential $Credential
+        $Script:SNOWAuth = @{
+            Instance = $Instance
+            Credential = $Credential
+            Type = 'basic'
+        }
 
 
 

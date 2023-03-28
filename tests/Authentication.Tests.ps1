@@ -18,6 +18,7 @@ InModuleScope $ProjectName {
             $Command = Get-Command Set-SNOWAuth
 
             Mock -CommandName Invoke-RestMethod -ParameterFilter { $URI -like "*oauth_token*" -and $Method -eq "POST" } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-WebRequest -ParameterFilter { $Uri -eq "https://$Instance.service-now.com/stats.do"}
         }
 
         Context "Set-SNOWAuth" -tag "Unit" {

@@ -18,7 +18,7 @@ InModuleScope $ProjectName {
             $Command = Get-Command Set-SNOWAuth
 
             Mock -CommandName Invoke-RestMethod -ParameterFilter { $URI -like "*oauth_token*" -and $Method -eq "POST" } -MockWith { $RestMethodResponse }
-            Mock -CommandName Invoke-WebRequest -ParameterFilter { $Uri -eq "https://$Instance.service-now.com/stats.do"}
+            Mock -CommandName Invoke-WebRequest -ParameterFilter { $Uri -eq "https://$Instance.service-now.com/stats.do" }
         }
 
         Context "Set-SNOWAuth" -tag "Unit" {
@@ -66,6 +66,11 @@ InModuleScope $ProjectName {
                 $script:SNOWAuth.Expires | Should -BeGreaterThan $OriginalExpiry
                 $script:SNOWAuth.Expires | Should -BeGreaterThan $ForcedExpiry
                 Should -Invoke Invoke-RestMethod -Exactly 2
+            }
+
+            It "Should throw an exception if the instance is hibernating" {
+                Mock -CommandName Invoke-WebRequest -ParameterFilter { $Uri -like "https://$Instance.service-now.com/stats.do"} -MockWith {@{content="Instance Hibernating page"}}
+                { Set-SNOWAuth -Instance $Instance -Credential $Credential } | Should -Throw -ExpectedMessage "This servicenow instance is hibernating. Please wake the instance up and use * again."
             }
         }
     }

@@ -185,9 +185,6 @@ function Set-SNOWIncident {
         [boolean]
         $made_sla,
         [Parameter()]
-        [string]
-        $number,
-        [Parameter()]
         [alias('opened')]
         [string]
         $opened_at,

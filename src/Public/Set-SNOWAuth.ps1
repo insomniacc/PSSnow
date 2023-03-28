@@ -46,7 +46,7 @@ function Set-SNOWAuth {
     if($instance -like "*.service-now.com*"){
         $instance = $instance.split('.') | Select-Object -first 1
     }
-
+    
     $script:SNOWAuth = @{
         Instance = $Instance
     }
@@ -79,4 +79,10 @@ function Set-SNOWAuth {
         }
     }
     Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
+
+    #? Aliveness/Hibernation check for developer instances
+    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop
+    if($response -and $response.content -like "*Instance Hibernating page*"){
+        Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
+    }
 }

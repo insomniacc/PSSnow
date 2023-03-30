@@ -47,6 +47,12 @@ function Set-SNOWAuth {
         $instance = $instance.split('.') | Select-Object -first 1
     }
     
+    #? Aliveness/Hibernation check for developer instances
+    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false
+    if($response -and $response.content -like "*Instance Hibernating page*"){
+        Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
+    }
+
     $script:SNOWAuth = @{
         Instance = $Instance
     }
@@ -67,22 +73,29 @@ function Set-SNOWAuth {
                 username = $Credential.UserName
                 password = $Credential.GetNetworkCredential().Password
             }
-            $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false
-            
-            $script:SNOWAuth += @{
-                ClientID = $ClientID
-                ClientSecret = $ClientSecret
-                Token = $Token
-                Expires = (get-date).AddSeconds($Token.expires_in)
-                Type = "oauth"
+            try{
+                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false -ErrorAction Stop
+            }catch{
+                try {
+                    $ReturnedErrorMessage = ConvertFrom-Json $_.ErrorDetails.Message -ErrorAction Stop
+                    Throw "Unable to obtain OAuth access token. Description: $($ReturnedErrorMessage.error_description)"
+                } catch {
+                    Throw $_.Exception.Message
+                }
+            }
+
+            if($null -ne $Token -and ($Token | get-member).name -contains 'access_token'){
+                $script:SNOWAuth += @{
+                    ClientID = $ClientID
+                    ClientSecret = $ClientSecret
+                    Token = $Token
+                    Expires = (get-date).AddSeconds($Token.expires_in)
+                    Type = "oauth"
+                }
+            }else{
+                Throw "A valid access token was not retrieved"
             }
         }
     }
     Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
-
-    #? Aliveness/Hibernation check for developer instances
-    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false
-    if($response -and $response.content -like "*Instance Hibernating page*"){
-        Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
-    }
 }

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Improved error handling on Set-SNOWAuth
 - Get-SNOWAuth
 
 ## [1.0.1] - 2023-03-28

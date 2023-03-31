@@ -118,6 +118,8 @@ manager       : 02826bf03710200044e0bfc8bcbe5d7f
 email         : billie.cowley@example.com
 ```
 
+> ❕ Please note that dot-walking can is only supported by GET cmdlets. Servicenow does not support this action on SET commands.
+
 ### Pagination
 All get commands will automatically paginate calls so that requests do not time out.  
 By default 1000 records are returned in each request, until there are no more records left to fetch.  

@@ -5,19 +5,23 @@ function Get-SNOWRITMVariableSet {
     .DESCRIPTION
         Returns all the RITM variables and display labels
     .EXAMPLE
-        Get-SNOWRITMVariable -number "RITM0010001"
+        Get-SNOWRITMVariableSet -number "RITM0010001"
         Returns RITM Variables for RITM0010001
     .EXAMPLE
-        Get-SNOWRITMVariable -number "RITM0010001" -IncludeLabels
+        Get-SNOWRITMVariableSet -Sys_id a07e6bd947616110d3e5fa8bd36d4339
+        Returns RITM Variables for the RITM with a sys_id of a07e6bd947616110d3e5fa8bd36d4339
+    .EXAMPLE
+        Get-SNOWRITMVariableSet -number "RITM0010001" -IncludeLabels
         Returns RITM Variables for RITM0010001, adding the display label to the output object
     .EXAMPLE
-        Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
+        Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariableSet
         Returns RITM Variables for RITM0010001
     .LINK
-        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariable.md
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariableSet.md
     #>
 
-    [CmdletBinding(DefaultParameterSetName='number')]
+    [CmdletBinding(DefaultParameterSetName='sys_id')]
+    [alias('Get-SNOWSCRequestedItemVariableSet')]
     [alias('Get-SNOWSCRequestedItemVariable')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName='number')]
@@ -28,29 +32,32 @@ function Get-SNOWRITMVariableSet {
         [alias('sysid')]
         [string]
         $Sys_Id,
-        [Parameter()]
+        [Parameter(ParameterSetName='sys_id')]
+        [Parameter(ParameterSetName='number')]
         [switch]
         $IncludeLabels
     )
     begin {
-        Assert-SNOWAuth
         $table = "sc_item_option_mtom"
     }
     process {
         switch ($PSCmdlet.ParameterSetName) {
             "number" {
-                $operator = "LIKE"
-                $RitmID = $number
+                $RITM = Get-SNOWSCRequestedItem -number $Number -Fields @('sys_id')
+                if($null -eq $RITM){ 
+                    Write-Error "Unable to locate $Number"
+                    return         
+                }
+                $RitmID = $RITM.sys_id
             }
             "sys_id" {
-                $operator = "="
                 $RitmID = $sys_id
             }
         }
         
         $MTOMSplat = @{
             Table  = $table
-            Query  = "request_item$operator$RitmID"
+            Query  = "request_item=$RitmID"
             Fields =    @( 
                             "sc_item_option.item_option_new.name",
                             "sc_item_option.item_option_new",
@@ -62,8 +69,9 @@ function Get-SNOWRITMVariableSet {
         $RITMVariables = Get-SNOWObject @MTOMSplat 
 
         if($RITMVariables){
+            $OutputObject = [PSCustomObject]@{}
+
             if($IncludeLabels.IsPresent){
-                $OutputObject = [PSCustomObject]@{}
                 Foreach($RITMVariable in $RITMVariables){
                     $OutputRow = [PSCustomObject]@{
                         label = $RITMVariable."sc_item_option.item_option_new"
@@ -72,7 +80,6 @@ function Get-SNOWRITMVariableSet {
                     $OutputObject | Add-Member -MemberType NoteProperty -Name $RITMVariable."sc_item_option.item_option_new.name" -Value $OutputRow
                 }
             }else{
-                $OutputObject = [PSCustomObject]@{}
                 Foreach($RITMVariable in $RITMVariables){
                     $OutputObject | Add-Member -MemberType NoteProperty -Name $RITMVariable."sc_item_option.item_option_new.name" -Value $RITMVariable."sc_item_option.value"
                 }

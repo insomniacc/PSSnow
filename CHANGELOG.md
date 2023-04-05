@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved error handling on Set-SNOWAuth
 - Get-SNOWAuth
 
+### Fixed
+- Get-SNOWRITMVariableSet removed RITM lookup by LIKE and replaced with =
+- Get-SNOWRITMVariableSet parameter sets fixed
+
 ## [1.0.1] - 2023-03-28
 ### Added
 - Set-SNOWAuth Aliveness check for developer instances

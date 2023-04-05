@@ -22,7 +22,7 @@ Set-SNOWSCTask [[-calendar_stc] <String>] [[-request_item] <String>] [[-active] 
  [[-correlation_id] <String>] [[-delivery_plan] <String>] [[-delivery_task] <String>] [[-description] <String>]
  [[-due_date] <String>] [[-expected_start] <String>] [[-follow_up] <String>] [[-group_list] <String>]
  [[-impact] <String>] [[-knowledge] <Boolean>] [[-location] <String>] [[-made_sla] <Boolean>]
- [[-number] <String>] [[-opened_at] <String>] [[-opened_by] <String>] [[-order] <String>] [[-parent] <String>]
+ [[-opened_at] <String>] [[-opened_by] <String>] [[-order] <String>] [[-parent] <String>]
  [[-priority] <String>] [[-reassignment_count] <String>] [[-service_offering] <String>]
  [[-short_description] <String>] [[-sla_due] <String>] [[-state] <String>] [[-time_worked] <String>]
  [[-universal_request] <String>] [[-upon_approval] <String>] [[-upon_reject] <String>] [[-urgency] <String>]
@@ -539,21 +539,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -number
-{{ Fill number Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 34
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -opened_at
 {{ Fill opened_at Description }}
 
@@ -563,7 +548,7 @@ Parameter Sets: (All)
 Aliases: opened
 
 Required: False
-Position: 35
+Position: 34
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -578,7 +563,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 35
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -593,7 +578,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 36
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -608,7 +593,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 38
+Position: 37
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -623,7 +608,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 39
+Position: 38
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -638,7 +623,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 40
+Position: 39
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -653,7 +638,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 41
+Position: 40
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -668,7 +653,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 42
+Position: 41
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -683,7 +668,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 43
+Position: 42
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -698,7 +683,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 44
+Position: 43
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -713,7 +698,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 45
+Position: 44
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -728,7 +713,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 46
+Position: 45
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -743,7 +728,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 47
+Position: 46
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -758,7 +743,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 48
+Position: 47
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -773,7 +758,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 49
+Position: 48
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -788,7 +773,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 50
+Position: 49
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -803,7 +788,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 51
+Position: 50
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -818,7 +803,7 @@ Parameter Sets: (All)
 Aliases: actual_end
 
 Required: False
-Position: 52
+Position: 51
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -833,7 +818,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 53
+Position: 52
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -848,7 +833,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 54
+Position: 53
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -863,7 +848,7 @@ Parameter Sets: (All)
 Aliases: actual_start
 
 Required: False
-Position: 55
+Position: 54
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

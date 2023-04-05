@@ -12,14 +12,14 @@ Gets all associated variables for a RITM
 
 ## SYNTAX
 
-### number (Default)
-```
-Get-SNOWRITMVariableSet -Number <String> [-IncludeLabels] [<CommonParameters>]
-```
-
-### sys_id
+### sys_id (Default)
 ```
 Get-SNOWRITMVariableSet -Sys_Id <String> [-IncludeLabels] [<CommonParameters>]
+```
+
+### number
+```
+Get-SNOWRITMVariableSet -Number <String> [-IncludeLabels] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,19 +29,25 @@ Returns all the RITM variables and display labels
 
 ### EXAMPLE 1
 ```powershell
-Get-SNOWRITMVariable -number "RITM0010001"
+Get-SNOWRITMVariableSet -number "RITM0010001"
 Returns RITM Variables for RITM0010001
 ```
 
 ### EXAMPLE 2
 ```powershell
-Get-SNOWRITMVariable -number "RITM0010001" -IncludeLabels
-Returns RITM Variables for RITM0010001, adding the display label to the output object
+Get-SNOWRITMVariableSet -Sys_id a07e6bd947616110d3e5fa8bd36d4339
+Returns RITM Variables for the RITM with a sys_id of a07e6bd947616110d3e5fa8bd36d4339
 ```
 
 ### EXAMPLE 3
 ```powershell
-Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariable
+Get-SNOWRITMVariableSet -number "RITM0010001" -IncludeLabels
+Returns RITM Variables for RITM0010001, adding the display label to the output object
+```
+
+### EXAMPLE 4
+```powershell
+Get-SNOWSCRequestedItem -Number "RITM0010001" | Get-SNOWRITMVariableSet
 Returns RITM Variables for RITM0010001
 ```
 
@@ -103,6 +109,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariable.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariable.md)
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariableSet.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWRITMVariableSet.md)
 
 

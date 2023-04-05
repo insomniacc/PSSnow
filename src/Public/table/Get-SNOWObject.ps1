@@ -39,6 +39,7 @@ function Get-SNOWObject {
         #Can be copied directly from the snow web gui
         $Query,
         [Parameter()]
+        [ValidateCount(1,1000)]
         [array]
         #Which fields should be returned
         $Fields,

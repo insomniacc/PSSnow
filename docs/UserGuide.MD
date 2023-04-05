@@ -202,6 +202,14 @@ OR
 Get-SNOWRITMVariableSet -number RITM0010001
 ```
 
+You can also set RITM variables in a similar manor:
+
+```powershell
+$RITM | Set-SNOWRITMVariable -Name "business_purpose" -Value "Test Value"
+```
+
+Please see function get-help examples for more.
+
 # Attachment API
 Please see the below example to upload an attachment, this can be applied to any table command that supports attachments:
 ```powershell

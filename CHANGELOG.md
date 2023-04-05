@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Get/New/Remove/Set-SNOWUserGroup
+- Get-SNOWSCOrderGuide
+- Get-SNOWSCItem
+- Get/New/Remove/Set-SNOWLocation
+- Get/New/Remove/Set-SNOWDepartment
+- Get/New/Set-SNOWCMDBCI
+- Get/Set-SNOWApprovalGroup
 - Set-SNOWRITMVariable
 - Improved error handling on Set-SNOWAuth
 - Get-SNOWAuth

@@ -1,0 +1,180 @@
+function Get-SNOWApprovalGroup {
+    <#
+    .SYNOPSIS
+        Retrieves a sysapproval_group record from SNOW
+    .DESCRIPTION
+        Gets a record from the sysapproval_group table
+    .NOTES
+        Uses Get-SNOWObject as a template function.
+    .OUTPUTS
+        PSCustomObject. The full table record/s.
+    .LINK
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Get-SNOWApprovalGroup.md
+    .LINK
+        https://docs.servicenow.com/csh?topicname=c_TableAPI.html&version=latest
+    .EXAMPLE
+        Get-SNOWApprovalGroup -limit 1 -verbose
+        Returns a single record from sysapproval_group
+    #>   
+
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [boolean]
+        $admin_override,
+        [Parameter()]
+        [string]
+        $approval_user,
+        [Parameter()]
+        [alias('handle_a_rejection_by')]
+        [string]
+        $reject_handling,
+        [Parameter()]
+        [string]
+        $wait_for,
+        [Parameter()]
+        [boolean]
+        $active,
+        [Parameter()]
+        [string]
+        $additional_assignee_list,
+        [Parameter()]
+        [string]
+        $approval,
+        [Parameter()]
+        [string]
+        $assigned_to,
+        [Parameter()]
+        [string]
+        $assignment_group,
+        [Parameter()]
+        [string]
+        $business_duration,
+        [Parameter()]
+        [alias('service')]
+        [string]
+        $business_service,
+        [Parameter()]
+        [alias('duration')]
+        [string]
+        $calendar_duration,
+        [Parameter()]
+        [string]
+        $closed_by,
+        [Parameter()]
+        [string]
+        $close_notes,
+        [Parameter()]
+        [alias('configuration_item')]
+        [string]
+        $cmdb_ci,
+        [Parameter()]
+        [alias('additional_comments')]
+        [string]
+        $comments,
+        [Parameter()]
+        [string]
+        $comments_and_work_notes,
+        [Parameter()]
+        [string]
+        $company,
+        [Parameter()]
+        [string]
+        $contact_type,
+        [Parameter()]
+        [string]
+        $contract,
+        [Parameter()]
+        [string]
+        $correlation_display,
+        [Parameter()]
+        [string]
+        $correlation_id,
+        [Parameter()]
+        [string]
+        $delivery_plan,
+        [Parameter()]
+        [string]
+        $delivery_task,
+        [Parameter()]
+        [string]
+        $description,
+        [Parameter()]
+        [string]
+        $escalation,
+        [Parameter()]
+        [string]
+        $group_list,
+        [Parameter()]
+        [string]
+        $impact,
+        [Parameter()]
+        [boolean]
+        $knowledge,
+        [Parameter()]
+        [string]
+        $location,
+        [Parameter()]
+        [boolean]
+        $made_sla,
+        [Parameter()]
+        [string]
+        $number,
+        [Parameter()]
+        [string]
+        $opened_by,
+        [Parameter()]
+        [string]
+        $order,
+        [Parameter()]
+        [string]
+        $parent,
+        [Parameter()]
+        [string]
+        $priority,
+        [Parameter()]
+        [alias('transfer_reason')]
+        [string]
+        $route_reason,
+        [Parameter()]
+        [string]
+        $service_offering,
+        [Parameter()]
+        [string]
+        $short_description,
+        [Parameter()]
+        [string]
+        $state,
+        [Parameter()]
+        [alias('effective_number')]
+        [string]
+        $task_effective_number,
+        [Parameter()]
+        [string]
+        $time_worked,
+        [Parameter()]
+        [string]
+        $urgency,
+        [Parameter()]
+        [string]
+        $user_input,
+        [Parameter()]
+        [string]
+        $watch_list,
+        [Parameter()]
+        [string]
+        $work_notes,
+        [Parameter()]
+        [string]
+        $work_notes_list
+    )
+    DynamicParam { Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" }
+
+    Begin {
+        $table = "sysapproval_group"
+    }
+    Process {
+        Invoke-SNOWTableREAD -table $table -Parameters $PSBoundParameters
+    }
+}
+

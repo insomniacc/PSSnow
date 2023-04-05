@@ -181,7 +181,8 @@ In this case, the `photo` param makes a second call to attach the photo to the n
 To set the value of an encrypted field `-InputDisplayValue` must be used.
 
 ## Remove-SNOWObject
-To remove any object returned from a `Get-SNOW*` table command it can be piped:
+The majority of returned table objects, contain both a unique identifier (sys_id) and table name (sys_class_name) as part of their properties.  
+To remove any object with these properties it can be piped as follows:
 ```powershell
 $NewUser | Remove-SNOWObject
 ```
@@ -189,6 +190,8 @@ Alternatively objects can be removed directly with the table name and sys_id:
 ```powershell
 Remove-SNOWObject -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 ```
+
+> ❕ If a returned object does not have a sys_class_name there will be an accompanied `Remove-SNOW*` command specifically for that type of object.
 
 # RITM Variables
 You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into a separate table from the RITM itself.  

@@ -10,6 +10,7 @@
 - [Batch API](#batch-api)
 - [Import API](#import-api)
 - [ServiceCatalog API](#servicecatalog-api)
+- [Invoke-SNOWRestMethod](#invoke-snowrestmethod)
 - [All Functions](#all-functions)
   
 # Authentication
@@ -333,6 +334,19 @@ Invoke-SNOWSCCart -Checkout -PassThru
 
 #Empty the cart
 Invoke-SNOWSCCart -Empty
+```
+
+# Invoke-SNOWRestMethod
+This function is a sort of generic replacement/wrapper to Invoke-RestMethod. 
+It's purpose is just to leverage the authentication set with Set-SNOWAuth to make REST calls to other API's in ServiceNow that may not yet be supported by this module.
+
+```powershell
+#Example GET command
+$Response = Invoke-SNOWRestMethod -uri "api/now/v2/table/sys_user?sysparm_limit=1"
+
+#Example POST command
+$Body = @{first_name="john";last_name="smith"} | ConvertTo-json
+$Response = Invoke-SNOWRestMethod -uri "api/now/v2/table/sys_user" -Method "POST" -Body $Body -Headers @{"Content-Type"="Application/Json"}
 ```
 
 # Function Documentation

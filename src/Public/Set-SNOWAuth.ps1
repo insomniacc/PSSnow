@@ -48,7 +48,7 @@ function Set-SNOWAuth {
     }
     
     #? Aliveness/Hibernation check for developer instances
-    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false
+    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false -UseBasicParsing
     if($response -and $response.content -like "*Instance Hibernating page*"){
         Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
     }

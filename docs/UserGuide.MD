@@ -195,7 +195,11 @@ Remove-SNOWObject -table "sys_user" -sys_id 7dad954b47a12110d3e5fa8bd36d43a8
 > ❕ If a returned object does not have a sys_class_name there will be an accompanied `Remove-SNOW*` command specifically for that type of object.
 
 # RITM Variables
-You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into a separate table from the RITM itself.  
+> Please note, to use Get-SNOWRITMVariableSet you will need read access to the following tables:  
+> sc_req_item, sc_item_option_mtom, sc_item_option, sc_item_option_new  
+> It is possible to make a call without the correct permissions; specific fields may be omitted from the response and there may not be any errors.
+
+You may use the service catalog quite a lot, the questions and values filled out by users on a catalog form are saved into separate tables from the RITM itself.  
 As such there's a separate command to make retrieval of these variables much easier.  
 This command will get all the variables associated to a single RITM.
 

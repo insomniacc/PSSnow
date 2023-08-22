@@ -72,7 +72,8 @@
             'Count'         {$URI += "&sysparm_count=$($Count.IsPresent.ToString().ToLower())"}
         }
 
-        $Response = Invoke-RestMethod -URI $URI @AuthSplat
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
+        $Response = Invoke-RestMethod -URI $URI @AuthSplat @ProxyAuth
         if($Response){
             return $Response.result
         }

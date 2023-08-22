@@ -15,6 +15,7 @@ function Invoke-SNOWTableUPDATE {
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" -AsStringArray -IncludeCommon
         $UpdateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
         $AuthSplat = @{Headers = Get-AuthHeader}
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
 
         #Removes GUI and increases performance
         $ProgressPreference = "SilentlyContinue"
@@ -61,7 +62,7 @@ function Invoke-SNOWTableUPDATE {
             }
 
             if($PSCmdlet.ShouldProcess("$table/$($Parameters.Sys_ID)","UPDATE")){
-                $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat
+                $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat @ProxyAuth
 
                 if($Parameters.PassThru.IsPresent){
                     Return $Response.Result

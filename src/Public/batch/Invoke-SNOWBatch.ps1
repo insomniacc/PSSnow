@@ -147,6 +147,7 @@ function Invoke-SNOWBatch {
         
         if($PSCmdlet.ShouldProcess("$RequestCount Requests in $BatchCount Batches", $PsCmdlet.MyInvocation.InvocationName)){
             if($BatchCount -gt 1 -and $Parallel.IsPresent){
+                $ProxyAuth = $script:SNOWAuth.ProxyAuth
                 $Batches | Invoke-Parallel -Throttle $Threads -Verbose:$False -ScriptBlock {
                     $Batch = $_
                     Write-Verbose "Submitting $($Batch.batch_request_id)"
@@ -160,7 +161,7 @@ function Invoke-SNOWBatch {
                         Headers = $Using:RestHeaders
                         Verbose = $false
                     }
-                    $Response = Invoke-RestMethod @RestMethodSplat
+                    $Response = Invoke-RestMethod @RestMethodSplat @Using:ProxyAuth
 
                     $Response.serviced_requests.Foreach({
                         $_.body = ConvertFrom-JSON -InputObject ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_.body)))
@@ -188,7 +189,8 @@ function Invoke-SNOWBatch {
                         Headers = $RestHeaders
                         Verbose = $false
                     }
-                    $Response = Invoke-RestMethod @RestMethodSplat     
+                    $ProxyAuth = $script:SNOWAuth.ProxyAuth
+                    $Response = Invoke-RestMethod @RestMethodSplat @ProxyAuth
                     
                     $Response.serviced_requests.Foreach({
                         $_.body = ConvertFrom-JSON -InputObject ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_.body)))

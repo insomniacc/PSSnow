@@ -65,7 +65,8 @@ function Invoke-SNOWSCCart {
     }
 
     if($PSCmdlet.ShouldProcess($URI,$Method)){
-        $Response = Invoke-RestMethod -Method $Method -Uri $URI -Headers $Headers
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
+        $Response = Invoke-RestMethod -Method $Method -Uri $URI -Headers $Headers @ProxyAuth
         if($Response -and $PassThru.IsPresent){
             return $Response.Result
         }

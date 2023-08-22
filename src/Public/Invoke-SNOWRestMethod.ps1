@@ -62,7 +62,8 @@ function Invoke-SNOWRestMethod {
         if($Body){
             $RestMethodSplat['Body'] = $Body
         }
-        
-        Invoke-RestMethod @RestMethodSplat
+
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
+        Invoke-RestMethod @RestMethodSplat @ProxyAuth
     }
 }

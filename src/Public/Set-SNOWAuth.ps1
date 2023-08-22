@@ -32,7 +32,15 @@ function Set-SNOWAuth {
         [Parameter(Mandatory, ParameterSetName = 'OAuth')]
         [SecureString]
         #OAuth ClientSecret
-        $ClientSecret
+        $ClientSecret,
+        [Parameter()]
+        [string]
+        #By default if this param is not used the system default proxy will be provided if configured. URI should include the port if used.
+        $ProxyURI,
+        [Parameter()]
+        [PSCredential]
+        #Provide credentials if you do not want to use default auth for any existing proxy
+        $ProxyCredential
     )
 
     if([String]::IsNullOrWhiteSpace($Instance)){
@@ -46,15 +54,43 @@ function Set-SNOWAuth {
     if($instance -like "*.service-now.com*"){
         $instance = $instance.split('.') | Select-Object -first 1
     }
+
+    #? Proxy Check
+    if($ProxyURI){
+        $proxy = $ProxyURI
+    }else{
+        $TestURI = 'https://google.com'
+        $SystemProxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy($TestURI)
+        if($SystemProxy.OriginalString -ne $TestURI){
+            $proxy = $SystemProxy
+        }else{
+            $proxy = $null
+        }
+    }
+    
+    if($proxy){
+        $ProxyAuth = @{
+            proxy = $proxy
+        }
+
+        if($ProxyCredential){
+            $ProxyAuth.ProxyCredential = $ProxyCredential
+        }else{
+            $ProxyAuth.ProxyUseDefaultCredentials = $true
+        }
+    }else{
+        $ProxyAuth = @{}
+    }
     
     #? Aliveness/Hibernation check for developer instances
-    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false -UseBasicParsing
+    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false -UseBasicParsing @ProxyAuth
     if($response -and $response.content -like "*Instance Hibernating page*"){
         Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
     }
 
     $script:SNOWAuth = @{
         Instance = $Instance
+        ProxyAuth = $ProxyAuth
     }
 
     switch ($PsCmdlet.ParameterSetName) {
@@ -74,7 +110,7 @@ function Set-SNOWAuth {
                 password = $Credential.GetNetworkCredential().Password
             }
             try{
-                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false -ErrorAction Stop
+                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false -ErrorAction Stop @ProxyAuth
             }catch{
                 try {
                     $ReturnedErrorMessage = ConvertFrom-Json $_.ErrorDetails.Message -ErrorAction Stop

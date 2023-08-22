@@ -53,7 +53,8 @@ function New-SNOWImport {
         #? API Call
         try{
             if($PSCmdlet.ShouldProcess($URI,'POST')){
-                Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
+                $ProxyAuth = $script:SNOWAuth.ProxyAuth
+                Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat @ProxyAuth
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"

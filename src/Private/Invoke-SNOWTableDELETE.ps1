@@ -14,6 +14,7 @@ function Invoke-SNOWTableDELETE {
         $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase #todo remove this & test
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table/"
         $AuthSplat = @{Headers = Get-AuthHeader}
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
 
         #$ProgressPreference = "SilentlyContinue"
     }
@@ -28,7 +29,7 @@ function Invoke-SNOWTableDELETE {
 
         try{
             if($PSCmdlet.ShouldProcess($URI,'DELETE')){
-                Invoke-RestMethod -Method "DELETE" -URI $URI @AuthSplat
+                Invoke-RestMethod -Method "DELETE" -URI $URI @AuthSplat @ProxyAuth
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"

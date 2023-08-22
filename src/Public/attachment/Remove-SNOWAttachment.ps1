@@ -37,7 +37,8 @@ function Remove-SNOWAttachment {
     process {
         try{
             if($PSCmdlet.ShouldProcess($file_name,'DELETE')){
-                Invoke-RestMethod -URI "$BaseURL$Sys_ID" -Method "DELETE" @AuthSplat
+                $ProxyAuth = $script:SNOWAuth.ProxyAuth
+                Invoke-RestMethod -URI "$BaseURL$Sys_ID" -Method "DELETE" @AuthSplat @ProxyAuth
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$BaseURL$Sys_ID]"

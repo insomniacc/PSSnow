@@ -27,6 +27,7 @@ function Invoke-SNOWWebRequest {
     )
 
     Begin {
+        $ProxyAuth = $script:SNOWAuth.ProxyAuth
         if($Headers){
             $PSBoundParameters.Headers = (Get-AuthHeader) + $Headers
         }else{
@@ -42,7 +43,7 @@ function Invoke-SNOWWebRequest {
         #todo work out what timeout / retry to add, should options for this be added into the script:SNOWAuth variable at set-snowauth stage?
        Do{
             try{
-                Invoke-WebRequest @PSBoundParameters -erroraction Stop
+                Invoke-WebRequest @PSBoundParameters @ProxyAuth -erroraction Stop
             }catch{
                 if($_.Exception.Response.StatusCode -eq "TooManyRequests"){
                     $RateLimitRule = $_.Exception.Response.Headers.GetValues("X-RateLimit-Rule") | Out-String

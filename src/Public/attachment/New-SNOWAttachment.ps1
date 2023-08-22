@@ -205,7 +205,8 @@ function New-SNOWAttachment {
                 $RestSplat += @{SkipHeaderValidation = $true}
             }
 
-            $Response = Invoke-RestMethod @RestSplat
+            $ProxyAuth = $script:SNOWAuth.ProxyAuth
+            $Response = Invoke-RestMethod @RestSplat @ProxyAuth
 
             if($PassThru.IsPresent){
                 Return $Response.Result

@@ -80,7 +80,8 @@ function New-SNOWSCCartItem {
                 URI = $URI
                 Body = $Body
             }
-            $Response = Invoke-RestMethod @RestSplat
+            $ProxyAuth = $script:SNOWAuth.ProxyAuth
+            $Response = Invoke-RestMethod @RestSplat @ProxyAuth
             if($Response){
                 $Response = $Response.result
             }

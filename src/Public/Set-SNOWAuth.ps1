@@ -40,7 +40,11 @@ function Set-SNOWAuth {
         [Parameter()]
         [PSCredential]
         #Provide credentials if you do not want to use default auth for any existing proxy
-        $ProxyCredential
+        $ProxyCredential,
+        #Servicenow rate limit policies are per hour, this will cause commands to sleep and wait until those rate limits are refreshed, instead of returning an error.
+        [switch]$HandleRatelimiting,
+        #Default is no specified timeout
+        [int]$WebCallTimeoutSeconds
     )
 
     if([String]::IsNullOrWhiteSpace($Instance)){
@@ -55,7 +59,7 @@ function Set-SNOWAuth {
         $instance = $instance.split('.') | Select-Object -first 1
     }
 
-    #? Proxy Check
+    #? Proxy Support
     if($ProxyURI){
         $proxy = $ProxyURI
     }else{
@@ -89,8 +93,10 @@ function Set-SNOWAuth {
     }
 
     $script:SNOWAuth = @{
-        Instance = $Instance
-        ProxyAuth = $ProxyAuth
+        Instance                = $Instance
+        ProxyAuth               = $ProxyAuth
+        HandleRatelimiting      = $HandleRatelimiting.IsPresent
+        WebCallTimeoutSeconds   = $WebCallTimeoutSeconds
     }
 
     switch ($PsCmdlet.ParameterSetName) {

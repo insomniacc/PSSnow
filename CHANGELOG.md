@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added Invoke-SNOWWebRequest as a wrapper for Invoke-WebRequest/RestMethod, which handles rate limiting, auth & proxy auth.
 - Proxy auth support added to Set-SNOWAuth and all relevant commands
+- WebCallTimeoutSeconds added to Set-SNOWAuth
 
 ## [1.1.0] - 2023-04-06
 ### Added

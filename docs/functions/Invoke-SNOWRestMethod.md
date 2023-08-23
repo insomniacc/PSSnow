@@ -8,7 +8,7 @@ schema: 2.0.0
 # Invoke-SNOWRestMethod
 
 ## SYNOPSIS
-A generic way to make rest calls to servicenow API's
+A generic way to make rest calls to servicenow API's \[deprecated\]
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Invoke-SNOWRestMethod [-Uri] <String> [[-Method] <String>] [[-Body] <Object>] [[
 ```
 
 ## DESCRIPTION
-A wrapper for Invoke-RestMethod that utilizes authentication set with Set-SNOWAuth
+A wrapper for Invoke-RestMethod that utilizes authentication set with Set-SNOWAuth \[deprecated\]
 
 ## EXAMPLES
 
@@ -104,9 +104,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+!This function is deprecated and has been left in for backward compatibility.
+Please use Invoke-SNOWWebRequest instead.
 
 ## RELATED LINKS
 
-[]()
+[https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWRestMethod.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWRestMethod.md)
 
 

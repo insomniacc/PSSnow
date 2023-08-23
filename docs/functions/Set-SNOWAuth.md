@@ -14,13 +14,20 @@ Sets ServiceNow authentication in the current session.
 
 ### Basic (Default)
 ```
-Set-SNOWAuth -Instance <String> -Credential <PSCredential> [<CommonParameters>]
+Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-ProxyURI <String>]
+ [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>] [<CommonParameters>]
 ```
 
 ### OAuth
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> -ClientID <String> -ClientSecret <SecureString>
+ [-ProxyURI <String>] [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>]
  [<CommonParameters>]
+```
+
+### GetSNOWAuth
+```
+Set-SNOWAuth -AuthObject <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +48,7 @@ Instance name e.g dev123456
 
 ```yaml
 Type: System.String
-Parameter Sets: (All)
+Parameter Sets: Basic, OAuth
 Aliases:
 
 Required: True
@@ -56,7 +63,7 @@ Basic Auth
 
 ```yaml
 Type: System.Management.Automation.PSCredential
-Parameter Sets: (All)
+Parameter Sets: Basic, OAuth
 Aliases:
 
 Required: True
@@ -93,6 +100,82 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProxyURI
+By default if this param is not used the system default proxy will be provided if configured.
+URI should include the port if used.
+
+```yaml
+Type: System.String
+Parameter Sets: Basic, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProxyCredential
+Provide credentials if you do not want to use default auth for any existing proxy
+
+```yaml
+Type: System.Management.Automation.PSCredential
+Parameter Sets: Basic, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HandleRatelimiting
+Servicenow rate limit policies are per hour, this will cause commands to sleep and wait until those rate limits are refreshed, instead of returning an error.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: Basic, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WebCallTimeoutSeconds
+Default is no specified timeout
+
+```yaml
+Type: System.Int32
+Parameter Sets: Basic, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthObject
+{{ Fill AuthObject Description }}
+
+```yaml
+Type: System.Object
+Parameter Sets: GetSNOWAuth
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

@@ -102,7 +102,7 @@ function Invoke-SNOWWebRequest {
                     $RateLimitResetDuration = New-TimeSpan -Start (get-date) -End $RateLimitResetTime
 
                     if($Script:SNOWAuth.HandleRatelimiting){
-                        Write-Warning "Rate limited (Rule: $RateLimitRule), cooling off for $RateLimitResetDuration"
+                        Write-Warning "Rate limit hit, only $RateLimitLimit requests allowed per hour (Rule: $RateLimitRule), cooling off for $RateLimitResetDuration"
                         Start-Sleep $RateLimitResetDuration.TotalSeconds + 1
                     }else{
                         Write-Error "Rate limit hit (Rule: $RateLimitRule). Duration until reset: $RateLimitResetDuration. Use -HandleRateLimiting on Set-SNOWAuth to automatically wait and retry."

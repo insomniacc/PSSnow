@@ -58,102 +58,108 @@ function Set-SNOWAuth {
         $AuthObject
     )
 
-    if($AuthObject){
-        $Script:SNOWAuth = $AuthObject
-        return
-    }
+    BEGIN {}
 
-    if([String]::IsNullOrWhiteSpace($Instance)){
-        Write-Error "Instance cannot be an empty string" -ErrorAction stop
-    }
+    PROCESS {
+        if($AuthObject){
+            $Script:SNOWAuth = $AuthObject
+            return
+        }
     
-    if($instance -like "https://*"){
-        $instance = $instance.replace('https://','')
-    }
-
-    if($instance -like "*.service-now.com*"){
-        $instance = $instance.split('.') | Select-Object -first 1
-    }
-
-    #? Proxy Support
-    if($ProxyURI){
-        $proxy = $ProxyURI
-    }else{
-        $TestURI = 'https://google.com'
-        $SystemProxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy($TestURI)
-        if($SystemProxy.OriginalString -ne $TestURI){
-            $proxy = $SystemProxy
+        if([String]::IsNullOrWhiteSpace($Instance)){
+            Write-Error "Instance cannot be an empty string" -ErrorAction stop
+        }
+        
+        if($instance -like "https://*"){
+            $instance = $instance.replace('https://','')
+        }
+    
+        if($instance -like "*.service-now.com*"){
+            $instance = $instance.split('.') | Select-Object -first 1
+        }
+    
+        #? Proxy Support
+        if($ProxyURI){
+            $proxy = $ProxyURI
         }else{
-            $proxy = $null
-        }
-    }
-    
-    if($proxy){
-        $ProxyAuth = @{
-            proxy = $proxy
-        }
-
-        if($ProxyCredential){
-            $ProxyAuth.ProxyCredential = $ProxyCredential
-        }else{
-            $ProxyAuth.ProxyUseDefaultCredentials = $true
-        }
-    }else{
-        $ProxyAuth = @{}
-    }
-    
-    #? Aliveness/Hibernation check for developer instances
-    $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false -UseBasicParsing @ProxyAuth
-    if($response -and $response.content -like "*Instance Hibernating page*"){
-        Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
-    }
-
-    $script:SNOWAuth = @{
-        Instance                = $Instance
-        ProxyAuth               = $ProxyAuth
-        HandleRatelimiting      = $HandleRatelimiting.IsPresent
-        WebCallTimeoutSeconds   = $WebCallTimeoutSeconds
-    }
-
-    switch ($PsCmdlet.ParameterSetName) {
-        'Basic' {
-            $script:SNOWAuth += @{
-                type = "basic"
-                Credential = $Credential
-            }
-        }
-        'OAuth' {
-            #? Get Token
-            $Body = @{
-                grant_type= "password"
-                client_id = $ClientID
-                client_secret = [System.Net.NetworkCredential]::new('dummy', $ClientSecret).Password
-                username = $Credential.UserName
-                password = $Credential.GetNetworkCredential().Password
-            }
-            try{
-                $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false -ErrorAction Stop @ProxyAuth
-            }catch{
-                try {
-                    $ReturnedErrorMessage = ConvertFrom-Json $_.ErrorDetails.Message -ErrorAction Stop
-                    Throw "Unable to obtain OAuth access token. Description: $($ReturnedErrorMessage.error_description)"
-                } catch {
-                    Throw $_.Exception.Message
-                }
-            }
-
-            if($null -ne $Token -and ($Token | get-member).name -contains 'access_token'){
-                $script:SNOWAuth += @{
-                    ClientID = $ClientID
-                    ClientSecret = $ClientSecret
-                    Token = $Token
-                    Expires = (get-date).AddSeconds($Token.expires_in)
-                    Type = "oauth"
-                }
+            $TestURI = 'https://google.com'
+            $SystemProxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy($TestURI)
+            if($SystemProxy.OriginalString -ne $TestURI){
+                $proxy = $SystemProxy
             }else{
-                Throw "A valid access token was not retrieved"
+                $proxy = $null
             }
         }
+        
+        if($proxy){
+            $ProxyAuth = @{
+                proxy = $proxy
+            }
+    
+            if($ProxyCredential){
+                $ProxyAuth.ProxyCredential = $ProxyCredential
+            }else{
+                $ProxyAuth.ProxyUseDefaultCredentials = $true
+            }
+        }else{
+            $ProxyAuth = @{}
+        }
+        
+        #? Aliveness/Hibernation check for developer instances
+        $response = Invoke-WebRequest -Uri "https://$Instance.service-now.com/stats.do" -ErrorAction Stop -Verbose:$false -UseBasicParsing @ProxyAuth
+        if($response -and $response.content -like "*Instance Hibernating page*"){
+            Throw "This servicenow instance is hibernating. Please wake the instance up and use $($PSCmdlet.MyInvocation.MyCommand.Name) again."
+        }
+    
+        $script:SNOWAuth = @{
+            Instance                = $Instance
+            ProxyAuth               = $ProxyAuth
+            HandleRatelimiting      = $HandleRatelimiting.IsPresent
+            WebCallTimeoutSeconds   = $WebCallTimeoutSeconds
+        }
+    
+        switch ($PsCmdlet.ParameterSetName) {
+            'Basic' {
+                $script:SNOWAuth += @{
+                    type = "basic"
+                    Credential = $Credential
+                }
+            }
+            'OAuth' {
+                #? Get Token
+                $Body = @{
+                    grant_type= "password"
+                    client_id = $ClientID
+                    client_secret = [System.Net.NetworkCredential]::new('dummy', $ClientSecret).Password
+                    username = $Credential.UserName
+                    password = $Credential.GetNetworkCredential().Password
+                }
+                try{
+                    $Token = Invoke-RestMethod -Method POST -uri "https://$Instance.service-now.com/oauth_token.do" -Body $Body -Verbose:$false -ErrorAction Stop @ProxyAuth
+                }catch{
+                    try {
+                        $ReturnedErrorMessage = ConvertFrom-Json $_.ErrorDetails.Message -ErrorAction Stop
+                        Throw "Unable to obtain OAuth access token. Description: $($ReturnedErrorMessage.error_description)"
+                    } catch {
+                        Throw $_.Exception.Message
+                    }
+                }
+    
+                if($null -ne $Token -and ($Token | get-member).name -contains 'access_token'){
+                    $script:SNOWAuth += @{
+                        ClientID = $ClientID
+                        ClientSecret = $ClientSecret
+                        Token = $Token
+                        Expires = (get-date).AddSeconds($Token.expires_in)
+                        Type = "oauth"
+                    }
+                }else{
+                    Throw "A valid access token was not retrieved"
+                }
+            }
+        }
+        Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
     }
-    Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
+
+    END{}
 }

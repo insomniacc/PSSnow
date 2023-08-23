@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.2.0] - 2023-08-23
 ### Added
 - Added Invoke-SNOWWebRequest as a wrapper for Invoke-WebRequest/RestMethod, which handles rate limiting, auth & proxy auth.
 - Proxy auth support added to Set-SNOWAuth and all relevant commands
@@ -74,7 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TABLE API support with Get/New/Set/Remove-SNOWObject (these core functions provide the template for all other table functions)
 - TABLE API framework with private functions supporting CRUD operations.
 
-[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v1.1.0..HEAD
+[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v1.2.0..HEAD
+[1.2.0]: https://github.com/insomniacc/PSSnow/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/insomniacc/PSSnow/compare/v1.0.1..v1.1.0
 [1.0.1]: https://github.com/insomniacc/PSSnow/compare/v1.0.0..v1.0.1
 [1.0.0]: https://github.com/insomniacc/PSSnow/compare/v0.0.4..v1.0.0

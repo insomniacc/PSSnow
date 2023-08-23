@@ -40,7 +40,8 @@ function Invoke-SNOWWebRequest {
         [string]$TransferEncoding,
         [switch]$PassThru,
         [int]$WebCallTimeoutSeconds = $Script:SNOWAuth.WebCallTimeoutSeconds,
-        [switch]$UseRestMethod
+        [switch]$UseRestMethod,
+        [switch]$SkipHeaderValidation
     )
 
     Begin {
@@ -50,7 +51,7 @@ function Invoke-SNOWWebRequest {
             $PSBoundParameters.URI = "https://$($script:SNOWAuth.Instance).service-now.com/$URI"
         }
 
-        # Timeout properties
+        #? Timeout properties
         if($WebCallTimeoutSeconds -gt 0){
             if($PSVersionTable.PSVersion.ToString() -gt 7.3){
                 $TimeoutSplat = @{
@@ -65,19 +66,28 @@ function Invoke-SNOWWebRequest {
             $TimeoutSplat = @{}
         }
 
-        # Proxy Auth
+        #? Proxy Auth
         if($script:SNOWAuth.ProxyAuth){
             $ProxyAuth = $script:SNOWAuth.ProxyAuth
         }else{
             $ProxyAuth = @{}
         }
         
+        #? Headers
         if($Headers){
             $PSBoundParameters.Headers = (Get-AuthHeader) + $Headers
         }else{
             $PSBoundParameters.Headers = (Get-AuthHeader)
         }
 
+        #? Version Control
+        if($PSVersionTable.PSVersion.ToString() -lt "5.2"){
+            if($SkipHeaderValidation){
+                Write-Warning "PSVersion 5.1 does not support -SkipHeaderValidation. Omitting parameter."
+            }
+        }
+
+        #? Cleanup
         # Remove all non standard properties from passthrough params
         [Void]$PSBoundParameters.Remove('WebCallTimeoutSeconds')
         [Void]$PSBoundParameters.Remove('UseRestMethod')

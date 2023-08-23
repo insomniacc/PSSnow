@@ -1,4 +1,20 @@
 function Invoke-SNOWWebRequest {
+
+    <#
+    .SYNOPSIS
+        A generic way to make rest calls to servicenow API's
+    .DESCRIPTION
+        A wrapper for Invoke-WebRequest & RestMethod that leverages authentication set with Set-SNOWAuth, provides support for proxy auth and also handles rate limiting (if set with -HandleRateLimiting on Set-SNOWAuth).
+    .LINK
+        https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWWebRequest.md
+    .EXAMPLE
+        $Response = Invoke-SNOWWebRequest -UseRestMethod -uri "api/now/v2/table/sys_user?sysparm_limit=1"
+    .EXAMPLE
+        $Body = @{first_name="john";last_name="smith"} | ConvertTo-json
+        $Headers = @{"Content-Type"="Application/Json"}
+        $Response = Invoke-SNOWWebRequest -UseRestMethod -uri "api/now/v2/table/sys_user" -Method "POST" -Body $Body -Headers $Headers
+    #>    
+
     [cmdletbinding()]
     param (
         [Parameter(Mandatory)]

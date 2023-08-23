@@ -144,9 +144,8 @@ function Invoke-SNOWBatch {
         
         if($PSCmdlet.ShouldProcess("$RequestCount Requests in $BatchCount Batches", $PsCmdlet.MyInvocation.InvocationName)){
             if($BatchCount -gt 1 -and $Parallel.IsPresent){
-                $BatchSNOWAuth = $script:SNOWAuth
                 $Batches | Invoke-Parallel -Throttle $Threads -Verbose:$False -ScriptBlock {
-                    $script:SNOWAuth = $using:BatchSNOWAuth
+                    $using:SNOWAuth | Set-SNOWAuth
                     $Batch = $_
                     Write-Verbose "Submitting $($Batch.batch_request_id)"
                     $Body = $Batch | ConvertTo-JSON -Depth 10 -Compress
@@ -156,7 +155,6 @@ function Invoke-SNOWBatch {
                         Method = 'POST'
                         Body = $Body
                         ContentType = 'application/json'
-                        Headers = $Using:RestHeaders
                         Verbose = $false
                     }
                     $Response = Invoke-SNOWWebRequest -UseRestMethod @RestMethodSplat

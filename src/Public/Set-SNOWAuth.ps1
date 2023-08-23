@@ -15,7 +15,8 @@ function Set-SNOWAuth {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
     [CmdletBinding(DefaultParameterSetName = 'Basic')]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ParameterSetName = 'Basic')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuth')]
         [ValidateNotNullOrEmpty()]
         [string]
         #Instance name e.g dev123456
@@ -33,19 +34,34 @@ function Set-SNOWAuth {
         [SecureString]
         #OAuth ClientSecret
         $ClientSecret,
-        [Parameter()]
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
         [string]
         #By default if this param is not used the system default proxy will be provided if configured. URI should include the port if used.
         $ProxyURI,
-        [Parameter()]
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
         [PSCredential]
         #Provide credentials if you do not want to use default auth for any existing proxy
         $ProxyCredential,
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
         #Servicenow rate limit policies are per hour, this will cause commands to sleep and wait until those rate limits are refreshed, instead of returning an error.
-        [switch]$HandleRatelimiting,
+        [switch]
+        $HandleRatelimiting,
         #Default is no specified timeout
-        [int]$WebCallTimeoutSeconds
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
+        [int]
+        $WebCallTimeoutSeconds,
+        [Parameter(Mandatory,ParameterSetName='GetSNOWAuth',ValueFromPipeline)]
+        $AuthObject
     )
+
+    if($AuthObject){
+        $Script:SNOWAuth = $AuthObject
+        return
+    }
 
     if([String]::IsNullOrWhiteSpace($Instance)){
         Write-Error "Instance cannot be an empty string" -ErrorAction stop

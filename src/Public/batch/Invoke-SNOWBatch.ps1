@@ -83,13 +83,10 @@ function Invoke-SNOWBatch {
     )
     
     begin {
-        Assert-SNOWAuth
         $URI = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/batch"
         
         # This will be used as an identifier across split batches
         $BatchGUID = (New-Guid).Guid
-        
-        $RestHeaders = Get-AuthHeader
 
         if($PSBoundParameters.ContainsKey('ScriptBlock')){
             $InputScript = $ScriptBlock.ToString()
@@ -148,6 +145,7 @@ function Invoke-SNOWBatch {
         if($PSCmdlet.ShouldProcess("$RequestCount Requests in $BatchCount Batches", $PsCmdlet.MyInvocation.InvocationName)){
             if($BatchCount -gt 1 -and $Parallel.IsPresent){
                 $Batches | Invoke-Parallel -Throttle $Threads -Verbose:$False -ScriptBlock {
+                    $using:SNOWAuth | Set-SNOWAuth
                     $Batch = $_
                     Write-Verbose "Submitting $($Batch.batch_request_id)"
                     $Body = $Batch | ConvertTo-JSON -Depth 10 -Compress
@@ -157,10 +155,9 @@ function Invoke-SNOWBatch {
                         Method = 'POST'
                         Body = $Body
                         ContentType = 'application/json'
-                        Headers = $Using:RestHeaders
                         Verbose = $false
                     }
-                    $Response = Invoke-RestMethod @RestMethodSplat
+                    $Response = Invoke-SNOWWebRequest -UseRestMethod @RestMethodSplat
 
                     $Response.serviced_requests.Foreach({
                         $_.body = ConvertFrom-JSON -InputObject ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_.body)))
@@ -185,10 +182,9 @@ function Invoke-SNOWBatch {
                         Method = 'POST'
                         Body = $Body
                         ContentType = 'application/json'
-                        Headers = $RestHeaders
                         Verbose = $false
                     }
-                    $Response = Invoke-RestMethod @RestMethodSplat     
+                    $Response = Invoke-SNOWWebRequest -UseRestMethod @RestMethodSplat
                     
                     $Response.serviced_requests.Foreach({
                         $_.body = ConvertFrom-JSON -InputObject ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_.body)))

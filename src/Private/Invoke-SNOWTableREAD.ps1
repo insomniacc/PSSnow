@@ -14,17 +14,13 @@ function Invoke-SNOWTableREAD {
     )
     
     BEGIN {
-        Assert-SNOWAuth
         $EnablePagination = $True
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "Get-SNOWObject" -AsStringArray -IncludeCommon
         $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
         $QueryParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
-        $AuthSplat = @{Headers = Get-AuthHeader}
 
         $Results = [System.Collections.ArrayList]@()
-        #Removes GUI and increases performance
-        $ProgressPreference = "SilentlyContinue"
     }
     
     PROCESS {
@@ -79,7 +75,7 @@ function Invoke-SNOWTableREAD {
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
                         #Last time I did similar with rel links in core, [https://github.com/ashscode] noticed they did not work so I haven't bothered to try replicate that method yet.
-                        $Response = (Invoke-RestMethod -Method 'Get' -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
+                        $Response = (Invoke-SNOWWebRequest -UseRestMethod -URI "$URI&sysparm_offset=$Offset" -Method GET).Result
                         [void]$Results.Add($Response)
                     }
                     $Results = @($Results | ForEach-Object {$_}) | Select-Object -first $Parameters.limit
@@ -89,7 +85,7 @@ function Invoke-SNOWTableREAD {
                         if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                             Write-Verbose "$URI&sysparm_offset=$Offset"
                         }
-                        $Response = Invoke-WebRequest -Method 'Get' -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
+                        $Response = Invoke-SNOWWebRequest -URI "$URI&sysparm_offset=$Offset" -Method GET
                         [void]$Results.Add(($Response.content | ConvertFrom-Json).Result)
                         $Offset += $PaginationAmount
                     }While($Response.Headers.Link -like "*rel=`"next`"*")
@@ -99,13 +95,12 @@ function Invoke-SNOWTableREAD {
                 if($PSVersionTable.PSEdition -eq "Core" -and $VerbosePreference -eq "Continue"){
                     Write-Verbose $URI
                 }
-                $Results = (Invoke-RestMethod -Method 'Get' -URI $URI @AuthSplat).Result
+                $Results = (Invoke-SNOWWebRequest -UseRestMethod -URI $URI -Method GET).Result
             }            
 
             Return $Results
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"
         }
-       
     }
 }

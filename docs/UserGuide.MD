@@ -36,6 +36,18 @@ The access token is then stored in script scope.  Once it expires a refresh toke
 
 > ❕ Please note that access token lifetimes should be no less than 5minutes (By default they are 30mins). This is due to a buffer period (for long running calls) being added in to the Assert-SNOWAuth private function.
 
+## Rate Limit Handling
+By default rate limiting is not handled.  
+Standard ServiceNow policies have limits applied on an hourly basis (not rolling).  
+If a rate limit is hit, an error will be thrown to state that this has happened, the rule number for the policy violation, and the time until the rate limit will reset.  
+  
+If you wish for the module to automatically handle these (e.g wait until the reset and then retry the command), please use ```-HandleRateLimiting``` on the Set-SNOWAuth command, but please be aware this could cause the command to 'hang' for up to 60 minutes depending on which policy has been triggered.  
+
+## Proxy Authentication
+By default, the module will attempt to detect if there is a proxy being used and it will apply default credentials if none are supplied.  
+Credentials can alternativly be provided to Set-SNOWAuth with the ```-ProxyCredential``` parameter.  
+Or to bypass detection and provide a specific proxy address ```-ProxyURI``` can also be used.  
+
 # Table API
 The Table API is one of the most commonly used, it supports [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on any table within the platform.  
 

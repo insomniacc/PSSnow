@@ -29,15 +29,13 @@ function Remove-SNOWAttachment {
     )
     
     begin {
-        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment/"
-        $AuthSplat = @{Headers = Get-AuthHeader}
     }
     
     process {
         try{
             if($PSCmdlet.ShouldProcess($file_name,'DELETE')){
-                Invoke-RestMethod -URI "$BaseURL$Sys_ID" -Method "DELETE" @AuthSplat
+                Invoke-SNOWWebRequest -UseRestMethod -URI "$BaseURL$Sys_ID" -Method "DELETE"
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$BaseURL$Sys_ID]"

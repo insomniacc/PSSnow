@@ -10,14 +10,9 @@ function Invoke-SNOWTableUPDATE {
     )
     
     BEGIN {
-        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "Set-SNOWObject" -AsStringArray -IncludeCommon
         $UpdateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
-        $AuthSplat = @{Headers = Get-AuthHeader}
-
-        #Removes GUI and increases performance
-        $ProgressPreference = "SilentlyContinue"
     }
     
     PROCESS {
@@ -61,7 +56,7 @@ function Invoke-SNOWTableUPDATE {
             }
 
             if($PSCmdlet.ShouldProcess("$table/$($Parameters.Sys_ID)","UPDATE")){
-                $Response = Invoke-RestMethod -Method PATCH -URI $URI -Body $Body @AuthSplat
+                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method PATCH -URI $URI -Body $Body
 
                 if($Parameters.PassThru.IsPresent){
                     Return $Response.Result

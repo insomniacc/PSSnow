@@ -13,14 +13,9 @@ function Invoke-SNOWTableCREATE {
     )
     
     BEGIN {
-        Assert-SNOWAuth
         $URI = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table"
         $DefaultParameterList = Import-DefaultParamSet -TemplateFunction "New-SNOWObject" -AsStringArray -IncludeCommon
         $CreateParameters = $Parameters.GetEnumerator() | Where-Object {$_.Key -notin $DefaultParameterList}
-        $AuthSplat = @{Headers = Get-AuthHeader}
-
-        #Removes GUI and increases performance
-        $ProgressPreference = "SilentlyContinue"
     }
     
     PROCESS {
@@ -57,7 +52,7 @@ function Invoke-SNOWTableCREATE {
         #? API Call
         try{
             if($PSCmdlet.ShouldProcess($URI,'POST')){
-                $Response = Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat
+                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json"
                 <#
                     Unlike the other CRUD private functions, CREATE has an additional PassThru
                     This is for granularity between the public and private functions as some CREATE actions may require the sys_id in order to perform other tasks, while not necessarily wanting to return output to the user

@@ -14,6 +14,8 @@ InModuleScope $ProjectName {
             Instance = $Instance
             Credential = $Credential
             Type = 'basic'
+            HandleRatelimiting    = $false
+            WebCallTimeoutSeconds = 0
         }
 
         #Get mock data
@@ -22,16 +24,16 @@ InModuleScope $ProjectName {
         $SingleRITMVariableResponse = Import-Clixml "$PSScriptRoot\MockedResponses\Set-SNOWRITMVariable_ReturnedVariable.xml"
         
 
-        Mock -CommandName Invoke-WebRequest -ParameterFilter {$URI -like "*table/sc_req_item*"} -MockWith {
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_req_item*"} -MockWith {
             $GetRITMResponse
         }
-        Mock -CommandName Invoke-WebRequest -ParameterFilter {$URI -like "*table/sc_item_option_mtom*"} -MockWith {
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option_mtom*"} -MockWith {
             $RITMVariableSetResponse
         }
-        Mock -CommandName Invoke-WebRequest -ParameterFilter {$URI -like "*table/sc_item_option_mtom*request_item=*^sc_item_option.item_option_new.name*"} -MockWith {
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option_mtom*request_item=*^sc_item_option.item_option_new.name*"} -MockWith {
             $SingleRITMVariableResponse
         }
-        Mock -CommandName Invoke-RestMethod -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH"} -MockWith {}    
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH" -and $UseRestMethod.IsPresent} -MockWith {}    
     }
 
     Describe "Get-SNOWRITMVariableSet" {
@@ -40,7 +42,7 @@ InModuleScope $ProjectName {
             $Output | Should -BeOfType PSCustomObject
             ($Output | Get-Member -MemberType NoteProperty).Name | Should -Contain "number"
             ($Output | Get-Member -MemberType NoteProperty).Count | Should -BeGreaterThan 1
-            Should -Invoke Invoke-WebRequest -Exactly 2
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 2
         }
 
         It "Should return variables [-sys_id]" {
@@ -48,7 +50,7 @@ InModuleScope $ProjectName {
             $Output | Should -BeOfType PSCustomObject
             ($Output | Get-Member -MemberType NoteProperty).Name | Should -Contain "sys_id"
             ($Output | Get-Member -MemberType NoteProperty).Count | Should -BeGreaterThan 1
-            Should -Invoke Invoke-WebRequest -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1
         }
 
         It "Should process multiple piped objects" {
@@ -60,32 +62,32 @@ InModuleScope $ProjectName {
             )
             $Output = $PipedInput | Get-SNOWRITMVariableSet
             $Output.count | Should -Be 4
-            Should -Invoke Invoke-WebRequest -Exactly 4
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 4
         }
     }
 
     Describe "Set-SNOWRITMVariable" {
         It "Should update a RITM Variable [-number]" {
             $Output = Set-SNOWRITMVariable -number "RITM0010001" -Name "business_purpose" -Value "Test"
-            Should -Invoke Invoke-WebRequest -Exactly 2
-            Should -Invoke Invoke-RestMethod -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH"} -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 2 -ParameterFilter {-not $UseRestMethod.IsPresent}
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH" -and $UseRestMethod.IsPresent} -Exactly 1
             $Output | Should -BeNullOrEmpty
         }
         It "Should update a RITM Variable [-sys_id]" {
             $Output = Set-SNOWRITMVariable -sys_id "a07e6bd947616110d3e5fa8bd36d4339" -Name "business_purpose" -Value "Test"
-            Should -Invoke Invoke-WebRequest -Exactly 1
-            Should -Invoke Invoke-RestMethod -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH"} -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1 -ParameterFilter {-not $UseRestMethod.IsPresent}
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH" -and $UseRestMethod.IsPresent} -Exactly 1
             $Output | Should -BeNullOrEmpty
         }
         It "Should accept a piped RITM" {
             [PSCustomObject]@{sys_id = "38cb1cda01654af48b55944a7a81eeef"} | Set-SNOWRITMVariable -Name "business_purpose" -Value "Test"
-            Should -Invoke Invoke-WebRequest -Exactly 1
-            Should -Invoke Invoke-RestMethod -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH"} -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1 -ParameterFilter {-not $UseRestMethod.IsPresent}
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH" -and $UseRestMethod.IsPresent} -Exactly 1
         }
         It "Should accept a piped RITM variable set" {
             Get-SNOWRITMVariableSet -Sys_Id "a07e6bd947616110d3e5fa8bd36d4339" | Set-SNOWRITMVariable -Name "business_purpose" -Value "Test"
-            Should -Invoke Invoke-WebRequest -Exactly 2
-            Should -Invoke Invoke-RestMethod -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH"} -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 2 -ParameterFilter {-not $UseRestMethod.IsPresent}
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {$URI -like "*table/sc_item_option*" -and $METHOD -eq "PATCH" -and $UseRestMethod.IsPresent} -Exactly 1
         }
     }
 }

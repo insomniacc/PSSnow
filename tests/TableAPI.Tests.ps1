@@ -50,22 +50,26 @@ InModuleScope $ProjectName {
             Instance = $Instance
             Credential = $Credential
             Type = 'basic'
+            HandleRatelimiting    = $false
+            WebCallTimeoutSeconds = 0
         }
     }
 
     Describe "Invoke-SNOWTableREAD" {
         BeforeAll {
-            Mock -CommandName Invoke-RestMethod -MockWith { 
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {
+                $UseRestMethod.IsPresent
+            } -MockWith { 
                 for( $i=0; $i -lt 20; $i++){
                     $RestMethodResponse
                 } 
             }
 
-            Mock -CommandName Invoke-WebRequest -MockWith {
+            Mock -CommandName Invoke-SNOWWebRequest -MockWith {
                 $WebRequestResponsePaged
             }
 
-            Mock -CommandName Invoke-WebRequest -ParameterFilter { $URI -like '*sysparm_offset=95' } -MockWith {
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $URI -like '*sysparm_offset=95' } -MockWith {
                 $WebRequestResponseNotPaged
             }
         }
@@ -73,22 +77,24 @@ InModuleScope $ProjectName {
         It "Should paginate, trim, and return an exact number of records (While using limit)" {
             $Output = Invoke-SNOWTableREAD -Parameters @{Limit = 101} -Table "sys_user" -PaginationAmount 20
             $Output.count | Should -BeExactly 101
-            Should -Invoke Invoke-RestMethod -Exactly 6
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {
+                $UseRestMethod.IsPresent
+            } -Exactly 6
         }
 
         It "Should return all records (While omitting limit)" {
             $Output = Invoke-SNOWTableREAD -Parameters @{} -Table "sys_user" -PaginationAmount 5
             $Output.count | Should -BeExactly 100
-            Should -Invoke Invoke-WebRequest -Exactly 20          
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 20          
         }
     }
 
     Describe "<CommandName>" -ForEach $TemplateCommands {
         BeforeAll {
-            Mock -CommandName Invoke-WebRequest -ParameterFilter { $Method -in 'GET','PATCH','POST' } -MockWith { $WebRequestResponse }
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -in 'GET','PATCH','POST' } -MockWith { $RestMethodResponse }
-            Mock -CommandName Invoke-WebRequest -ParameterFilter { $Method -eq 'DELETE' } -MockWith { }
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -eq 'DELETE' } -MockWith { }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -in 'GET','PATCH','POST' } -MockWith { $WebRequestResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -in 'GET','PATCH','POST' -and $UseRestMethod.IsPresent } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'DELETE' } -MockWith { }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'DELETE' -and $UseRestMethod.IsPresent} -MockWith { }
         }
 
         BeforeEach {
@@ -118,7 +124,7 @@ InModuleScope $ProjectName {
             $CommandName = $_
             $Command = Get-Command -Name $CommandName
 
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -eq 'GET' } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'GET' -and $UseRestMethod.IsPresent} -MockWith { $RestMethodResponse }
         }
 
         It "Should inherit parameters from Get-SNOWObject" {
@@ -143,7 +149,7 @@ InModuleScope $ProjectName {
             $CommandName = $_
             $Command = Get-Command -Name $CommandName
 
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -eq 'PATCH' } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'PATCH' -and $UseRestMethod.IsPresent} -MockWith { $RestMethodResponse }
         }
 
         It "Should inherit parameters from Set-SNOWObject" {
@@ -184,7 +190,7 @@ InModuleScope $ProjectName {
             $CommandName = $_
             $Command = Get-Command -Name $CommandName
 
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -eq 'POST' } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'POST' -and $UseRestMethod.IsPresent } -MockWith { $RestMethodResponse }
         }
 
         It "Should inherit parameters from New-SNOWObject" {
@@ -224,7 +230,7 @@ InModuleScope $ProjectName {
             $CommandName = $_
             $Command = Get-Command -Name $CommandName
 
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $Method -eq 'DELETE' } -MockWith { }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $Method -eq 'DELETE' -and $UseRestMethod.IsPresent} -MockWith { }
         }
 
         It "Should inherit parameters from Remove-SNOWObject" {

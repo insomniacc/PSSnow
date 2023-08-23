@@ -56,9 +56,7 @@
     )
     
     begin {
-        Assert-SNOWAuth
         $URI = "https://$($script:SNOWAuth.Instance).service-now.com/api/now/v1/stats/$Table`?"
-        $AuthSplat = @{Headers = Get-AuthHeader}
     }
     
     process {
@@ -72,7 +70,7 @@
             'Count'         {$URI += "&sysparm_count=$($Count.IsPresent.ToString().ToLower())"}
         }
 
-        $Response = Invoke-RestMethod -URI $URI @AuthSplat
+        $Response = Invoke-SNOWWebRequest -UseRestMethod -URI $URI
         if($Response){
             return $Response.result
         }

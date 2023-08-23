@@ -17,12 +17,14 @@ InModuleScope $ProjectName {
             Instance = $Instance
             Credential = $Credential
             Type = 'basic'
+            HandleRatelimiting    = $false
+            WebCallTimeoutSeconds = 0
         }
     }
 
     Describe "New-SNOWImport" {
         BeforeAll {
-            Mock -CommandName Invoke-RestMethod -ParameterFilter { $URI -like "*import*" -and $Method -eq "POST" } -MockWith { $RestMethodResponse }
+            Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $URI -like "*import*" -and $Method -eq "POST" -and $UseRestMethod.IsPresent} -MockWith { $RestMethodResponse }
         }
 
         It "Should a result indicating successful import" {
@@ -43,7 +45,7 @@ InModuleScope $ProjectName {
             $Output = $Movies | New-SNOWImport -table "u_moviesimport"
 
             $Output.count | Should -BeExactly 2
-            Should -Invoke Invoke-RestMethod -Exactly 2
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 2
         }
     }
 

@@ -93,15 +93,9 @@ function Get-SNOWAttachment {
     )
     
     begin {
-        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment"      
         $EnablePagination = $True
-        $AuthSplat = @{Headers = Get-AuthHeader}
-        $AuthSplat.Add('Method','GET')
-
-        #Removes GUI and increases performance
-        $ProgressPreference = "SilentlyContinue"      
-
+        
         if($OutputDestination -and -not $PassThru.IsPresent){
             $PassThru = [switch]$True
         }
@@ -172,14 +166,14 @@ function Get-SNOWAttachment {
             $Attachments =  if($EnablePagination){
                                 if($Limit){
                                     For($Offset = 0; $Offset -lt $Limit; $Offset+=$PaginationAmount){
-                                        $Response = (Invoke-RestMethod -uri "$URI&sysparm_offset=$Offset" @AuthSplat).Result
+                                        $Response = (Invoke-SNOWWebRequest -UseRestMethod -URI "$URI&sysparm_offset=$Offset" -Method GET).Result
                                         [void]$Attachments.Add($Response)
                                     }
                                     @($Attachments | ForEach-Object {$_}) | Select-Object -first $Limit
                                 }else{
                                     $Offset = 0
                                     Do{
-                                        $Response = Invoke-WebRequest -uri "$URI&sysparm_offset=$Offset" @AuthSplat -UseBasicParsing
+                                        $Response = Invoke-SNOWWebRequest -URI "$URI&sysparm_offset=$Offset" -Method GET
                                         [void]$Attachments.Add(($Response.content | ConvertFrom-Json).Result)
                                         $Offset += $PaginationAmount
                                     }While($Response.Headers.Link -like "*rel=`"next`"*")
@@ -188,7 +182,7 @@ function Get-SNOWAttachment {
                             }else{
                                 #? If this is a direct 'attachment' lookup, we already have the full attachment object, and PassThru is specified then we don't need to get the record again.
                                 if(-not ($PSCmdlet.ParameterSetName -eq 'SNOWObject' -and $LookupType -eq 'Attachment' -and $PassThru.IsPresent)){
-                                    (Invoke-RestMethod -URI $URI @AuthSplat).Result
+                                    (Invoke-SNOWWebRequest -UseRestMethod -URI $URI -Method GET).Result
                                 }else{
                                     $SNOWObject
                                 }
@@ -222,10 +216,10 @@ function Get-SNOWAttachment {
                         }
                     }
                     $Attachment | Add-Member -MemberType NoteProperty -Name 'output_filepath' -Value $OutFilepath -Force
-                    Invoke-RestMethod -URI $Attachment.download_link @AuthSplat -OutFile $OutFilepath
+                    Invoke-SNOWWebRequest -UseRestMethod -URI $Attachment.download_link -OutFile $OutFilepath -Method GET
                     $Attachment
                 }else{
-                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-RestMethod -URI $Attachment.download_link @AuthSplat) -Force
+                    $Attachment | Add-Member -MemberType NoteProperty -Name 'content' -Value (Invoke-SNOWWebRequest -UseRestMethod -URI $Attachment.download_link -Method GET) -Force
                     $Attachment
                 }   
             }

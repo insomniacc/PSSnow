@@ -3,7 +3,7 @@
 [![PSSnow](https://img.shields.io/powershellgallery/v/PSSnow.svg?style=flat-square&label=Powershell%20Gallery)](https://www.powershellgallery.com/packages/PSSnow/)
 ![powershell gallery](https://img.shields.io/powershellgallery/dt/PSSnow)
 [![License](https://img.shields.io/badge/license-GPL&ndash;3.0-blue.svg)](https://github.com/insomniacc/PSSnow/blob/main/LICENSE) 
-<img src="https://img.shields.io/badge/supports ps-5.0-blue.svg"></img>
+<img src="https://img.shields.io/badge/supports ps-5.1-blue.svg"></img>
 <img src="https://img.shields.io/badge/supports ps-core-blue.svg"></img>
 <a href="https://www.buymeacoffee.com/insomniacc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" height="20px"></a>
 
@@ -25,11 +25,13 @@ I've worked for a few large orgs with vastly different implementations of Servic
 
 ## Key Features
 
+- Handles rate limited requests
 - Handles OAuth auto token renewal
-- Pagination is handled automatically
+- Supports using proxies
+- Auto paginated calls
 - Provides generic 'template' functions to interact with all tables
 - Provides table specific functions with auto-complete
-- Batching is as easy as wrapping your existing code with a scriptblock
+- Batching calls is as easy as wrapping your existing code with a scriptblock
 - Attachments can be passed through without the need to interact with the filesystem
 - Service Catalog requests and incidents can be automated
 - Filters/Queries can be copied directly from ServiceNow and used in table GET commands

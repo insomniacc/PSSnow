@@ -16,6 +16,10 @@ $ProjectName = $Scriptpath | Split-Path -leaf
 #Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop
 
 if($Test.IsPresent){
+    if($PSVersionTable.PSVersion.ToString() -ge 5.2){
+        Write-Warning "These Pester tests currently are only written for & functional in 5.1, expect errors in PS Core."
+    }
+
     Write-Host "Running PSScriptAnalyzer tests"
     $AnalyzerResults = Invoke-ScriptAnalyzer -Path $ModulePath -Recurse -Profile @{Severity = @('Error', 'Warning')} -ReportSummary
     if($AnalyzerResults){

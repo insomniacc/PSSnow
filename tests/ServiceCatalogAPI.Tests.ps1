@@ -24,35 +24,41 @@ InModuleScope $ProjectName {
             Instance = $Instance
             Credential = $Credential
             Type = 'basic'
+            HandleRatelimiting    = $false
+            WebCallTimeoutSeconds = 0
         }
 
 
-        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { 
             $URI -like '*/add_to_cart' -and 
-            $METHOD -eq "POST"
+            $METHOD -eq "POST" -and
+            $UseRestMethod.IsPresent
         } -MockWith {
             $script:Cart = $CartWithItem
             $CartItem
         }
 
-        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { 
             $URI -like '*/checkout' -and 
-            $METHOD -eq "POST"
+            $METHOD -eq "POST" -and
+            $UseRestMethod.IsPresent
         } -MockWith {
             $script:Cart = $CartEmpty
             $CheckedOutCart
         }
 
-        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { 
             $URI -like '*/empty' -and 
-            $METHOD -eq "DELETE" 
+            $METHOD -like "Delete" -and
+            $UseRestMethod.IsPresent
         } -MockWith {
             $script:Cart = $CartEmpty
         }
 
-        Mock -CommandName Invoke-RestMethod -ParameterFilter { 
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { 
             $URI -like '*/cart' -and
-            $METHOD -eq "GET"
+            $METHOD -eq "GET" -and
+            $UseRestMethod.IsPresent
         } -MockWith {
             $script:Cart
         }
@@ -74,7 +80,7 @@ InModuleScope $ProjectName {
             
             $script:Cart.result.none | Should -Not -BeNullOrEmpty
             $Output | Should -BeNullOrEmpty
-            Should -Invoke Invoke-RestMethod -ParameterFilter {
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {
                 $URI -like '*/add_to_cart' -and 
                 $METHOD -eq "POST"
             } -Exactly 1
@@ -92,7 +98,7 @@ InModuleScope $ProjectName {
             $script:Cart.result.none | Should -Not -BeNullOrEmpty
             $Output | Should -BeExactly $CartItem.result
 
-            Should -Invoke Invoke-RestMethod -ParameterFilter {
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {
                 $URI -like '*/add_to_cart' -and 
                 $METHOD -eq "POST"
             } -Exactly 1
@@ -109,7 +115,7 @@ InModuleScope $ProjectName {
             $Output.request_number | Should -BeLike "REQ*"
             $script:Cart.result | Should -BeExactly $CartEmpty.result
 
-            Should -Invoke Invoke-RestMethod -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1
         }
 
         It "Should -empty the current cart" {
@@ -117,13 +123,12 @@ InModuleScope $ProjectName {
             $Output | Should -BeNullOrEmpty
             $script:Cart.result | Should -BeExactly $CartEmpty.result
 
-            Should -Invoke Invoke-RestMethod -ParameterFilter {
-                $URI -like '*/cart' -and
-                $METHOD -eq "GET"
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {
+                $URI -like '*/cart'
             } -Exactly 1
-            Should -Invoke Invoke-RestMethod -ParameterFilter {
+            Should -Invoke Invoke-SNOWWebRequest -ParameterFilter {
                 $URI -like '*/empty' -and 
-                $METHOD -eq "DELETE"
+                $METHOD -eq "Delete"
             } -Exactly 1
         }
 
@@ -132,7 +137,7 @@ InModuleScope $ProjectName {
             $Output | Should -BeNullOrEmpty
             $script:Cart.result | Should -BeExactly $CartEmpty.result
 
-            Should -Invoke Invoke-RestMethod -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1
         }
     }
 }

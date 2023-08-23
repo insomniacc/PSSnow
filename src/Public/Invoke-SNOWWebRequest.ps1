@@ -66,7 +66,12 @@ function Invoke-SNOWWebRequest {
         }
 
         # Proxy Auth
-        $ProxyAuth = $script:SNOWAuth.ProxyAuth
+        if($script:SNOWAuth.ProxyAuth){
+            $ProxyAuth = $script:SNOWAuth.ProxyAuth
+        }else{
+            $ProxyAuth = @{}
+        }
+        
         if($Headers){
             $PSBoundParameters.Headers = (Get-AuthHeader) + $Headers
         }else{

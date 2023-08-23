@@ -16,7 +16,7 @@ function Get-SNOWSCCart {
     param()
     
     $URI = "https://$($Script:SNOWAuth.Instance).service-now.com/api/sn_sc/servicecatalog/cart"
-    $Response = Invoke-SNOWWebRequest -UseRestMethod -Uri $URI
+    $Response = Invoke-SNOWWebRequest -UseRestMethod -Uri $URI -Method GET
     if($Response){
         return $Response.Result
     }

@@ -18,13 +18,15 @@ InModuleScope $ProjectName {
             Instance = $Instance
             Credential = $Credential
             Type = 'basic'
+            HandleRatelimiting    = $false
+            WebCallTimeoutSeconds = 0
         }
 
-        Mock -CommandName Invoke-RestMethod -ParameterFilter { $URI -like '*api/now/v1/batch' } -MockWith {
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter { $URI -like '*api/now/v1/batch' -and $UseRestMethod.IsPresent } -MockWith {
             $BatchRequestResponse
         }
 
-        Mock -CommandName Invoke-RestMethod -MockWith {
+        Mock -CommandName Invoke-SNOWWebRequest -ParameterFilter {$URI -notlike '*api/now/v1/batch' -and $UseRestMethod.IsPresent} -MockWith {
             $RestMethodResponse
         }
     }
@@ -38,7 +40,7 @@ InModuleScope $ProjectName {
             }
             $Output | Should -Not -BeNullOrEmpty
             $Output.serviced_requests.count | Should -BeExactly 3
-            Should -Invoke Invoke-RestMethod -Exactly 1
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 1
         }
 
         It "Should not throw or provide output when run with no requests" {
@@ -46,7 +48,7 @@ InModuleScope $ProjectName {
                 Get-SNOWUser -Sys_ID "02826bf03710200044e0bfc8bcbe5d3f"
             } -WarningAction SilentlyContinue
             $Output | Should -BeNullOrEmpty
-            Should -Invoke Invoke-RestMethod -Exactly 0
+            Should -Invoke Invoke-SNOWWebRequest -Exactly 0
         }
        
     }

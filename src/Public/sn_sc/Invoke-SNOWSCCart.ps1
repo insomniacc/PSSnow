@@ -45,11 +45,11 @@ function Invoke-SNOWSCCart {
         $PassThru
     )
     
-    Assert-SNOWAuth
     $URI = "https://$($Script:SNOWAuth.Instance).service-now.com/api/sn_sc/servicecatalog/cart/"
-    $Headers = Get-AuthHeader
-    $Headers.Add('Accept','application/json')
-    $Headers.Add('Content-Type','application/json')
+    $Headers = @{
+        'Accept'       = 'application/json'
+        'Content-Type' = 'application/json'
+    }
 
     if($Checkout.IsPresent){
         $URI = $URI + "checkout"
@@ -65,8 +65,7 @@ function Invoke-SNOWSCCart {
     }
 
     if($PSCmdlet.ShouldProcess($URI,$Method)){
-        $ProxyAuth = $script:SNOWAuth.ProxyAuth
-        $Response = Invoke-RestMethod -Method $Method -Uri $URI -Headers $Headers @ProxyAuth
+        $Response = Invoke-SNOWWebRequest -UseRestMethod -Method $Method -Uri $URI -Headers $Headers
         if($Response -and $PassThru.IsPresent){
             return $Response.Result
         }

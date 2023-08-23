@@ -36,9 +36,7 @@ function New-SNOWImport {
     )
 
     Begin {
-        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.Instance).service-now.com/api/now/v1/import/"
-        $AuthSplat = @{Headers = Get-AuthHeader}
     }
 
     Process {
@@ -53,8 +51,7 @@ function New-SNOWImport {
         #? API Call
         try{
             if($PSCmdlet.ShouldProcess($URI,'POST')){
-                $ProxyAuth = $script:SNOWAuth.ProxyAuth
-                Invoke-RestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json" @AuthSplat @ProxyAuth
+                Invoke-SNOWWebRequest -UseRestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json"
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"

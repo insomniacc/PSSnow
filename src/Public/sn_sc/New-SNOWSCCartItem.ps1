@@ -46,11 +46,11 @@ function New-SNOWSCCartItem {
     )
 
     Begin {
-        Assert-SNOWAuth
         $BaseURL = "https://$($Script:SNOWAuth.Instance).service-now.com/api/sn_sc/servicecatalog/items"
-        $Headers = Get-AuthHeader
-        $Headers.Add('Accept','application/json')
-        $Headers.Add('Content-Type','application/json')
+        $Headers = @{
+            'Accept'       = 'application/json'
+            'Content-Type' = 'application/json'
+        }
     }
     Process {
         $URI = "$BaseURL/$Sys_ID/add_to_cart"
@@ -80,8 +80,7 @@ function New-SNOWSCCartItem {
                 URI = $URI
                 Body = $Body
             }
-            $ProxyAuth = $script:SNOWAuth.ProxyAuth
-            $Response = Invoke-RestMethod @RestSplat @ProxyAuth
+            $Response = Invoke-SNOWWebRequest -UseRestMethod @RestSplat
             if($Response){
                 $Response = $Response.result
             }

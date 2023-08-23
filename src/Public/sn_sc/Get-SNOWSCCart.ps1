@@ -15,12 +15,8 @@ function Get-SNOWSCCart {
     [CmdletBinding()]
     param()
     
-    Assert-SNOWAuth
     $URI = "https://$($Script:SNOWAuth.Instance).service-now.com/api/sn_sc/servicecatalog/cart"
-    $Headers = Get-AuthHeader
-
-    $ProxyAuth = $script:SNOWAuth.ProxyAuth
-    $Response = Invoke-RestMethod -Method "GET" -Uri $URI -Headers $Headers @ProxyAuth
+    $Response = Invoke-SNOWWebRequest -UseRestMethod -Uri $URI
     if($Response){
         return $Response.Result
     }

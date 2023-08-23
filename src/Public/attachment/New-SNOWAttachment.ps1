@@ -59,14 +59,11 @@ function New-SNOWAttachment {
     )
     
     begin {
-        Assert-SNOWAuth
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v1/attachment/file"
         $RestMethod = 'POST'
     }
     
     process {
-        $Headers = Get-AuthHeader
-
         if($AttachedFilename){
             $Filename = $AttachedFilename
         }else{
@@ -190,7 +187,7 @@ function New-SNOWAttachment {
         }
         
         if($PSCmdlet.ShouldProcess($URI,$RestMethod)){
-            $Headers += @{
+            $Headers = @{
                 'Content-Type' = $MimeType
                 'Accept' = 'application/json'
             }
@@ -205,8 +202,7 @@ function New-SNOWAttachment {
                 $RestSplat += @{SkipHeaderValidation = $true}
             }
 
-            $ProxyAuth = $script:SNOWAuth.ProxyAuth
-            $Response = Invoke-RestMethod @RestSplat @ProxyAuth
+            $Response = Invoke-SNOWWebRequest -UseRestMethod @RestSplat
 
             if($PassThru.IsPresent){
                 Return $Response.Result

@@ -10,13 +10,8 @@ function Invoke-SNOWTableDELETE {
     )
     
     BEGIN {
-        Assert-SNOWAuth
-        $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase #todo remove this & test
+        $Parameters = Format-Hashtable -Hashtable $Parameters -KeysToLowerCase
         $BaseURL = "https://$($script:SNOWAuth.instance).service-now.com/api/now/v2/table/$Table/"
-        $AuthSplat = @{Headers = Get-AuthHeader}
-        $ProxyAuth = $script:SNOWAuth.ProxyAuth
-
-        #$ProgressPreference = "SilentlyContinue"
     }
     
     PROCESS {
@@ -26,10 +21,10 @@ function Invoke-SNOWTableDELETE {
         if($Parameters.ContainsKey('RestrictDomain')){
             $URI = "$URI`?sysparm_query_no_domain=$($Parameters.RestrictDomain.ToString().ToLower())"
         }
-
+        
         try{
             if($PSCmdlet.ShouldProcess($URI,'DELETE')){
-                Invoke-RestMethod -Method "DELETE" -URI $URI @AuthSplat @ProxyAuth
+                Invoke-SNOWWebRequest -UseRestMethod -Method "DELETE" -URI $URI
             }
         }catch{
             Write-Error "$($_.Exception.Message) [$URI]"

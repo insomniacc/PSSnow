@@ -2,9 +2,11 @@ function Invoke-SNOWRestMethod {
 
     <#
     .SYNOPSIS
-        A generic way to make rest calls to servicenow API's
+        A generic way to make rest calls to servicenow API's [deprecated]
     .DESCRIPTION
-        A wrapper for Invoke-RestMethod that utilizes authentication set with Set-SNOWAuth
+        A wrapper for Invoke-RestMethod that utilizes authentication set with Set-SNOWAuth [deprecated]
+    .NOTES
+        !This function is deprecated and has been left in for backward compatibility. Please use Invoke-SNOWWebRequest instead.
     .LINK
         https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Invoke-SNOWRestMethod.md
     .EXAMPLE
@@ -43,16 +45,11 @@ function Invoke-SNOWRestMethod {
         $Headers   
     )
 
-    Begin {Assert-SNOWAuth}
+    Begin {}
     Process {
-        $CombinedHeaders = Get-AuthHeader
-        if($Headers){
-            $CombinedHeaders += $Headers
-        }
-
         $RestMethodSplat = @{
-            URI     = "https://$($script:SNOWAuth.Instance).service-now.com/$Uri"
-            Headers = $CombinedHeaders
+            URI     = $URI
+            Headers = $Headers
         }
 
         if($Method){
@@ -62,8 +59,7 @@ function Invoke-SNOWRestMethod {
         if($Body){
             $RestMethodSplat['Body'] = $Body
         }
-
-        $ProxyAuth = $script:SNOWAuth.ProxyAuth
-        Invoke-RestMethod @RestMethodSplat @ProxyAuth
+        
+        Invoke-SNOWWebRequest -UseRestMethod @RestMethodSplat
     }
 }

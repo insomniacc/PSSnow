@@ -16,9 +16,9 @@ Retrieves a sys_user_group record from SNOW
 Get-SNOWUserGroup [[-active] <Boolean>] [[-cost_center] <String>] [[-default_assignee] <String>]
  [[-description] <String>] [[-email] <String>] [[-exclude_manager] <Boolean>] [[-include_members] <Boolean>]
  [[-manager] <String>] [[-name] <String>] [[-parent] <String>] [[-roles] <String>] [[-source] <String>]
- [[-type] <String>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>]
- [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>]
- [<CommonParameters>]
+ [[-type] <String>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
+ [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
+ [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -296,6 +296,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

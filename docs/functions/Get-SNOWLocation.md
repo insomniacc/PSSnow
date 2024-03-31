@@ -19,9 +19,9 @@ Get-SNOWLocation [[-city] <String>] [[-cmn_location_source] <String>] [[-cmn_loc
  [[-life_cycle_stage] <String>] [[-life_cycle_stage_status] <String>] [[-longitude] <String>]
  [[-managed_by_group] <String>] [[-name] <String>] [[-parent] <String>] [[-phone] <String>]
  [[-phone_territory] <String>] [[-primary_location] <String>] [[-state] <String>] [[-stock_room] <Boolean>]
- [[-street] <String>] [[-time_zone] <String>] [[-zip] <String>] [-Sys_ID <String>] [-Query <String>]
- [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>]
- [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
+ [[-street] <String>] [[-time_zone] <String>] [[-zip] <String>] [-ProgressAction <ActionPreference>]
+ [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks]
+ [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -479,6 +479,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

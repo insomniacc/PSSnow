@@ -15,9 +15,9 @@ Retrieves a cmn_department record from SNOW
 ```
 Get-SNOWDepartment [[-business_unit] <String>] [[-company] <String>] [[-cost_center] <String>]
  [[-dept_head] <String>] [[-description] <String>] [[-head_count] <String>] [[-id] <String>] [[-name] <String>]
- [[-parent] <String>] [[-primary_contact] <String>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
- [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
- [-SysParmView <String>] [<CommonParameters>]
+ [[-parent] <String>] [[-primary_contact] <String>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>]
+ [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>]
+ [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -250,6 +250,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

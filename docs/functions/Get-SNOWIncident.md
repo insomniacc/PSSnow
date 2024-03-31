@@ -19,9 +19,9 @@ Get-SNOWIncident [[-made_sla] <Boolean>] [[-number] <String>] [[-resolved_by] <S
  [[-notify] <String>] [[-closed_by] <String>] [[-parent_incident] <String>] [[-contact_type] <String>]
  [[-reopened_by] <String>] [[-incident_state] <String>] [[-urgency] <String>] [[-company] <String>]
  [[-assigned_to] <String>] [[-severity] <String>] [[-approval] <String>] [[-reopen_count] <String>]
- [[-escalation] <String>] [[-location] <String>] [[-category] <String>] [-Sys_ID <String>] [-Query <String>]
- [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>]
- [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
+ [[-escalation] <String>] [[-location] <String>] [[-category] <String>] [-ProgressAction <ActionPreference>]
+ [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks]
+ [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -509,6 +509,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

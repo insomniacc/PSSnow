@@ -15,7 +15,8 @@ A generic way to make rest calls to servicenow API's
 ```
 Invoke-SNOWWebRequest [-URI] <String> [[-Method] <String>] [[-Headers] <Hashtable>] [[-Body] <Object>]
  [[-ContentType] <String>] [[-OutFile] <String>] [[-InFile] <String>] [[-TransferEncoding] <String>]
- [-PassThru] [[-WebCallTimeoutSeconds] <Int32>] [-UseRestMethod] [<CommonParameters>]
+ [-PassThru] [[-WebCallTimeoutSeconds] <Int32>] [-UseRestMethod] [-SkipHeaderValidation]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -198,6 +199,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipHeaderValidation
+{{ Fill SkipHeaderValidation Description }}
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

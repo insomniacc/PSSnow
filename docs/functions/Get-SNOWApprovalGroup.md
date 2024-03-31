@@ -25,9 +25,10 @@ Get-SNOWApprovalGroup [[-admin_override] <Boolean>] [[-approval_user] <String>] 
  [[-order] <String>] [[-parent] <String>] [[-priority] <String>] [[-route_reason] <String>]
  [[-service_offering] <String>] [[-short_description] <String>] [[-state] <String>]
  [[-task_effective_number] <String>] [[-time_worked] <String>] [[-urgency] <String>] [[-user_input] <String>]
- [[-watch_list] <String>] [[-work_notes] <String>] [[-work_notes_list] <String>] [-Sys_ID <String>]
- [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>]
- [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
+ [[-watch_list] <String>] [[-work_notes] <String>] [[-work_notes_list] <String>]
+ [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
+ [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
+ [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -815,6 +816,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

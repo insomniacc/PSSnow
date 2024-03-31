@@ -14,12 +14,14 @@ Gets all associated variables for a RITM
 
 ### sys_id (Default)
 ```
-Get-SNOWRITMVariableSet -Sys_Id <String> [-IncludeLabels] [<CommonParameters>]
+Get-SNOWRITMVariableSet -Sys_Id <String> [-IncludeLabels] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### number
 ```
-Get-SNOWRITMVariableSet -Number <String> [-IncludeLabels] [<CommonParameters>]
+Get-SNOWRITMVariableSet -Number <String> [-IncludeLabels] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -94,6 +96,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

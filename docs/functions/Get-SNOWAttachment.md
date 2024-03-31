@@ -15,21 +15,22 @@ Gets attachments from servicenow.
 ### Attachment
 ```
 Get-SNOWAttachment -Sys_ID <String> [-PassThru] [-OutputDestination <String>] [-OutputFilename <String>]
- [-Force] [-DisregardSourceTable] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Force] [-DisregardSourceTable] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### SNOWObject
 ```
 Get-SNOWAttachment -SNOWObject <PSObject> [-Offset <Int32>] [-Limit <Int32>] [-PassThru]
  [-OutputDestination <String>] [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>]
- [-DisregardSourceTable] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-DisregardSourceTable] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Query
 ```
 Get-SNOWAttachment -Query <String> [-Offset <Int32>] [-Limit <Int32>] [-PassThru] [-OutputDestination <String>]
- [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>] [-DisregardSourceTable] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-OutputFilename <String>] [-Force] [-PaginationAmount <Int32>] [-DisregardSourceTable]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -263,6 +264,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

@@ -31,8 +31,8 @@ Set-SNOWCMDBCI [[-asset_tag] <String>] [[-assigned] <String>] [[-assigned_to] <S
  [[-owned_by] <String>] [[-po_number] <String>] [[-purchase_date] <String>] [[-schedule] <String>]
  [[-serial_number] <String>] [[-short_description] <String>] [[-start_date] <String>] [[-subcategory] <String>]
  [[-supported_by] <String>] [[-support_group] <String>] [[-vendor] <String>] [[-warranty_expiration] <String>]
- [-WhatIf] [-Confirm] -Sys_ID <String> [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru]
- [-AsBatchRequest] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] -Sys_ID <String> [-Properties <Hashtable>]
+ [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -1121,6 +1121,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

@@ -48,6 +48,24 @@ By default, the module will attempt to detect if there is a proxy being used and
 Credentials can alternativly be provided to Set-SNOWAuth with the ```-ProxyCredential``` parameter.  
 Or to bypass detection and provide a specific proxy address ```-ProxyURI``` can also be used.  
 
+### Bypassing a proxy
+There is also a ```-BypassDefaultProxy``` parameter which will ignore any system configured proxy.
+
+> ⚠️ **This parameter is only available to PoweShell Core users**
+
+### Bypassing a proxy on 5.1
+Because the above switch is only available to Core users, you will need to apply the bypass to the machine config.  
+This can be done in several places.  
+
+For example on windows, Under 'Network & Internet \ Proxy'
+We can add the bypass when modifying the proxy settings as shown below:  
+![proxy_bypass](images/ProxyBypass.png)
+
+Alternatively (and depending on how your proxy is configured) you can also use system environment variables as per this [MS article](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient.defaultproxy?view=net-5.0)  
+Please note using this method, it may be case sensitive.  
+If in doubt, use lower case for the env variable names e.g 'no_proxy'.  
+
+
 # Table API
 The Table API is one of the most commonly used, it supports [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on any table within the platform.  
 

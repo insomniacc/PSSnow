@@ -64,6 +64,7 @@ We can add the bypass when modifying the proxy settings as shown below:
 Alternatively (and depending on how your proxy is configured) you can also use system environment variables as per this [MS article](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient.defaultproxy?view=net-5.0)  
 Please note using this method, it may be case sensitive.  
 If in doubt, use lower case for the env variable names e.g 'no_proxy'.  
+You will need to reboot for these settings to take effect.  
 
 
 # Table API

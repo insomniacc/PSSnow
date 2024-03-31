@@ -15,19 +15,20 @@ Sets ServiceNow authentication in the current session.
 ### Basic (Default)
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-ProxyURI <String>]
- [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>] [<CommonParameters>]
+ [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>] [-BypassDefaultProxy]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### OAuth
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> -ClientID <String> -ClientSecret <SecureString>
  [-ProxyURI <String>] [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>]
- [<CommonParameters>]
+ [-BypassDefaultProxy] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### GetSNOWAuth
 ```
-Set-SNOWAuth -AuthObject <Object> [<CommonParameters>]
+Set-SNOWAuth -AuthObject <Object> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -179,6 +180,37 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -BypassDefaultProxy
+Only supported on PS Core.
+5.1 users will need to add a bypass via device config.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: Basic, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -189,6 +221,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/insomniacc/PSSnow/blob/next/docs/UserGuide.MD#authentication](https://github.com/insomniacc/PSSnow/blob/next/docs/UserGuide.MD#authentication)
 
 [https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md](https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md)
 

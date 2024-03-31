@@ -19,9 +19,9 @@ Set-SNOWLocation [[-city] <String>] [[-cmn_location_source] <String>] [[-cmn_loc
  [[-lat_long_error] <String>] [[-life_cycle_stage] <String>] [[-life_cycle_stage_status] <String>]
  [[-longitude] <String>] [[-managed_by_group] <String>] [[-name] <String>] [[-parent] <String>]
  [[-phone] <String>] [[-phone_territory] <String>] [[-primary_location] <String>] [[-state] <String>]
- [[-stock_room] <Boolean>] [[-street] <String>] [[-time_zone] <String>] [[-zip] <String>] [-WhatIf] [-Confirm]
- -Sys_ID <String> [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest]
- [<CommonParameters>]
+ [[-stock_room] <Boolean>] [[-street] <String>] [[-time_zone] <String>] [[-zip] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] -Sys_ID <String> [-Properties <Hashtable>]
+ [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -495,6 +495,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

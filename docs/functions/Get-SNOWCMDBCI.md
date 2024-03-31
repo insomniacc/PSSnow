@@ -28,9 +28,9 @@ Get-SNOWCMDBCI [[-asset] <String>] [[-asset_tag] <String>] [[-assigned_to] <Stri
  [[-name] <String>] [[-operational_status] <String>] [[-owned_by] <String>] [[-po_number] <String>]
  [[-schedule] <String>] [[-serial_number] <String>] [[-short_description] <String>] [[-skip_sync] <Boolean>]
  [[-subcategory] <String>] [[-supported_by] <String>] [[-support_group] <String>] [[-unverified] <Boolean>]
- [[-vendor] <String>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>]
- [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>]
- [<CommonParameters>]
+ [[-vendor] <String>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>]
+ [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>]
+ [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -968,6 +968,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

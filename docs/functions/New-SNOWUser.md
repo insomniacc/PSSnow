@@ -21,8 +21,8 @@ New-SNOWUser [[-active] <Boolean>] [[-building] <String>] [[-city] <String>] [[-
  [[-password_needs_reset] <Boolean>] [[-phone] <String>] [[-preferred_language] <String>] [[-state] <String>]
  [[-street] <String>] [[-time_format] <String>] [[-time_zone] <String>] [[-title] <String>]
  [[-user_name] <String>] [[-user_password] <String>] [[-vip] <Boolean>] [[-web_service_access_only] <Boolean>]
- [[-zip] <String>] [[-photo] <FileInfo>] [-WhatIf] [-Confirm] [-Properties <Hashtable>] [-InputDisplayValue]
- [-PassThru] [-AsBatchRequest] [<CommonParameters>]
+ [[-zip] <String>] [[-photo] <FileInfo>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -616,6 +616,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

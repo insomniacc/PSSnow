@@ -15,8 +15,8 @@ Updates a sysapproval_approver record in SNOW
 ```
 Set-SNOWApprover [[-approver] <String>] [[-comments] <String>] [[-document_id] <String>] [[-due_date] <String>]
  [[-expected_start] <String>] [[-group] <String>] [[-source_table] <String>] [[-state] <String>]
- [[-sysapproval] <String>] [-WhatIf] [-Confirm] -Sys_ID <String> [-Properties <Hashtable>] [-InputDisplayValue]
- [-PassThru] [-AsBatchRequest] [<CommonParameters>]
+ [[-sysapproval] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] -Sys_ID <String>
+ [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -235,6 +235,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

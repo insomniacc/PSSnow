@@ -32,9 +32,10 @@ Get-SNOWSCItem [[-access_type] <String>] [[-active] <Boolean>] [[-availability] 
  [[-short_description] <String>] [[-show_variable_help_on_load] <Boolean>] [[-start_closed] <Boolean>]
  [[-state] <String>] [[-taxonomy_topic] <String>] [[-template] <String>] [[-template_manager_roles] <String>]
  [[-type] <String>] [[-use_sc_layout] <Boolean>] [[-vendor] <String>] [[-visible_bundle] <Boolean>]
- [[-visible_guide] <Boolean>] [[-visible_standalone] <Boolean>] [[-workflow] <String>] [-Sys_ID <String>]
- [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>]
- [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
+ [[-visible_guide] <Boolean>] [[-visible_standalone] <Boolean>] [[-workflow] <String>]
+ [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
+ [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
+ [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -1182,6 +1183,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

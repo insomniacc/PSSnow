@@ -26,8 +26,8 @@ Set-SNOWApprovalGroup [[-admin_override] <Boolean>] [[-approval_user] <String>] 
  [[-priority] <String>] [[-service_offering] <String>] [[-short_description] <String>] [[-sla_due] <String>]
  [[-state] <String>] [[-time_worked] <String>] [[-urgency] <String>] [[-user_input] <String>]
  [[-watch_list] <String>] [[-work_end] <String>] [[-work_notes] <String>] [[-work_notes_list] <String>]
- [[-work_start] <String>] [-WhatIf] [-Confirm] -Sys_ID <String> [-Properties <Hashtable>] [-InputDisplayValue]
- [-PassThru] [-AsBatchRequest] [<CommonParameters>]
+ [[-work_start] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] -Sys_ID <String>
+ [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -876,6 +876,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

@@ -18,9 +18,9 @@ Get-SNOWSCRequestedItem [[-active] <Boolean>] [[-approval] <String>] [[-assigned
  [[-company] <String>] [[-configuration_item] <String>] [[-impact] <String>] [[-made_sla] <Boolean>]
  [[-number] <String>] [[-opened_by] <String>] [[-priority] <String>] [[-request] <String>]
  [[-requested_for] <String>] [[-short_description] <String>] [[-stage] <String>] [[-state] <String>]
- [[-urgency] <String>] [[-order_guide] <String>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
- [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
- [-SysParmView <String>] [<CommonParameters>]
+ [[-urgency] <String>] [[-order_guide] <String>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>]
+ [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>]
+ [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -418,6 +418,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

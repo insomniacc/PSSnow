@@ -22,9 +22,9 @@ Get-SNOWChangeRequest [[-number] <String>] [[-requested_by] <String>] [[-categor
  [[-production_system] <Boolean>] [[-opened_by] <String>] [[-closed_by] <String>] [[-active] <Boolean>]
  [[-approval] <String>] [[-parent] <String>] [[-phase] <String>] [[-phase_state] <String>]
  [[-unauthorized] <Boolean>] [[-company] <String>] [[-escalation] <String>] [[-location] <String>]
- [[-made_sla] <Boolean>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>]
- [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>]
- [<CommonParameters>]
+ [[-made_sla] <Boolean>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>]
+ [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>]
+ [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -632,6 +632,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

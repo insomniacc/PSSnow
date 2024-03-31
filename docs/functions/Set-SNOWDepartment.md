@@ -15,8 +15,9 @@ Updates a cmn_department record in SNOW
 ```
 Set-SNOWDepartment [[-business_unit] <String>] [[-company] <String>] [[-cost_center] <String>]
  [[-dept_head] <String>] [[-description] <String>] [[-head_count] <String>] [[-id] <String>] [[-name] <String>]
- [[-parent] <String>] [[-primary_contact] <String>] [-WhatIf] [-Confirm] -Sys_ID <String>
- [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest] [<CommonParameters>]
+ [[-parent] <String>] [[-primary_contact] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ -Sys_ID <String> [-Properties <Hashtable>] [-InputDisplayValue] [-PassThru] [-AsBatchRequest]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -250,6 +251,21 @@ Accept wildcard characters: False
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

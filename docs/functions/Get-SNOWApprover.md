@@ -15,8 +15,9 @@ Retrieves a sysapproval_approver record from SNOW
 ```
 Get-SNOWApprover [[-approval_source] <String>] [[-approver] <String>] [[-document_id] <String>]
  [[-group] <String>] [[-source_table] <String>] [[-state] <String>] [[-sysapproval] <String>]
- [-Sys_ID <String>] [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks]
- [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
+ [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
+ [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -204,6 +205,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

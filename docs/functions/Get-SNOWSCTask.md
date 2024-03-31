@@ -17,9 +17,9 @@ Get-SNOWSCTask [[-parent] <String>] [[-made_sla] <Boolean>] [[-number] <String>]
  [[-state] <String>] [[-impact] <String>] [[-active] <Boolean>] [[-priority] <String>] [[-request] <String>]
  [[-short_description] <String>] [[-delivery_task] <String>] [[-assignment_group] <String>]
  [[-closed_by] <String>] [[-urgency] <String>] [[-company] <String>] [[-assigned_to] <String>]
- [[-approval] <String>] [[-request_item] <String>] [-Sys_ID <String>] [-Query <String>] [-Fields <Array>]
- [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>] [-Limit <Int32>] [-RestrictDomain]
- [-SysParmView <String>] [<CommonParameters>]
+ [[-approval] <String>] [[-request_item] <String>] [-ProgressAction <ActionPreference>] [-Sys_ID <String>]
+ [-Query <String>] [-Fields <Array>] [-DisplayValue <String>] [-ExcludeReferenceLinks] [-Offset <Int32>]
+ [-Limit <Int32>] [-RestrictDomain] [-SysParmView <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -372,6 +372,21 @@ Accept wildcard characters: False
 Type: System.Int32
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

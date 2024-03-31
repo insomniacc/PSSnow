@@ -8,6 +8,8 @@ function Set-SNOWAuth {
         Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
         Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
     .LINK
+        https://github.com/insomniacc/PSSnow/blob/next/docs/UserGuide.MD#authentication
+    .LINK
         https://github.com/insomniacc/PSSnow/blob/main/docs/functions/Set-SNOWAuth.md
     .LINK
         https://docs.servicenow.com/csh?topicname=c_RESTAPI.html&version=latest
@@ -55,7 +57,12 @@ function Set-SNOWAuth {
         [int]
         $WebCallTimeoutSeconds,
         [Parameter(Mandatory,ParameterSetName='GetSNOWAuth',ValueFromPipeline)]
-        $AuthObject
+        $AuthObject,
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
+        [switch]
+        #Only supported on PS Core. 5.1 users will need to add a bypass via device config.
+        $BypassDefaultProxy
     )
 
     BEGIN {}
@@ -82,12 +89,16 @@ function Set-SNOWAuth {
         if($ProxyURI){
             $proxy = $ProxyURI
         }else{
-            $TestURI = 'https://google.com'
-            $SystemProxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy($TestURI)
-            if($SystemProxy.OriginalString -ne $TestURI){
-                $proxy = $SystemProxy
-            }else{
+            if($BypassDefaultProxy.IsPresent){
                 $proxy = $null
+            }else{
+                $TestURI = 'https://google.com'
+                $SystemProxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy($TestURI)
+                if($SystemProxy.OriginalString -ne $TestURI){
+                    $proxy = $SystemProxy
+                }else{
+                    $proxy = $null
+                }
             }
         }
         
@@ -102,7 +113,17 @@ function Set-SNOWAuth {
                 $ProxyAuth.ProxyUseDefaultCredentials = $true
             }
         }else{
-            $ProxyAuth = @{}
+            if($BypassDefaultProxy.IsPresent){
+                if($PSEdition -like "Desktop"){
+                    Write-Warning "The '-BypassDefaultProxy' switch is not supported on PS 5.1 (only PS Core). For more information on how to bypass please see: https://github.com/insomniacc/PSSnow/blob/next/docs/UserGuide.MD#bypassing-a-proxy-on-51"
+                    $ProxyAuth = @{}
+
+                }else{
+                    $ProxyAuth = @{NoProxy = $true}
+                }                
+            }else{
+                $ProxyAuth = @{}
+            }
         }
         
         #? Aliveness/Hibernation check for developer instances

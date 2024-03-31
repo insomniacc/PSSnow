@@ -15,7 +15,7 @@ Retrieves a servicenow table API object
 ```
 Get-SNOWObject [-Table] <String> [[-Sys_ID] <String>] [[-Query] <String>] [[-Fields] <Array>]
  [[-DisplayValue] <String>] [-ExcludeReferenceLinks] [[-Offset] <Int32>] [[-Limit] <Int32>] [-RestrictDomain]
- [[-SysParmView] <String>] [<CommonParameters>]
+ [[-SysParmView] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -184,6 +184,21 @@ Aliases:
 
 Required: False
 Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

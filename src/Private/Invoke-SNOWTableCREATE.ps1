@@ -52,7 +52,7 @@ function Invoke-SNOWTableCREATE {
         #? API Call
         try{
             if($PSCmdlet.ShouldProcess($URI,'POST')){
-                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json"
+                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method POST -URI $URI -Body $Body -ContentType "Application/Json;charset=utf-8"
                 <#
                     Unlike the other CRUD private functions, CREATE has an additional PassThru
                     This is for granularity between the public and private functions as some CREATE actions may require the sys_id in order to perform other tasks, while not necessarily wanting to return output to the user

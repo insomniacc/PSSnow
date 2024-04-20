@@ -56,7 +56,7 @@ function Invoke-SNOWTableUPDATE {
             }
 
             if($PSCmdlet.ShouldProcess("$table/$($Parameters.Sys_ID)","UPDATE")){
-                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method PATCH -URI $URI -Body $Body -ContentType "Application/Json"
+                $Response = Invoke-SNOWWebRequest -UseRestMethod -Method PATCH -URI $URI -Body $Body -ContentType "Application/Json;charset=utf-8"
 
                 if($Parameters.PassThru.IsPresent){
                     Return $Response.Result

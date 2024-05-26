@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.2] - 2024-05-26
+### Fixed
+- fixed issued with TimeoutSec on Invoke-SNOWWebRequest in PS 7.3
+
 ## [1.3.1] - 2024-04-20
 ### Fixed
 - fixed issued with utf-8 character encoding on update and create table API functions
@@ -88,7 +92,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TABLE API support with Get/New/Set/Remove-SNOWObject (these core functions provide the template for all other table functions)
 - TABLE API framework with private functions supporting CRUD operations.
 
-[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v1.3.1..HEAD
+[Unreleased]: https://github.com/insomniacc/PSSnow/compare/v1.3.2..HEAD
+[1.3.2]: https://github.com/insomniacc/PSSnow/compare/v1.3.1..v1.3.2
 [1.3.1]: https://github.com/insomniacc/PSSnow/compare/v1.3.0..v1.3.1
 [1.3.0]: https://github.com/insomniacc/PSSnow/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/insomniacc/PSSnow/compare/v1.1.0..v1.2.0

@@ -53,7 +53,7 @@ function Invoke-SNOWWebRequest {
 
         #? Timeout properties
         if($WebCallTimeoutSeconds -gt 0){
-            if($PSVersionTable.PSVersion.ToString() -gt 7.3){
+            if($PSVersionTable.PSVersion.ToString() -ge 7.4){
                 $TimeoutSplat = @{
                     OperationTimeoutSeconds = $WebCallTimeoutSeconds
                 }

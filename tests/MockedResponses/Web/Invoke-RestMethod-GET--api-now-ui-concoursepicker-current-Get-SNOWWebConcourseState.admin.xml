@@ -1,0 +1,43 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <Obj N="result" RefId="1">
+        <TNRef RefId="0" />
+        <MS>
+          <Obj N="currentUpdateSet" RefId="2">
+            <TNRef RefId="0" />
+            <MS>
+              <S N="name">Default [ServiceNow IDE]</S>
+              <S N="sysId">9064a804838daa10f2dbcac6feaad34d</S>
+            </MS>
+          </Obj>
+          <Obj N="currentDomain" RefId="3">
+            <TNRef RefId="0" />
+            <MS>
+              <B N="used">false</B>
+              <S N="label">global</S>
+              <S N="image"></S>
+              <B N="reference">false</B>
+              <S N="rawLabel">global</S>
+              <B N="selected">false</B>
+              <B N="missing">false</B>
+              <S N="value">global</S>
+            </MS>
+          </Obj>
+          <Obj N="currentApplication" RefId="4">
+            <TNRef RefId="0" />
+            <MS>
+              <S N="name">ServiceNow IDE</S>
+              <S N="scopeName">sn_glider</S>
+              <S N="sysId">fd254d9443a161100967247e6bb8f200</S>
+            </MS>
+          </Obj>
+        </MS>
+      </Obj>
+    </MS>
+  </Obj>
+</Objs>

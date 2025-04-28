@@ -1,0 +1,33 @@
+﻿<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Instance">dev306209</S>
+      <B N="HasSecurityToken">true</B>
+      <S N="SecurityToken">33d3114a9330a25019dc74cdfaba10c090839df6c1367da1ed6cd04bb83fdd041698eade</S>
+      <I32 N="CookieCount">6</I32>
+      <B N="CookiesValid">false</B>
+      <S N="CookieString">JSESSIONID=4B53AFB4C0E2F1BA7AFD9FAE83DCA245; glide_user_route=glide.8df3e1564b6173ee051971dc3bd3b893; glide_node_id_for_js=ec9a096fd0ad5212633876394444289d141d5a2b838a16a9a2fd38007f11ab3f; BIGipServerpool_dev306209=3313540618.45374.0000; glide_user_activity=U0N2M18xOldjZVVidVlwUEUwUW53OHdxUHoxaCtOeXo0TWgrSzh6SXJ0QjlTTWZxbTQ9OnBIWG5YakxlTUFrV3hzdlgwTGFtNzlxNVZwdG5hdWRGdjU0Mkd6LzRSTms9; glide_session_store=FFD3114A9330A25019DC74CDFABA10BF</S>
+      <B N="Valid">false</B>
+      <S N="ValidationMessage">Session not validated</S>
+      <I32 N="StatusCode">0</I32>
+      <Nil N="Response" />
+      <DT N="NextCookieExpiration">2025-04-10T11:21:22.2130645-04:00</DT>
+      <Obj N="Headers" RefId="1">
+        <TN RefId="1">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">X-UserToken</S>
+            <S N="Value">33d3114a9330a25019dc74cdfaba10c090839df6c1367da1ed6cd04bb83fdd041698eade</S>
+          </En>
+        </DCT>
+      </Obj>
+    </MS>
+  </Obj>
+</Objs>

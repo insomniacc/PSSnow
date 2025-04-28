@@ -32,5 +32,28 @@ function Assert-SNOWAuth() {
             $script:SNOWAuth.Expires = (get-date).AddSeconds($Token.expires_in)
         }
     }
+    if ($script:SNOWAuth.session) {
+        $SessionState = Get-SNOWWebSessionState
+        
+        #? Validate session cookies - if they are invalid, attempt to fetch a NEW session.
+        if ($SessionState.CookiesValid -eq $true -and !$SessionState.Expired) {
+            $script:SNOWAuth.SessionState = $SessionState
+        }
+        else {
+            Write-Warning "PSSnow WebSession ValidationMessage: $($SessionState.ValidationMessage) - Removing SNOWAuth.session and re-authenticating"
+            $Script:SNOWAuth.session = $null
+            $script:SNOWAuth.SessionState = $null
+            $script:SNOWAuth.session = New-SNOWAuthWebSession
+            if ($Script:SNOWAuth.session.valid) {
+                $script:SNOWAuth.SessionState = Get-SNOWWebSessionState -ValidateSession
+                Write-Information ("Web Session state: [{0}]" -f $script:SNOWAuth.SessionState.ValidationMessage)
+            }
+            else {
+                $Script:SNOWAuth.session = $null
+                $script:SNOWAuth.SessionState = $null
+                Write-Warning "Web login failed, falling back to basic authentication"
+            }
+        } 
+    }
 }
 

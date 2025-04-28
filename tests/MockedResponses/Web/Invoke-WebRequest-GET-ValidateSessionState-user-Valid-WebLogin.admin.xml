@@ -1,0 +1,265 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject</T>
+      <T>Microsoft.PowerShell.Commands.WebResponseObject</T>
+      <T>System.Object</T>
+    </TN>
+    <ToString>{"result":[{"sys_id":"6816f79cc0a8016401c5a33be04be441","user_name":"admin","name":"System Administrator"}]}</ToString>
+    <Props>
+      <S N="Content">{"result":[{"sys_id":"6816f79cc0a8016401c5a33be04be441","user_name":"admin","name":"System Administrator"}]}</S>
+      <Obj N="Encoding" RefId="1">
+        <TN RefId="1">
+          <T>System.Text.UTF8Encoding+UTF8EncodingSealed</T>
+          <T>System.Text.UTF8Encoding</T>
+          <T>System.Text.Encoding</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>System.Text.UTF8Encoding+UTF8EncodingSealed</ToString>
+        <Props>
+          <S N="BodyName">utf-8</S>
+          <S N="EncodingName">Unicode (UTF-8)</S>
+          <S N="HeaderName">utf-8</S>
+          <S N="WebName">utf-8</S>
+          <I32 N="WindowsCodePage">1200</I32>
+          <B N="IsBrowserDisplay">true</B>
+          <B N="IsBrowserSave">true</B>
+          <B N="IsMailNewsDisplay">true</B>
+          <B N="IsMailNewsSave">true</B>
+          <B N="IsSingleByte">false</B>
+          <S N="EncoderFallback">System.Text.EncoderReplacementFallback</S>
+          <S N="DecoderFallback">System.Text.DecoderReplacementFallback</S>
+          <B N="IsReadOnly">true</B>
+          <I32 N="CodePage">65001</I32>
+        </Props>
+      </Obj>
+      <Obj N="InputFields" RefId="2">
+        <TN RefId="2">
+          <T>Microsoft.PowerShell.Commands.WebCmdletElementCollection</T>
+          <T>System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Management.Automation.PSObject, System.Management.Automation, Version=7.5.0.500, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]</T>
+          <T>System.Object</T>
+        </TN>
+        <LST />
+      </Obj>
+      <Obj N="Links" RefId="3">
+        <TNRef RefId="2" />
+        <LST />
+      </Obj>
+      <Obj N="Images" RefId="4">
+        <TNRef RefId="2" />
+        <LST />
+      </Obj>
+      <Obj N="BaseResponse" RefId="5">
+        <TN RefId="3">
+          <T>System.Net.Http.HttpResponseMessage</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: System.Net.Http.HttpConnectionResponseContent, Headers:_x000A_{_x000A_  Server-Timing: sem_wait;dur=1, sesh_wait;dur=0_x000A_  X-Is-Logged-In: true_x000A_  X-Transaction-ID: 9244f0008301_x000A_  X-Total-Count: 1_x000A_  X-Content-Type-Options: nosniff_x000A_  Pragma: no-store_x000A_  Pragma: no-cache_x000A_  Cache-Control: no-cache,no-store,must-revalidate,max-age=-1_x000A_  Date: Wed, 16 Apr 2025 17:41:13 GMT_x000A_  Server: ServiceNow_x000A_  Set-Cookie: glide_user_activity=U0N2M18xOkFNREJ6SW5rcUM1WXpPWnA2UzNqUE14MWhpZnNFb1VlNlJjaDJnSHNmeFE9Ok56NkVBVHhrK281TzBhSUZPalFIUTNIbCtwa2JsSG92YXZZZ3MybUQzaUk9; Path=/; Secure; HttpOnly; SameSite=None; Secure_x000A_  Set-Cookie: glide_node_id_for_js=9f4f7b490cb0168f1bf91f37a6f3b82c941d35bc53182f09f7afdc2f9a6f5084; Path=/; Secure; SameSite=None; Secure_x000A_  Set-Cookie: glide_session_store=5E447448834DAA10F2DBCAC6FEAAD3DD; Max-Age=60; Expires=Wed, 16-Apr-2025 17:42:14 GMT; Path=/; Secure; HttpOnly; SameSite=None; Secure_x000A_  Strict-Transport-Security: max-age=63072000; includeSubDomains_x000A_  Expires: 0_x000A_  Content-Type: application/json; charset=UTF-8_x000A_  Content-Length: 108_x000A_}</ToString>
+        <Props>
+          <Version N="Version">1.1</Version>
+          <S N="Content">System.Net.Http.HttpConnectionResponseContent</S>
+          <S N="StatusCode">OK</S>
+          <S N="ReasonPhrase">OK</S>
+          <Obj N="Headers" RefId="6">
+            <TN RefId="4">
+              <T>System.Net.Http.Headers.HttpResponseHeaders</T>
+              <T>System.Net.Http.Headers.HttpHeaders</T>
+              <T>System.Object</T>
+            </TN>
+            <IE>
+              <S>[Server-Timing, System.String[]]</S>
+              <S>[X-Is-Logged-In, System.String[]]</S>
+              <S>[X-Transaction-ID, System.String[]]</S>
+              <S>[X-Total-Count, System.String[]]</S>
+              <S>[X-Content-Type-Options, System.String[]]</S>
+              <S>[Pragma, System.String[]]</S>
+              <S>[Cache-Control, System.String[]]</S>
+              <S>[Date, System.String[]]</S>
+              <S>[Server, System.String[]]</S>
+              <S>[Set-Cookie, System.String[]]</S>
+              <S>[Strict-Transport-Security, System.String[]]</S>
+            </IE>
+          </Obj>
+          <Obj N="TrailingHeaders" RefId="7">
+            <TNRef RefId="4" />
+            <IE />
+          </Obj>
+          <S N="RequestMessage">Method: GET, RequestUri: 'https://dev195226.service-now.com/api/now/v2/table/sys_user?sysparm_limit=1&amp;sysparm_fields=sys_id,name,user_name&amp;sysparm_query=user_name=javascript:gs.getUserName()', Version: 1.1, Content: &lt;null&gt;, Headers:_x000A_{_x000A_  X-UserToken: de447448834daa10f2dbcac6feaad3dd2bb922730998ed61fe928dde2bb44fe392b60fc3_x000A_  User-Agent: Mozilla/5.0_x000A_  User-Agent: (Linux; Ubuntu 22.04.5 LTS; )_x000A_  User-Agent: PowerShell/7.5.0_x000A_  Accept-Encoding: gzip_x000A_  Accept-Encoding: deflate_x000A_  Accept-Encoding: br_x000A_}</S>
+          <B N="IsSuccessStatusCode">true</B>
+        </Props>
+      </Obj>
+      <Obj N="Headers" RefId="8">
+        <TN RefId="5">
+          <T>System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.IEnumerable`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Server-Timing</S>
+            <Obj N="Value" RefId="9">
+              <TN RefId="6">
+                <T>System.String[]</T>
+                <T>System.Array</T>
+                <T>System.Object</T>
+              </TN>
+              <LST>
+                <S>sem_wait;dur=1, sesh_wait;dur=0</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">X-Is-Logged-In</S>
+            <Obj N="Value" RefId="10">
+              <TNRef RefId="6" />
+              <LST>
+                <S>true</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">X-Transaction-ID</S>
+            <Obj N="Value" RefId="11">
+              <TNRef RefId="6" />
+              <LST>
+                <S>9244f0008301</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">X-Total-Count</S>
+            <Obj N="Value" RefId="12">
+              <TNRef RefId="6" />
+              <LST>
+                <S>1</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">X-Content-Type-Options</S>
+            <Obj N="Value" RefId="13">
+              <TNRef RefId="6" />
+              <LST>
+                <S>nosniff</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Pragma</S>
+            <Obj N="Value" RefId="14">
+              <TNRef RefId="6" />
+              <LST>
+                <S>no-store</S>
+                <S>no-cache</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cache-Control</S>
+            <Obj N="Value" RefId="15">
+              <TNRef RefId="6" />
+              <LST>
+                <S>no-cache,no-store,must-revalidate,max-age=-1</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Date</S>
+            <Obj N="Value" RefId="16">
+              <TNRef RefId="6" />
+              <LST>
+                <S>Wed, 16 Apr 2025 17:41:13 GMT</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Server</S>
+            <Obj N="Value" RefId="17">
+              <TNRef RefId="6" />
+              <LST>
+                <S>ServiceNow</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Set-Cookie</S>
+            <Obj N="Value" RefId="18">
+              <TNRef RefId="6" />
+              <LST>
+                <S>glide_user_activity=U0N2M18xOkFNREJ6SW5rcUM1WXpPWnA2UzNqUE14MWhpZnNFb1VlNlJjaDJnSHNmeFE9Ok56NkVBVHhrK281TzBhSUZPalFIUTNIbCtwa2JsSG92YXZZZ3MybUQzaUk9; Path=/; Secure; HttpOnly; SameSite=None; Secure</S>
+                <S>glide_node_id_for_js=9f4f7b490cb0168f1bf91f37a6f3b82c941d35bc53182f09f7afdc2f9a6f5084; Path=/; Secure; SameSite=None; Secure</S>
+                <S>glide_session_store=5E447448834DAA10F2DBCAC6FEAAD3DD; Max-Age=60; Expires=Wed, 16-Apr-2025 17:42:14 GMT; Path=/; Secure; HttpOnly; SameSite=None; Secure</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Strict-Transport-Security</S>
+            <Obj N="Value" RefId="19">
+              <TNRef RefId="6" />
+              <LST>
+                <S>max-age=63072000; includeSubDomains</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Expires</S>
+            <Obj N="Value" RefId="20">
+              <TNRef RefId="6" />
+              <LST>
+                <S>0</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Content-Type</S>
+            <Obj N="Value" RefId="21">
+              <TNRef RefId="6" />
+              <LST>
+                <S>application/json; charset=UTF-8</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Content-Length</S>
+            <Obj N="Value" RefId="22">
+              <TNRef RefId="6" />
+              <LST>
+                <S>108</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <S N="RawContent">HTTP/1.1 200 OK_x000A_Server-Timing: sem_wait;dur=1, sesh_wait;dur=0_x000A_X-Is-Logged-In: true_x000A_X-Transaction-ID: 9244f0008301_x000A_X-Total-Count: 1_x000A_X-Content-Type-Options: nosniff_x000A_Pragma: no-store_x000A_Pragma: no-cache_x000A_Cache-Control: no-cache,no-store,must-revalidate,max-age=-1_x000A_Date: Wed, 16 Apr 2025 17:41:13 GMT_x000A_Server: ServiceNow_x000A_Set-Cookie: glide_user_activity=U0N2M18xOkFNREJ6SW5rcUM1WXpPWnA2UzNqUE14MWhpZnNFb1VlNlJjaDJnSHNmeFE9Ok56NkVBVHhrK281TzBhSUZPalFIUTNIbCtwa2JsSG92YXZZZ3MybUQzaUk9; Path=/; Secure; HttpOnly; SameSite=None; Secure_x000A_Set-Cookie: glide_node_id_for_js=9f4f7b490cb0168f1bf91f37a6f3b82c941d35bc53182f09f7afdc2f9a6f5084; Path=/; Secure; SameSite=None; Secure_x000A_Set-Cookie: glide_session_store=5E447448834DAA10F2DBCAC6FEAAD3DD; Max-Age=60; Expires=Wed, 16-Apr-2025 17:42:14 GMT; Path=/; Secure; HttpOnly; SameSite=None; Secure_x000A_Strict-Transport-Security: max-age=63072000; includeSubDomains_x000A_Expires: 0_x000A_Content-Type: application/json; charset=UTF-8_x000A_Content-Length: 108_x000A__x000A_{"result":[{"sys_id":"6816f79cc0a8016401c5a33be04be441","user_name":"admin","name":"System Administrator"}]}</S>
+      <I64 N="RawContentLength">108</I64>
+      <Obj N="RawContentStream" RefId="23">
+        <TN RefId="7">
+          <T>Microsoft.PowerShell.Commands.WebResponseContentMemoryStream</T>
+          <T>System.IO.MemoryStream</T>
+          <T>System.IO.Stream</T>
+          <T>System.MarshalByRefObject</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Microsoft.PowerShell.Commands.WebResponseContentMemoryStream</ToString>
+        <Props>
+          <B N="CanRead">true</B>
+          <B N="CanSeek">true</B>
+          <B N="CanWrite">true</B>
+          <I64 N="Length">108</I64>
+          <I32 N="Capacity">10000</I32>
+          <I64 N="Position">0</I64>
+          <B N="CanTimeout">false</B>
+        </Props>
+      </Obj>
+      <Obj N="RelationLink" RefId="24">
+        <TN RefId="8">
+          <T>System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT />
+      </Obj>
+      <I32 N="StatusCode">200</I32>
+      <S N="StatusDescription">OK</S>
+      <Nil N="OutFile" />
+    </Props>
+  </Obj>
+</Objs>

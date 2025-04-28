@@ -1,0 +1,24 @@
+{
+  "Parameters": {
+    "Headers": {
+      "X-UserToken": "da95b0848301ea10f2dbcac6feaad3fade48c0ecdd2bc997f94a88fc29a2565d2aba481a"
+    },
+    "InFile": null,
+    "Body": null,
+    "PassThru": null,
+    "OutFile": null,
+    "URI": "https://dev195226.service-now.com//api/now/ui/concoursepicker/concourselist",
+    "ContentType": null,
+    "TransferEncoding": null,
+    "Method": "GET"
+  },
+  "URI": "https://dev195226.service-now.com//api/now/ui/concoursepicker/concourselist",
+  "Body": null,
+  "FileTag": "-api-now-ui-concoursepicker-concourselist-Get-SNOWWebConcourseState",
+  "Method": "GET",
+  "Headers": {
+    "X-UserToken": "da95b0848301ea10f2dbcac6feaad3fade48c0ecdd2bc997f94a88fc29a2565d2aba481a"
+  },
+  "Time": "2025-04-16T13:46:59.292-04:00",
+  "ContentType": null
+}

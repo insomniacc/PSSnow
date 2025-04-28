@@ -1,0 +1,57 @@
+{
+  "FileTag": "sn_devstudio_get_publish_info-WebLogin",
+  "URI": "https://dev195226.service-now.com/sn_devstudio_/v1/get_publish_info",
+  "Parameters": {
+    "Headers": {
+      "Authorization": "Basic YWRtaW46LXZKWnNJLUZjMjBj"
+    },
+    "Method": "GET",
+    "WebSession": {
+      "Headers": {
+        "Authorization": "Basic YWRtaW46LXZKWnNJLUZjMjBj"
+      },
+      "Cookies": {
+        "Capacity": 300,
+        "Count": 5,
+        "MaxCookieSize": 4096,
+        "PerDomainCapacity": 20
+      },
+      "UseDefaultCredentials": false,
+      "Credentials": {
+        "UserName": "admin",
+        "Password": "-vJZsI-Fc20c",
+        "SecurePassword": {
+          "Length": 12
+        },
+        "Domain": ""
+      },
+      "Certificates": null,
+      "UserAgent": "Mozilla/5.0 (Linux; Ubuntu 22.04.5 LTS; ) PowerShell/7.5.0",
+      "Proxy": {
+        "Credentials": {
+          "UserName": "",
+          "Password": "",
+          "SecurePassword": "System.Security.SecureString",
+          "Domain": ""
+        }
+      },
+      "MaximumRedirection": -1,
+      "MaximumRetryCount": 0,
+      "RetryIntervalInSeconds": 0
+    },
+    "Uri": "https://dev195226.service-now.com/sn_devstudio_/v1/get_publish_info",
+    "Credential": {
+      "UserName": "admin",
+      "Password": {
+        "Length": 12
+      }
+    }
+  },
+  "ContentType": null,
+  "Method": "GET",
+  "Body": null,
+  "Time": "2025-04-16T13:41:13.884-04:00",
+  "Headers": {
+    "Authorization": "Basic YWRtaW46LXZKWnNJLUZjMjBj"
+  }
+}

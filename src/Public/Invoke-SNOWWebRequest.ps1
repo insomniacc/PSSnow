@@ -92,6 +92,15 @@ function Invoke-SNOWWebRequest {
         [Void]$PSBoundParameters.Remove('WebCallTimeoutSeconds')
         [Void]$PSBoundParameters.Remove('UseRestMethod')
 
+        #? WebSession. If the session is valid, remove the Authorization header and use the WebSession (Cookies) and X-UserToken Header instead.
+        # .SessionState is resolved by Assert-SNOWAuth whenever Set-SNOWAuth is called with -UseWebSession
+        if ($script:SNOWAuth.SessionState -and $script:SNOWAuth.SessionState.CookiesValid -eq $true) {
+            $script:SNOWAuth.session.WebSession.Headers = @{}
+            $PSBoundParameters.WebSession = $script:SNOWAuth.session.WebSession
+            [void]$PSBoundParameters.Headers.Remove('Authorization')
+            $PSBoundParameters.Headers['X-UserToken'] = $script:SNOWAuth.SessionState.SecurityToken
+        }
+
         # Removes GUI and increases performance
         $ProgressPreference = "SilentlyContinue"
     }

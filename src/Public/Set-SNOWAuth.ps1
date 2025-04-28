@@ -6,7 +6,17 @@ function Set-SNOWAuth {
         Applies module scope authentication for PSSnow
     .EXAMPLE
         Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-        Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+        # Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+    .EXAMPLE
+        Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -ClientSecret (ConvertTo-SecureString -String "ClientSecret" -AsPlainText -Force) -Credential (get-credential) -Verbose
+        # Applies OAuth authentication in the current session for instance 'InstanceName.service-now.com'
+    .EXAMPLE
+        Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -AccessToken "AccessToken" -RefreshToken "RefreshToken" -ExpiresInSeconds 3600 -Verbose
+        # Applies OAuth authentication with a Public Client in the current session for instance 'InstanceName.service-now.com' using provided tokens.
+    .EXAMPLE
+        Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -AccessToken "AccessToken" -RefreshToken "RefreshToken" -ExpiresInSeconds 3600 -ClientSecret (ConvertTo-SecureString -String "ClientSecret" -AsPlainText -Force) -Verbose
+        # Applies OAuth authentication with a Private Client in the current session for instance 'InstanceName.service-now.com' using provided tokens. 
+
     .LINK
         https://github.com/insomniacc/PSSnow/blob/next/docs/UserGuide.MD#authentication
     .LINK
@@ -19,6 +29,7 @@ function Set-SNOWAuth {
     param (
         [Parameter(Mandatory, ParameterSetName = 'Basic')]
         [Parameter(Mandatory, ParameterSetName = 'OAuth')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
         [ValidateNotNullOrEmpty()]
         [string]
         #Instance name e.g dev123456
@@ -29,40 +40,66 @@ function Set-SNOWAuth {
         #Basic Auth
         $Credential,
         [Parameter(Mandatory, ParameterSetName = 'OAuth')]
+        [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
         [string]
         #OAuth ClientID
         $ClientID,
         [Parameter(Mandatory, ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         [SecureString]
         #OAuth ClientSecret
         $ClientSecret,
         [Parameter(ParameterSetName = 'Basic')]
         [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         [string]
         #By default if this param is not used the system default proxy will be provided if configured. URI should include the port if used.
         $ProxyURI,
         [Parameter(ParameterSetName = 'Basic')]
         [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         [PSCredential]
         #Provide credentials if you do not want to use default auth for any existing proxy
         $ProxyCredential,
         [Parameter(ParameterSetName = 'Basic')]
         [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         #Servicenow rate limit policies are per hour, this will cause commands to sleep and wait until those rate limits are refreshed, instead of returning an error.
         [switch]
         $HandleRatelimiting,
         #Default is no specified timeout
         [Parameter(ParameterSetName = 'Basic')]
         [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         [int]
         $WebCallTimeoutSeconds,
-        [Parameter(Mandatory,ParameterSetName='GetSNOWAuth',ValueFromPipeline)]
+        [Parameter(Mandatory, ParameterSetName = 'GetSNOWAuth', ValueFromPipeline)]
+        # Use this parameter to pass an existing SNOWAuth context object to the function
         $AuthObject,
         [Parameter(ParameterSetName = 'Basic')]
         [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
         [switch]
         #Only supported on PS Core. 5.1 users will need to add a bypass via device config.
-        $BypassDefaultProxy
+        $BypassDefaultProxy,
+        [Parameter(ParameterSetName = 'Basic')]
+        [Parameter(ParameterSetName = 'OAuth')]
+        [Parameter(ParameterSetName = 'OAuthToken')]
+        [switch]
+        # Create a web session for the session context. This will store the cookies and X-UserToken in the session object.
+        $UseWebSession,
+        [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
+        [string]
+        # An e
+        $AccessToken,
+        [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
+        [string]
+        #OAuth Refresh Token
+        $RefreshToken,
+        [Parameter(ParameterSetName = 'OAuthToken')]
+        [int]
+        #Token expiration time in seconds
+        $ExpiresInSeconds = 1800
     )
 
     BEGIN {}
@@ -176,6 +213,33 @@ function Set-SNOWAuth {
                     }
                 }else{
                     Throw "A valid access token was not retrieved"
+                }
+            }
+            'OAuthToken' {
+                #? Use provided tokens
+                $Token = [PSCustomObject]@{
+                    access_token  = $AccessToken
+                    refresh_token = $RefreshToken
+                    expires_in    = $ExpiresInSeconds
+                    token_type    = "Bearer"
+                }
+
+                $script:SNOWAuth += @{
+                    ClientID = $ClientID
+                    Token    = $Token
+                    Expires  = (Get-Date).AddSeconds($ExpiresInSeconds)
+                    Type     = 'oauth'
+                }
+            }
+        }
+        #? Create a web session if requested.
+        if ($UseWebSession) {
+            $script:SNOWAuth.session = New-SNOWAuthWebSession
+            if ($script:SNOWAuth.session -and $Script:SNOWAuth.session.valid) {
+                $script:SNOWAuth.SessionState = Get-SNOWWebSessionState -ValidateSession -ErrorAction Stop
+                if ($script:SNOWAuth.SessionState.Valid) {
+                    Write-Verbose "Web login successful"
+                    return
                 }
             }
         }

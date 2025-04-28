@@ -1,0 +1,20 @@
+{
+  "FileTag": "ValidateSessionState-user-Valid-WebLogin",
+  "URI": "https://dev195226.service-now.com/api/now/v2/table/sys_user?sysparm_limit=1&sysparm_fields=sys_id,name,user_name&sysparm_query=user_name=javascript:gs.getUserName()",
+  "Parameters": {
+    "Body": null,
+    "Method": "GET",
+    "ContentType": null,
+    "Headers": {
+      "X-UserToken": "de447448834daa10f2dbcac6feaad3dd2bb922730998ed61fe928dde2bb44fe392b60fc3"
+    },
+    "URI": "https://dev195226.service-now.com/api/now/v2/table/sys_user?sysparm_limit=1&sysparm_fields=sys_id,name,user_name&sysparm_query=user_name=javascript:gs.getUserName()"
+  },
+  "ContentType": null,
+  "Method": "GET",
+  "Body": null,
+  "Time": "2025-04-16T13:41:14.202-04:00",
+  "Headers": {
+    "X-UserToken": "de447448834daa10f2dbcac6feaad3dd2bb922730998ed61fe928dde2bb44fe392b60fc3"
+  }
+}

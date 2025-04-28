@@ -12,7 +12,7 @@
 RootModule = 'PSSnow.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.2'
+ModuleVersion = '1.4.0'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop', 'Core'
@@ -89,7 +89,11 @@ FunctionsToExport = 'Set-SNOWAuth', 'Get-SNOWObject', 'Get-SNOWUser', 'Remove-SN
                'Get-SNOWCMDBCI', 'Set-SNOWCMDBCI', 'Get-SNOWSCOrderGuide', 
                'New-SNOWCMDBCI', 'Remove-SNOWLocation', 'Remove-SNOWDepartment', 
                'Remove-SNOWUserGroup', 'Invoke-SNOWRestMethod', 
-               'Invoke-SNOWWebRequest'
+               'Invoke-SNOWWebRequest',
+               'New-SNOWAuthWebSession', 'Get-SNOWWebSessionState',
+               'Get-SNOWWebConcourseState', 'Set-SNOWWebConcourseState',
+               'Invoke-SNOWBackgroundScript', 'Invoke-SNOWGlideAjax', 'Wait-SNOWGlideAjaxProgress'
+               
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -130,7 +134,7 @@ PrivateData = @{
         ReleaseNotes = 'https://github.com/insomniacc/PSSnow/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
-        # Prerelease = ''
+        Prerelease = 'preview1'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

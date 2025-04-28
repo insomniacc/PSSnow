@@ -16,6 +16,14 @@ Sets ServiceNow authentication in the current session.
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-ProxyURI <String>]
  [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>] [-BypassDefaultProxy]
+ [-UseWebSession] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### OAuthToken
+```
+Set-SNOWAuth -Instance <String> -ClientID <String> [-ClientSecret <SecureString>] [-ProxyURI <String>]
+ [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>] [-BypassDefaultProxy]
+ [-UseWebSession] -AccessToken <String> -RefreshToken <String> [-ExpiresInSeconds <Int32>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -23,7 +31,7 @@ Set-SNOWAuth -Instance <String> -Credential <PSCredential> [-ProxyURI <String>]
 ```
 Set-SNOWAuth -Instance <String> -Credential <PSCredential> -ClientID <String> -ClientSecret <SecureString>
  [-ProxyURI <String>] [-ProxyCredential <PSCredential>] [-HandleRatelimiting] [-WebCallTimeoutSeconds <Int32>]
- [-BypassDefaultProxy] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-BypassDefaultProxy] [-UseWebSession] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### GetSNOWAuth
@@ -39,7 +47,25 @@ Applies module scope authentication for PSSnow
 ### EXAMPLE 1
 ```powershell
 Set-SNOWAuth -Instance "InstanceName" -Credential (get-credential) -Verbose
-Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+# Applies basic authentication in the current session for instance 'InstanceName.service-now.com'
+```
+
+### EXAMPLE 2
+```powershell
+Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -ClientSecret (ConvertTo-SecureString -String "ClientSecret" -AsPlainText -Force) -Credential (get-credential) -Verbose
+# Applies OAuth authentication in the current session for instance 'InstanceName.service-now.com'
+```
+
+### EXAMPLE 3
+```powershell
+Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -AccessToken "AccessToken" -RefreshToken "RefreshToken" -ExpiresInSeconds 3600 -Verbose
+# Applies OAuth authentication with a Public Client in the current session for instance 'InstanceName.service-now.com' using provided tokens.
+```
+
+### EXAMPLE 4
+```powershell
+Set-SNOWAuth -Instance "InstanceName" -ClientID "ClientID" -AccessToken "AccessToken" -RefreshToken "RefreshToken" -ExpiresInSeconds 3600 -ClientSecret (ConvertTo-SecureString -String "ClientSecret" -AsPlainText -Force) -Verbose
+# Applies OAuth authentication with a Private Client in the current session for instance 'InstanceName.service-now.com' using provided tokens.
 ```
 
 ## PARAMETERS
@@ -49,7 +75,7 @@ Instance name e.g dev123456
 
 ```yaml
 Type: System.String
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: True
@@ -79,7 +105,7 @@ OAuth ClientID
 
 ```yaml
 Type: System.String
-Parameter Sets: OAuth
+Parameter Sets: OAuthToken, OAuth
 Aliases:
 
 Required: True
@@ -91,6 +117,18 @@ Accept wildcard characters: False
 
 ### -ClientSecret
 OAuth ClientSecret
+
+```yaml
+Type: System.Security.SecureString
+Parameter Sets: OAuthToken
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ```yaml
 Type: System.Security.SecureString
@@ -110,7 +148,7 @@ URI should include the port if used.
 
 ```yaml
 Type: System.String
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: False
@@ -125,7 +163,7 @@ Provide credentials if you do not want to use default auth for any existing prox
 
 ```yaml
 Type: System.Management.Automation.PSCredential
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: False
@@ -140,7 +178,7 @@ Servicenow rate limit policies are per hour, this will cause commands to sleep a
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: False
@@ -155,7 +193,7 @@ Default is no specified timeout
 
 ```yaml
 Type: System.Int32
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: False
@@ -166,7 +204,7 @@ Accept wildcard characters: False
 ```
 
 ### -AuthObject
-{{ Fill AuthObject Description }}
+Use this parameter to pass an existing SNOWAuth context object to the function
 
 ```yaml
 Type: System.Object
@@ -186,12 +224,73 @@ Only supported on PS Core.
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
-Parameter Sets: Basic, OAuth
+Parameter Sets: Basic, OAuthToken, OAuth
 Aliases:
 
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseWebSession
+Create a web session for the session context.
+This will store the cookies and X-UserToken in the session object.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: Basic, OAuthToken, OAuth
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AccessToken
+An e
+
+```yaml
+Type: System.String
+Parameter Sets: OAuthToken
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RefreshToken
+OAuth Refresh Token
+
+```yaml
+Type: System.String
+Parameter Sets: OAuthToken
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpiresInSeconds
+Token expiration time in seconds
+
+```yaml
+Type: System.Int32
+Parameter Sets: OAuthToken
+Aliases:
+
+Required: False
+Position: Named
+Default value: 1800
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

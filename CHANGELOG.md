@@ -6,6 +6,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Features
+
+- Authentication using WebSessions and the ServiceNow `X-UserToken` header.
+- Support for running background scripts using `Invoke-SNOWBackgroundScript`
+- Support for running GlideAjax requests using `Invoke-SNOWGlideAjax` and `Wait-SNOWGlideAjaxProgress`.
+- Support for `sn_cicd` and `sn_devstudio` API endpoints for managing update sets and VCS applications.
+
+### Changed
+
+- [`Set-SNOWAuth`](src/Public/Set-SNOWAuth.ps1)
+  - Added `-UseWebSession` parameter to start a new WebSession and use it for authentication. This works with all authentication methods (Basic, OAuth, OAuthToken).
+  - Added `OAuthToken` ParameterSet with new parameters `-AccessToken` and `-RefreshToken`  for OAuth authentication using an existing access token and refresh token.
+  
+- [`Assert-SNOWAuth`](src/Private/Assert-SNOWAuth.ps1)
+  - Update OAuth refresh flow. ClientSecret is now optional and will be used if provided. If not, a refresh will be attempted using the existing `$script:SNOWAuth.token.refresh_token` and `$script:SNOWAuth.ClientId` only.
+  - When a WebSession is used, the function will now check if the cookies are still valid and refreshes it if necessary. This sets the `$Script:SNOWAuth.SessionState` variable using the new `Get-SNOWWebSessionState` function.
+
+  [`Invoke-SNOWWebRequest`](src/Public/Invoke-SNOWWebRequest.ps1)
+  - Update to use the `$Script:SNOWAuth.session.WebSession` and `$script:SNOWAuth.SessionState.SecurityToken` variables for authentication and session management when available and valid.
+
+### Added
+
+#### [web](src/Public/web/)
+
+- [`Get-SNOWWebConcourseState`](src/Public/web/Get-SNOWWebConcourseState.ps1) - Retrieves the current state of the active ServiceNow session.
+- [`Get-SNOWWebSessionState`](src/Public/web/Get-SNOWWebSessionState.ps1) - Retrieves the current state of a ServiceNow web session.
+- [`Invoke-SNOWBackgroundScript`](src/Public/web/Invoke-SNOWBackgroundScript.ps1) - Executes a background script in the ServiceNow instance.
+- [`Invoke-SNOWGlideAjax`](src/Public/web/Invoke-SNOWGlideAjax.ps1) - Sends a GlideAjax request to a ServiceNow instance and returns the response synchronously.
+- [`New-SNOWAuthWebSession`](src/Public/web/New-SNOWAuthWebSession.ps1) - Creates an authenticated web session to ServiceNow using credentials from SNOWAuth.
+- [`Set-SNOWWebConcourseState`](src/Public/web/Set-SNOWWebConcourseState.ps1) - Sets the current application or update set in a ServiceNow web session.
+- [`Wait-SNOWGlideAjaxProgress`](src/Public/web/Wait-SNOWGlideAjaxProgress.ps1) - Waits for a ServiceNow background process to complete.
+
+#### [sn_cicd](src/Public/sn_cicd/)
+
+- [`Get-SNOWUpdateSet`](src/Public/sn_cicd/Get-SNOWUpdateSet.ps1) - Get update set from ServiceNow by sys_id. Searches sys_update_set and sys_remote_update_set tables in order.
+- [`Import-SNOWUpdateSet`](src/Public/sn_cicd/Import-SNOWUpdateSet.ps1) - Imports an update set XML file into ServiceNow using sys_upload.do and a valid WebSession.
+- [`New-SNOWUpdateSet`](src/Public/sn_cicd/New-SNOWUpdateSet.ps1) - Creates a new update set in ServiceNow using the CICD API.
+- [`Remove-SNOWUpdateSet`](src/Public/sn_cicd/Remove-SNOWUpdateSet.ps1) - Removes a ServiceNow update set by directly deleting it.
+- [`Search-SNOWUpdateSet`](src/Public/sn_cicd/Search-SNOWUpdateSet.ps1) - Searches for update sets in ServiceNow.
+- [`Start-SNOWUpdateSetBackOut`](src/Public/sn_cicd/Start-SNOWUpdateSetBackOut.ps1) - Removes (backs out) an update set from ServiceNow.
+- [`Start-SNOWUpdateSetCommit`](src/Public/sn_cicd/Start-SNOWUpdateSetCommit.ps1) - Starts the commit process for a ServiceNow update set.
+- [`Start-SNOWUpdateSetPreview`](src/Public/sn_cicd/Start-SNOWUpdateSetPreview.ps1) - Starts the preview process for a ServiceNow update set.
+- [`Start-SNOWVCSApplyChanges`](src/Public/sn_cicd/Start-SNOWVCSApplyChanges.ps1) - Starts applying changes from a remote source control to a specified local application or application-customization.
+- [`Start-SNOWVCSApplyStash`](src/Public/sn_cicd/Start-SNOWVCSApplyStash.ps1) - Starts applying a previously generated "stash" of changes from a remote source control.
+- [`Start-SNOWVCSImport`](src/Public/sn_cicd/Start-SNOWVCSImport.ps1) - Imports an application using the specified repository URL and branch name.
+- [`Sync-SNOWVCSApplication`](src/Public/sn_cicd/Sync-SNOWVCSApplication.ps1) - Synchronizes a ServiceNow application with a Git repository using the CICD Source Control API.
+- [`Test-SNOWUpdateSet`](src/Public/sn_cicd/Test-SNOWUpdateSet.ps1) - Tests an update set XML file to determine if it contains an update set.
+- [`Wait-SNOWCICDProgress`](src/Public/sn_cicd/Wait-SNOWCICDProgress.ps1) - Waits for a ServiceNow CICD operation to complete.
+
+#### [sn_devstudio](src/Public/sn_devstudio/)
+
+- [`Get-SNOWDevStudioApp`](src/Public/sn_devstudio/Get-SNOWDevStudioApp.ps1) - Get all VCS apps from api/sn_devstudio/v1/vcs/apps
+- [`Sync-SNOWDevStudioApp`](src/Public/sn_devstudio/Sync-SNOWDevStudioApp.ps1) - Imports, syncs and updates a ServiceNow application with a Git repository. Use sn_devstudio API endpoints to manage the repository.
+- [`Wait-SNOWDevStudioTransaction`](src/Public/sn_devstudio/Wait-SNOWDevStudioTransaction.ps1) - Wait for a sn_devstudio transaction to complete - api/sn_devstudio/v1/vcs/transactions/{ProgressId}
+
 ## [1.3.2] - 2024-05-26
 ### Fixed
 - fixed issued with TimeoutSec on Invoke-SNOWWebRequest in PS 7.3

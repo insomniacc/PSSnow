@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2025-01-06 21:27:27">
+    <sys_remote_update_set action="INSERT_OR_UPDATE">
+        <application display_value="Global">global</application>
+        <application_name>Global</application_name>
+        <application_scope>global</application_scope>
+        <application_version/>
+        <collisions/>
+        <commit_date/>
+        <deleted/>
+        <description/>
+        <inserted/>
+        <name>Test Import Set</name>
+        <origin_sys_id/>
+        <parent display_value=""/>
+        <release_date/>
+        <remote_base_update_set display_value=""/>
+        <remote_parent_id/>
+        <remote_sys_id>ef68eabb83321210d47296d6feaad361</remote_sys_id>
+        <state>loaded</state>
+        <summary/>
+        <sys_class_name>sys_remote_update_set</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-06 21:27:27</sys_created_on>
+        <sys_id>d1196afb83321210d47296d6feaad3fb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-06 21:27:27</sys_updated_on>
+        <update_set display_value=""/>
+        <update_source display_value=""/>
+        <updated/>
+    </sys_remote_update_set>
+    <sys_update_xml action="INSERT_OR_UPDATE">
+        <action>INSERT_OR_UPDATE</action>
+        <application display_value="Global">global</application>
+        <category>customer</category>
+        <comments/>
+        <name>sys_script_include_21e866fb83321210d47296d6feaad3de</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;public&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.TestGlobalScript&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;TestGlobalScript&lt;/name&gt;&lt;sandbox_callable&gt;false&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[var TestGlobalScript = Class.create();
+TestGlobalScript.prototype = {
+    initialize: function() {
+    },
+
+    type: 'TestGlobalScript'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-01-06 21:26:56&lt;/sys_created_on&gt;&lt;sys_id&gt;21e866fb83321210d47296d6feaad3de&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;TestGlobalScript&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_21e866fb83321210d47296d6feaad3de&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-01-06 21:26:56&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;21e866fb83321210d47296d6feaad3de&lt;/id&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-01-06 21:26:55&lt;/sys_created_on&gt;&lt;sys_id&gt;edf866fb83321210d47296d6feaad3f3&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-01-06 21:26:55&lt;/sys_updated_on&gt;&lt;table&gt;sys_script_include&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>242884971</payload_hash>
+        <remote_update_set display_value="Test Import Set">d1196afb83321210d47296d6feaad3fb</remote_update_set>
+        <replace_on_upgrade>false</replace_on_upgrade>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-06 21:27:27</sys_created_on>
+        <sys_id>d5196afb83321210d47296d6feaad3fb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1943d8382540000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-06 21:27:27</sys_updated_on>
+        <table/>
+        <target_name>TestGlobalScript</target_name>
+        <type>Script Include</type>
+        <update_domain>global</update_domain>
+        <update_guid>65f8e2fb5132121087802835b006cf2a</update_guid>
+        <update_guid_history>65f8e2fb5132121087802835b006cf2a:242884971</update_guid_history>
+        <update_set display_value=""/>
+        <view/>
+    </sys_update_xml>
+</unload>

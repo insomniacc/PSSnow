@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2025-01-07 03:18:24">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description/>
+<inserted/>
+<name>Test Import Set 2</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>fc4933bb83b61210d47296d6feaad3cb</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2025-01-07 03:18:23</sys_created_on>
+<sys_id>866933bb83b61210d47296d6feaad3ff</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-01-07 03:18:23</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_21e866fb83321210d47296d6feaad3de</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;public&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.TestGlobalScript&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description&gt;Update 1&lt;/description&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;TestGlobalScript&lt;/name&gt;&lt;sandbox_callable&gt;false&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[var TestGlobalScript = Class.create();
+TestGlobalScript.prototype = {
+    initialize: function() {
+    },
+
+    type: 'TestGlobalScript'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-01-06 21:26:56&lt;/sys_created_on&gt;&lt;sys_id&gt;21e866fb83321210d47296d6feaad3de&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;TestGlobalScript&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_21e866fb83321210d47296d6feaad3de&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-01-07 03:18:07&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;21e866fb83321210d47296d6feaad3de&lt;/id&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-01-06 21:26:55&lt;/sys_created_on&gt;&lt;sys_id&gt;edf866fb83321210d47296d6feaad3f3&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-01-06 21:26:55&lt;/sys_updated_on&gt;&lt;table&gt;sys_script_include&lt;/table&gt;&lt;use_es_latest&gt;false&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>586547687</payload_hash>
+<remote_update_set display_value="Test Import Set 2">866933bb83b61210d47296d6feaad3ff</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2025-01-07 03:18:24</sys_created_on>
+<sys_id>4a6933bb83b61210d47296d6feaad3ff</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>1943ec506560000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-01-07 03:18:24</sys_updated_on>
+<table/>
+<target_name>TestGlobalScript</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>3159b3bb84b61210fe8568517e794fe3</update_guid>
+<update_guid_history>3159b3bb84b61210fe8568517e794fe3:586547687,65f8e2fb5132121087802835b006cf2a:242884971,0cfc973b69361210bb0c1cde91db4cf8:884866057,5ebc533b5d361210cff631332eecd570:1400350973,65f8e2fb5132121087802835b006cf2a:242884971,5e0897b37f36121018b1257e3fb20548:-976039308,d94117bbf9f212108ce86ca6a44d3061:-78519448,65f8e2fb5132121087802835b006cf2a:242884971</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>

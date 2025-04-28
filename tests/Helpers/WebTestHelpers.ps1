@@ -7,7 +7,6 @@ Required environment variables:
 - SN_TEST_PASSWORD (e.g. password)
 - SN_TEST_VAULT (e.g. 123456)
 "@
-$Script:PSDefaultParameterValues['Set-SNOWAuth:ProxyUri'] = 'http://localhost:8022'
 function AssertTestSnowAuth([switch]$SetAuth) {
     if (-not $env:SN_TEST_INSTANCE) {
         Write-Verbose "The environment variable SN_TEST_INSTANCE is not set. Please set it to the instance you want to test against."

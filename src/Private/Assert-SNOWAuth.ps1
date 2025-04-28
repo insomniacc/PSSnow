@@ -20,8 +20,11 @@ function Assert-SNOWAuth() {
             $Body = @{
                 grant_type="refresh_token"
                 client_id = $script:SNOWAuth.ClientID
-                client_secret = [System.Net.NetworkCredential]::new('dummy', $script:SNOWAuth.ClientSecret).Password
                 refresh_token = $script:SNOWAuth.token.refresh_token
+            }
+            # If client secret is provided, add it to the body. Public clients can refresh tokens without a client secret.
+            if ($script:SNOWAuth.ClientSecret) {
+                $Body.client_secret = [System.Net.NetworkCredential]::new('dummy', $script:SNOWAuth.ClientSecret).Password
             }
             $Token = Invoke-RestMethod -Method POST -uri "https://$($Script:SNOWAuth.Instance).service-now.com/oauth_token.do" -Body $Body -Verbose:$false @ProxyAuth
 

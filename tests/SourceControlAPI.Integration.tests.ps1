@@ -12,27 +12,22 @@
     - GITHUB_PAT - This should have write access to the repository as well since SN seems to check for it
 
 #>
+# PSScriptAnalyzer - TEST Secrets should be transient. Ignore this rule for the tests.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+param()
 $ScriptRoot = $PSScriptRoot
 $ModulePath = ($ScriptRoot | Split-Path -Parent) + '\src'
 $ProjectName = $ScriptRoot | Split-Path -Parent | Split-Path -Leaf
 Import-Module "$ModulePath\$ProjectName.psm1" -Force
-$Global:SN_TEST_ENABLED = (![string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
-if ($Global:SN_TEST_ENABLED) {
-    Write-Host "Running Integration tests against instance: $env:SN_TEST_INSTANCE"
-}
-if ([string]::IsNullOrEmpty($env:GITHUB_PAT)) {
-    Write-Host "GITHUB_PAT is not set. Skipping tests that require GitHub authentication."
-    $Global:SN_GIT_TEST_ENABLED = $false
-}
-else {
-    $Global:SN_GIT_TEST_ENABLED = $true
-    Write-Host "Running Integration tests against GitHub with PAT from env:GITHUB_PAT"
-}
+
 InModuleScope $ProjectName {
     Describe 'Source Control Integration Tests' {
-        Context 'Sync-SNOWVCSApplication' -Skip:(-not $Global:SN_TEST_ENABLED -or -not $Global:SN_GIT_TEST_ENABLED) -Tag 'Integration' {
+        Context 'Sync-SNOWVCSApplication' -Skip:(
+            ([string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -or
+            ([string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -or
+            ([string]::IsNullOrEmpty($env:SN_TEST_PASSWORD)) -or 
+            ([string]::IsNullOrEmpty($env:GITHUB_PAT))
+        ) -Tag 'Integration' {
             BeforeAll {
                 . "$PSScriptRoot\Helpers\WebTestHelpers.ps1"
                 # Setup authentication if not already done

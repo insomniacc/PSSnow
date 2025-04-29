@@ -1,3 +1,5 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+param()
 $ModulePath = ($PSScriptRoot | Split-Path -parent) + "\src"
 $ProjectName = $PSScriptRoot | Split-Path -parent | Split-Path -leaf
 Import-Module "$ModulePath\$ProjectName.psd1" -Force -ErrorAction Stop

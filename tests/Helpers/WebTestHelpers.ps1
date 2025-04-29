@@ -1,4 +1,6 @@
-# This helper MUST be called in the BeforeAll block of a pester test.
+# PSScriptAnalyzer - TEST Secrets should be transient. Ignore this rule for the tests.
+
+param()
 $Script:TestMessage = @"
 SNOW Integration Tests.
 Required environment variables:
@@ -7,10 +9,13 @@ Required environment variables:
 - SN_TEST_PASSWORD (e.g. password)
 - SN_TEST_VAULT (e.g. 123456)
 "@
-function AssertTestSnowAuth([switch]$SetAuth) {
+function AssertTestSnowAuth {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+    Param(
+        [switch]$SetAuth
+    )
     if (-not $env:SN_TEST_INSTANCE) {
         Write-Verbose "The environment variable SN_TEST_INSTANCE is not set. Please set it to the instance you want to test against."
-        $Global:SN_TEST_ENABLED = $false
         return
     }
     $Script:IntegrationTestsEnabled = $true
@@ -18,22 +23,19 @@ function AssertTestSnowAuth([switch]$SetAuth) {
         $env:SN_TEST_USERNAME,
         (ConvertTo-SecureString -String $env:SN_TEST_PASSWORD -AsPlainText -Force)
     )
-    if($env:SN_TEST_INSTANCE -notlike '*dev*' -and $env:SN_TEST_INSTANCE -notlike '*test*') {
-        Write-Error "The `$env:SN_TEST_INSTANCE [$($env:SN_TEST_INSTANCE)] is not a dev or test instance. Please set it to a dev or test instance."
-        $Global:SN_TEST_ENABLED = $false
+    if ($env:SN_TEST_INSTANCE -notlike '*dev*' -and $env:SN_TEST_INSTANCE -notlike '*test*') {
+        Write-Error "The `$env:SN_TEST_INSTANCE [$($env:SN_TEST_INSTANCE)] is not a dev or test instance. Please set it to a dev or test instance or update the test helper to skip this test."
         return
     }
     $Script:TEST_SN_INSTANCE = $env:SN_TEST_INSTANCE
-    if($SetAuth){
+    if ($SetAuth) {
         Set-SNOWAuth -Instance $Script:TEST_SN_INSTANCE -Credential $Script:TEST_SN_CREDENTIALS -UseWebSession
     }
-    $Global:SN_TEST_ENABLED = $true
 }
 
 # Mocking Code
 # We mock using actual Invoke-WebRequest response object to simulate the real response.
 # This gives a better simulation of the actual session handling.
-
 
 function GetMockFilePath {
     [CmdletBinding()]

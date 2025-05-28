@@ -90,7 +90,7 @@ function Set-SNOWAuth {
         $UseWebSession,
         [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
         [string]
-        # An e
+        # An existing OAuth Access Token
         $AccessToken,
         [Parameter(Mandatory, ParameterSetName = 'OAuthToken')]
         [string]

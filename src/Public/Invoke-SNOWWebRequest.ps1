@@ -132,6 +132,25 @@ function Invoke-SNOWWebRequest {
                         Write-Error "Rate limit hit (Rule: $RateLimitRule). Duration until reset: $RateLimitResetDuration. Use -HandleRateLimiting on Set-SNOWAuth to automatically wait and retry."
                         break
                     }
+                }elseif($_.Exception.Response.StatusCode -eq 401){
+                    if($script:SNOWAuth.SessionState -and $script:SNOWAuth.session){
+                        Write-Warning "Caught 401 during Invoke-SNOWWebRequest with WebSession. Attempting to re-authenticate..."
+                        Assert-SNOWAuth
+                        Assert-SNOWAuthWebSession -NewSession
+                        if($Script:SNOWAuth.SessionState -and $script:SNOWAuth.SessionState.CookiesValid -eq $true){
+                            Write-Verbose "Re-authenticated successfully. Retrying request..."
+                            $PSBoundParameters.WebSession = $script:SNOWAuth.session.WebSession
+                            $PSBoundParameters.Headers['X-UserToken'] = $script:SNOWAuth.SessionState.SecurityToken
+                            continue
+                        }else{
+                            Write-Warning "Retrying request without WebSession"
+                            $PSBoundParameters.WebSession = $null
+                            $PSBoundParameters.Headers.Remove('X-UserToken')
+                            $PSBoundParameters.Headers['Authorization'] = (Get-AuthHeader).Authorization
+                            continue
+                        }
+                    }
+                    throw
                 }else{
                     throw
                 }

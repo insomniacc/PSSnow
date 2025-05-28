@@ -39,7 +39,6 @@ function New-SNOWAuthWebSession {
         }
     }
     process {
-        $Credential = $Script:SNOWAuth.Credential
         # Create session state tracking object
         $SnowSession = @{
             g_ck    = $null
@@ -55,17 +54,19 @@ function New-SNOWAuthWebSession {
         $Script:PSDefaultParameterValues['Invoke-WebRequest:WebSession'] = $WebSession
         $Script:PSDefaultParameterValues['Invoke-WebRequest:MaximumRedirection'] = 0
         $PublishResponse = try {
+            $Script:SNOWAuth.session = $null
+            $Script:SNOWAuth.SessionState = $null
             (Invoke-SNOWWebRequest @PublishRequest)
         }
         catch { 
             if ($_.Exception.Response.StatusCode -eq 401) {
                 Write-Warning "Authentication failed. Please check your credentials."
-                if (!$Script:SNOWAuth.Credentials) {
+                if (!$Script:SNOWAuth.Credential) {
                     Write-Warning "No credentials provided. Unable to authenticate."
                     return $null
                 }
             }
-            elseif($_.Exception.Response.StatusCode -eq 302) {
+            elseif ($_.Exception.Response.StatusCode -eq 302) {
                 Write-Warning "302 response received. API Endpoint may be missing @ $($PublishRequest.Uri)"
             }
             $_.Exception.Response 
@@ -83,7 +84,7 @@ function New-SNOWAuthWebSession {
             $PublishReponseObject = try { $PublishResponse.Content | ConvertFrom-Json -ErrorAction SilentlyContinue } catch { 
                 Write-Warning "Failed to parse JSON response from $($PublishRequest.Uri) $($_.Exception.Message)"
                 $null
-             }
+            }
             if ($PublishReponseObject.ck) {
                 Write-Verbose "Got ck token from sn_devstudio_/v1/get_publish_info: $($PublishReponseObject.ck.Substring(0, 10))..."
                 $WebSession.Credentials = $null # Clear credentials now that we have a valid session
@@ -94,14 +95,14 @@ function New-SNOWAuthWebSession {
                 $SnowSession.valid = $true
                 $WebSession.Headers['X-UserToken'] = $PublishReponseObject.ck
                 $SnowSession.WebSession = $WebSession
-                $SnowSession.Expires = (Get-Date).AddMinutes(45)
+                $SnowSession.Expires = (Get-Date).AddSeconds(60)
                 return $SnowSession
             }
             elseif ($Script:SNOWAuth.Credentials) {
                 Write-Warning "Publish info token not found in response. Proceeding with normal login."
             }
             else {
-                Write-Warning "Publish info token not found in response. No credentials provided. Unable to authenticate."
+                Write-Error "Publish info token not found in response. No credentials provided. Unable to authenticate."
             }
         }
         # First request to get the login page and sysparm_ck token
@@ -109,7 +110,7 @@ function New-SNOWAuthWebSession {
         # Alternative Login Method
         # Form-Based login is left here for backward compatibility in case the first method fails
         $LoginParams = @{
-            Uri        = "https://$Instance.service-now.com/login.do"
+            Uri        = "https://$($Script:SNOWAuth.Instance).service-now.com/login.do"
             Method     = 'GET'
             WebSession = $WebSession
         }
@@ -133,10 +134,10 @@ function New-SNOWAuthWebSession {
         }
             
         # URL encode the password for the login request
-        $EncodedPassword = [uri]::EscapeDataString($Credential.GetNetworkCredential().Password)
+        $EncodedPassword = [uri]::EscapeDataString($Script:SNOWAuth.Credential.GetNetworkCredential().Password)
         # Perform login request
         $AuthParams = @{
-            Uri        = "https://$Instance.service-now.com/login.do?user_name=$($Credential.UserName)&user_password=${EncodedPassword}&sys_action=sysverb_login&sysparm_ck=$SecurityToken&sysparm_goto_url=/sys_user_list.do?sysparm_limit=1&sysparm_fields=name,sys_id,user_name"
+            Uri        = "https://$($Script:SNOWAuth.Instance).service-now.com/login.do?user_name=$($Script:SNOWAuth.Credential.UserName)&user_password=${EncodedPassword}&sys_action=sysverb_login&sysparm_ck=$SecurityToken&sysparm_goto_url=/sys_user_list.do?sysparm_limit=1&sysparm_fields=name,sys_id,user_name"
             Method     = 'GET'
             WebSession = $WebSession
         }
@@ -156,7 +157,7 @@ function New-SNOWAuthWebSession {
             $SnowSession.g_ck = $NewToken
             $SnowSession.WebSession = $WebSession
             $SnowSession.Expires = (Get-Date).AddMinutes(45)
-            Write-Information "Web session successfully authenticated for $Instance. Updating SNOWAuth session."
+            Write-Information "Web session successfully authenticated for $($Script:SNOWAuth.Instance). Updating SNOWAuth session."
             return $SnowSession
         }
         else {

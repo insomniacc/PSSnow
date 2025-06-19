@@ -54,8 +54,7 @@ InModuleScope $ProjectName {
                 $script:SNOWAuth.Instance | Should -BeExactly $TEST_SN_INSTANCE
                 $script:SNOWAuth.Credential | Should -BeExactly $BadCredential
                 $script:SNOWAuth.type | Should -BeExactly 'basic'
-                $script:SNOWAuth.session | Should -Be $null
-                $Script:SNOWAuth.SessionState | Should -Be $null
+                $Script:SNOWAuth.SessionState.Valid | Should -Be $false
             }
 
             It 'should automatically fall back to basic authentication when the WebSession is invalid' {

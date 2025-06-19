@@ -251,7 +251,7 @@ Accept wildcard characters: False
 ```
 
 ### -AccessToken
-An e
+An existing OAuth Access Token
 
 ```yaml
 Type: System.String

@@ -33,6 +33,16 @@ InModuleScope $ProjectName {
                 $Response | Should -BeOfType 'PSCustomObject'
                 $Response.ScriptResponse | Should -BeLike "*$TestGuid*"
             }
+
+            It 'should execute a background script successfully by fetching a new session.' {
+                $Script:SNOWAuth.session = $null
+                $Script:SNOWAuth.SessionState = $null
+                $TestGuid = [guid]::NewGuid().ToString()
+                $ScriptContents = "gs.info('Executing PSSnow Test {0}')" -f $TestGuid
+                $Response = Invoke-SNOWBackgroundScript -ScriptContents $ScriptContents
+                $Response | Should -BeOfType 'PSCustomObject'
+                $Response.ScriptResponse | Should -BeLike "*$TestGuid*"
+            }
         }
     }
                     

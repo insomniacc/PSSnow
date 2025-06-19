@@ -13,8 +13,8 @@ Starts the commit process for a ServiceNow update set.
 ## SYNTAX
 
 ```
-Start-SNOWUpdateSetCommit [-sys_id] <String> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Start-SNOWUpdateSetCommit [-sys_id] <String> [-ForceCommit] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,6 +23,8 @@ It returns the raw result object from the API which can be piped to Wait-SNOWCIC
 to wait for the operation to complete.
 
 This function calls the ServiceNow API endpoint: api/sn_cicd/update_set/commit/{sys_id}
+
+https://www.servicenow.com/docs/bundle/yokohama-api-reference/page/integrate/inbound-rest/concept/cicd-update-set-api.html
 
 ## EXAMPLES
 
@@ -47,6 +49,13 @@ Get-SNOWUpdateSet -sys_id "1234567890abcdef" | Start-SNOWUpdateSetCommit | Wait-
 
 Gets the update set, starts the commit process, and waits for it to complete.
 
+### EXAMPLE 4
+```powershell
+Start-SNOWUpdateSetCommit -sys_id "1234567890abcdef" -ForceCommit
+```
+
+Forces the commit process for the specified update set, bypassing validation checks.
+
 ## PARAMETERS
 
 ### -sys_id
@@ -61,6 +70,25 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ForceCommit
+Switch that indicates whether to force commit the update set.
+Force commits the update set even if you haven't yet previewed it to check for conflicts.
+
+Default: Doesn't force commit the update set.
+You must preview the update set before proceeding with the commit.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

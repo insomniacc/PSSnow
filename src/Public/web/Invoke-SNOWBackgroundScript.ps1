@@ -30,16 +30,16 @@ function Invoke-SNOWBackgroundScript {
         [string]$Scope = 'global'
     )
     
-    $Session = Get-SNOWWebSessionState -ValidateSession
-    if (-not $Session.Valid) {
-        Write-Error "No active ServiceNow session found. Please connect using Connect-SNOW first."
-        return $null
-    }
-    
-    $ScopeSysId = $Session.ConcourseList.availableApplications | 
+    Assert-SNOWAuthWebSession
+    $Session = Get-SNOWWebSessionState -ValidateSession -ErrorAction Stop
+    $ConcourseState = Get-SNOWWebConcourseState
+    $ScopeSysId = $ConcourseState.ConcourseList.availableApplications | 
     Where-Object { ($_.scopeName -eq $Scope) -or ($_.sysId -eq $Scope) } | 
     Select-Object -ExpandProperty sysId
     
+    if($Scope -eq 'global'){
+        $ScopeSysId = 'global'
+    }
     
     
     $RequestParams = @{

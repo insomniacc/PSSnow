@@ -2,21 +2,21 @@ $ScriptRoot = $PSScriptRoot
 $ModulePath = ($ScriptRoot | Split-Path -Parent) + '\src'
 $ProjectName = $ScriptRoot | Split-Path -Parent | Split-Path -Leaf
 Import-Module "$ModulePath\$ProjectName.psm1" -Force
-$Global:SN_TEST_ENABLED = (![string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
+
 InModuleScope $ProjectName {
     BeforeAll {
         . "$PSScriptRoot\Helpers\WebTestHelpers.ps1"
         AssertTestSNOWAuth -SetAuth
     }
-    
-    Describe 'UpdateSet Integration Tests' -Skip:(-not $Global:SN_TEST_ENABLED) {
+    Describe 'UpdateSet Integration Tests' -Skip:(
+        ([string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -or
+        ([string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -or
+        ([string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
+    ) -Tag 'Integration' {
         BeforeAll {
             # Define paths for test files
             $SampleUpdateSetPath = "$PSScriptRoot\TestFiles\sample_update_set.xml"
             $SampleUpdateSetPath2 = "$PSScriptRoot\TestFiles\sample_update_set_2.xml"
-            
             $TestUpdateSetName = "Test Import Set"
             
             # Store created resources for cleanup

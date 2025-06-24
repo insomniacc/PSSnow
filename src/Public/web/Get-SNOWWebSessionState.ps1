@@ -49,7 +49,7 @@ function Get-SNOWWebSessionState {
 
     # Check if SNOWAuth contains session information
     if (-not $Script:SNOWAuth -or -not $Script:SNOWAuth.session) {
-        Write-Warning "Session information is missing from SNOWAuth. The session may not be properly initialized. Please run Set-SNOWAuth first."
+        Write-Warning "Get-SNOWWebSessionState: Session information is missing from SNOWAuth."
         return $null
     }
     function resolveBaseState() {

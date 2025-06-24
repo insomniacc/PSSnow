@@ -37,9 +37,7 @@ function Import-SNOWUpdateSet {
 
     process {
         # Validate web session
-        if (-not (Get-SNOWWebSessionState).Valid) {
-            throw "No valid ServiceNow web session established. Please use Connect-SNOW first."
-        }
+        Assert-SNOWAuthWebSession
         
         $UpdateSet = Test-SNOWUpdateSet -Path $Path
         

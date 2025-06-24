@@ -1,15 +1,17 @@
+# PSScriptAnalyzer - TEST Secrets should be transient. Ignore this rule for the tests.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+param()
 $ScriptRoot = $PSScriptRoot
 $ModulePath = ($ScriptRoot | Split-Path -Parent) + '\src'
 $ProjectName = $ScriptRoot | Split-Path -Parent | Split-Path -Leaf
 Import-Module "$ModulePath\$ProjectName.psm1" -Force
-$Global:SN_TEST_ENABLED = (![string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
-if ($Global:SN_TEST_ENABLED) {
-    
-}
+
 InModuleScope $ProjectName {
-    Describe 'WebSession Authentication Test' -Skip:(-not $Global:SN_TEST_ENABLED) {
+    Describe 'WebSession Authentication Test' -Skip:(
+        ([string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -or
+        ([string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -or
+        ([string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
+    ) {
         BeforeAll {
             . "$PSScriptRoot\Helpers\WebTestHelpers.ps1"
             Write-Host "Running WebSession Authentication Integration tests against instance: $env:SN_TEST_INSTANCE"
@@ -52,8 +54,7 @@ InModuleScope $ProjectName {
                 $script:SNOWAuth.Instance | Should -BeExactly $TEST_SN_INSTANCE
                 $script:SNOWAuth.Credential | Should -BeExactly $BadCredential
                 $script:SNOWAuth.type | Should -BeExactly 'basic'
-                $script:SNOWAuth.session | Should -Be $null
-                $Script:SNOWAuth.SessionState | Should -Be $null
+                $Script:SNOWAuth.SessionState.Valid | Should -Be $false
             }
 
             It 'should automatically fall back to basic authentication when the WebSession is invalid' {

@@ -1,3 +1,6 @@
+# PSScriptAnalyzer - TEST Secrets should be transient. Ignore this rule for the tests.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+param()
 $ScriptRoot = $PSScriptRoot
 $ModulePath = ($ScriptRoot | Split-Path -Parent) + "\src"
 $ProjectName = $ScriptRoot | Split-Path -Parent | Split-Path -Leaf

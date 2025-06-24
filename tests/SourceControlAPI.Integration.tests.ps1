@@ -12,27 +12,22 @@
     - GITHUB_PAT - This should have write access to the repository as well since SN seems to check for it
 
 #>
+# PSScriptAnalyzer - TEST Secrets should be transient. Ignore this rule for the tests.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingConvertToSecureStringWithPlainText", "")]
+param()
 $ScriptRoot = $PSScriptRoot
 $ModulePath = ($ScriptRoot | Split-Path -Parent) + '\src'
 $ProjectName = $ScriptRoot | Split-Path -Parent | Split-Path -Leaf
 Import-Module "$ModulePath\$ProjectName.psm1" -Force
-$Global:SN_TEST_ENABLED = (![string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -and
-(![string]::IsNullOrEmpty($env:SN_TEST_PASSWORD))
-if ($Global:SN_TEST_ENABLED) {
-    Write-Host "Running Integration tests against instance: $env:SN_TEST_INSTANCE"
-}
-if ([string]::IsNullOrEmpty($env:GITHUB_PAT)) {
-    Write-Host "GITHUB_PAT is not set. Skipping tests that require GitHub authentication."
-    $Global:SN_GIT_TEST_ENABLED = $false
-}
-else {
-    $Global:SN_GIT_TEST_ENABLED = $true
-    Write-Host "Running Integration tests against GitHub with PAT from env:GITHUB_PAT"
-}
+
 InModuleScope $ProjectName {
     Describe 'Source Control Integration Tests' {
-        Context 'Sync-SNOWVCSApplication' -Skip:(-not $Global:SN_TEST_ENABLED -or -not $Global:SN_GIT_TEST_ENABLED) -Tag 'Integration' {
+        Context 'Sync-SNOWVCSApplication' -Skip:(
+            ([string]::IsNullOrEmpty($env:SN_TEST_INSTANCE)) -or
+            ([string]::IsNullOrEmpty($env:SN_TEST_USERNAME)) -or
+            ([string]::IsNullOrEmpty($env:SN_TEST_PASSWORD)) -or 
+            ([string]::IsNullOrEmpty($env:GITHUB_PAT))
+        ) -Tag 'Integration' {
             BeforeAll {
                 . "$PSScriptRoot\Helpers\WebTestHelpers.ps1"
                 # Setup authentication if not already done
@@ -64,7 +59,7 @@ InModuleScope $ProjectName {
             It 'Should Sync the TEST App' {
                 $env:SKIP_MOCKS = $null
                 $env:SNOW_MOCK_TAG = 'Sync-SNOWVCSApplication'
-                $Result = Sync-SNOWVCSApplication @TestRequest -ImportIfMissing
+                $Result = Sync-SNOWVCSApplication @TestRequest -ImportIfMissing -ApplyChanges
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
@@ -74,10 +69,13 @@ InModuleScope $ProjectName {
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
-                $ScriptResult = Invoke-SNOWBackgroundScript -ScriptContents "gs.info('Hello from the background script in the app: TestApp')" -Scope $AppRecord.sys_id
+                $GetCurrentAppScript = "gs.info(gs.getCurrentScopeName())"
+                $ScriptResult = Invoke-SNOWBackgroundScript -ScriptContents "gs.info('Hello from the background script in the app: TestApp');${GetCurrentAppScript}" -Scope $AppRecord.sys_id
                 $ScriptResult | Should -Not -BeNullOrEmpty
+                Write-Host "$($ScriptResult.ScriptResponse)"
                 $ScriptResult.ScriptResponse | Should -Not -BeNullOrEmpty
                 $ScriptResult.ScriptResponse | Should -BeLike "*Hello from the background script in the app: TestApp*"
+                $ScriptResult.ScriptResponse | Should -BeLike "*Script completed in scope $($TestRequest.Scope)*"
             }
 
             Context 'New-SNOWUpdateSet' -Tag 'Integration' {
@@ -103,10 +101,15 @@ InModuleScope $ProjectName {
                 $SessionState = Get-SNOWWebSessionState -ValidateSession
                 $SessionState.Valid | Should -BeTrue
                 $SessionState.StatusCode | Should -BeExactly 200
+                # Switch to Global first
+                Set-SNOWWebConcourseState -ScopeName 'global'
+
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
-                Set-SNOWWebConcourseState -ScopeName $AppRecord.scope
+                $ConcourseState = Set-SNOWWebConcourseState -ScopeName $AppRecord.scope
+                #  = Get-SNOWWebConcourseState
+                $ConcourseState.Current.currentApplication.sysId | Should -BeExactly $AppRecord.sys_id
             }
 
             It 'Should Sync the TEST App and apply remote changes' {
@@ -123,7 +126,7 @@ InModuleScope $ProjectName {
             }
 
             It 'should pull in the app - when the REPO config is removed.' {
-                $RepoConfig = Get-SNOWObject -Table 'sys_repo_config' -Query "urlEQ$($RepoURL)"
+                $RepoConfig = Get-SNOWObject -Table 'sys_repo_config' -Query "url=$($TestRequest.RepoURL)^"
                 if ($RepoConfig) {
                     Write-Warning "Deleting RepoConfig: $($RepoConfig.sys_id)"
                     Remove-SNOWObject -Table 'sys_repo_config' -sys_id $RepoConfig.sys_id -Confirm:$false

@@ -104,7 +104,8 @@ function Sync-SNOWVCSApplication {
     process {
         # First handle credential management
         Write-Verbose "Managing credentials for Git repository access"
-        $credentialName = "SC_Cred_" + ($RepoURL -replace '[^a-zA-Z0-9]', '_').Substring(0, 20)
+        $RepoName = ($RepoURL -split '/')[-1] -replace '\.git$', '' -replace '[^a-zA-Z0-9]', '_'
+        $credentialName = "VCS_$RepoName".SubString([System.Math]::Min(15, $String.Length))
         
         $credentialValues = @{
             name      = $credentialName
@@ -141,30 +142,29 @@ function Sync-SNOWVCSApplication {
         $appExists = $false
         
         if ($PSCmdlet.ParameterSetName -eq 'ByScope') {
-            $appQuery = "sys_scopeSTARTSWITH${Scope}"
-            $appObj = Get-SNOWObject -Table 'sys_app' -Query $appQuery
+            $appQuery = "scope=${Scope}^"
+            $appObj = Get-SNOWObject -Table 'sys_app' -Query $appQuery -ErrorAction SilentlyContinue
             if ($appObj) {
                 $appExists = $true
                 $SysID = $appObj.sys_id
                 $Scope = $appObj.scope
-                Write-Verbose "Found application with scope ${Scope} - sys_id: ${SysID}"
+                Write-Host "Found application with scope ${Scope} - sys_id: ${SysID}"
             }
         }
         else {
-            $appObj = Get-SNOWObject -Table 'sys_app' -Sys_Id $SysID
+            $appObj = Get-SNOWObject -Table 'sys_app' -Sys_Id $SysID -ErrorAction SilentlyContinue
             if ($appObj) {
                 $appExists = $true
                 $Scope = $appObj.scope
                 $SysID = $appObj.sys_id
-                Write-Verbose "Found application with sys_id ${SysID} - scope: ${Scope}"
+                Write-Host "Found application with sys_id ${SysID} - scope: ${Scope}"
             }
         }
-
+        $AppRepo = Get-SNOWObject -Table 'sys_repo_config' -Query "url=${RepoURL}^"
         # The sn_cicd/sc/import endpoint does
         if ($appObj.sys_id) {
-            $AppRepo = Get-SNOWObject -Table 'sys_repo_config' -Query "url=${RepoURL}"
             if (-not $AppRepo) {
-                Write-Warning "Application $($appObj.sys_id) exists - but sys_repo_config found. Creating sys_repo_config record for the application."
+                Write-Warning "Application $($appObj.sys_id) exists - but no sys_repo_config found. Creating sys_repo_config record for the application."
                 $RepoProps = @{
                     short_description        = "Imported by PSSnow"
                     sys_app                  = $appObj.sys_id
@@ -185,15 +185,20 @@ function Sync-SNOWVCSApplication {
                 }
             }
         }
+        elseif ($AppRepo -and (-not $AppObj.sys_id)) {
+            Write-Warning "Found sys_repo_config record for the URL ${RepoURL} with sys_id: $($AppRepo.sys_id) but no associated application."
+            # If we have a sys_repo_config but no sys_app, we can still import
+            Remove-SNOWObject -Table 'sys_repo_config' -Sys_Id $AppRepo.sys_id -Confirm:$false
+        }
+        
+        if ($AppRepo -and $AppRepo.sys_app -eq '') {
+            Write-Warning "Deleting existing repository configuration with URL ${RepoURL} and no associated application"
+            Remove-SNOWObject -Table 'sys_repo_config' -Sys_Id $AppRepo.sys_id -Confirm:$false
+        }
+        
         # If app doesn't exist and ImportIfMissing is specified, import it
         if ((-not $appExists -and $ImportIfMissing)) {
             Write-Verbose "Application doesn't exist. Importing from repository."
-            # Check sys_repo_config for existing repo configuration with the same URL and delete it if found
-            $ExistingRepoConfig = Get-SNOWObject -Table 'sys_repo_config' -Query "url=$RepoURL"
-            if ($ExistingRepoConfig -and $ExistingRepoConfig.sys_app -eq '') {
-                Write-Warning "Deleting existing repository configuration with URL ${RepoURL} and no associated application"
-                Remove-SNOWObject -Table 'sys_repo_config' -Sys_Id $ExistingRepoConfig.sys_id -Confirm:$false
-            }
             $importParams = @{
                 RepoURL            = $RepoURL
                 CredentialSysID    = $credentialSysID

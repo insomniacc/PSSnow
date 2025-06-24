@@ -59,7 +59,7 @@ InModuleScope $ProjectName {
             It 'Should Sync the TEST App' {
                 $env:SKIP_MOCKS = $null
                 $env:SNOW_MOCK_TAG = 'Sync-SNOWVCSApplication'
-                $Result = Sync-SNOWVCSApplication @TestRequest -ImportIfMissing
+                $Result = Sync-SNOWVCSApplication @TestRequest -ImportIfMissing -ApplyChanges
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
@@ -69,10 +69,13 @@ InModuleScope $ProjectName {
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
-                $ScriptResult = Invoke-SNOWBackgroundScript -ScriptContents "gs.info('Hello from the background script in the app: TestApp')" -Scope $AppRecord.sys_id
+                $GetCurrentAppScript = "gs.info(gs.getCurrentScopeName())"
+                $ScriptResult = Invoke-SNOWBackgroundScript -ScriptContents "gs.info('Hello from the background script in the app: TestApp');${GetCurrentAppScript}" -Scope $AppRecord.sys_id
                 $ScriptResult | Should -Not -BeNullOrEmpty
+                Write-Host "$($ScriptResult.ScriptResponse)"
                 $ScriptResult.ScriptResponse | Should -Not -BeNullOrEmpty
                 $ScriptResult.ScriptResponse | Should -BeLike "*Hello from the background script in the app: TestApp*"
+                $ScriptResult.ScriptResponse | Should -BeLike "*Script completed in scope $($TestRequest.Scope)*"
             }
 
             Context 'New-SNOWUpdateSet' -Tag 'Integration' {
@@ -98,10 +101,15 @@ InModuleScope $ProjectName {
                 $SessionState = Get-SNOWWebSessionState -ValidateSession
                 $SessionState.Valid | Should -BeTrue
                 $SessionState.StatusCode | Should -BeExactly 200
+                # Switch to Global first
+                Set-SNOWWebConcourseState -ScopeName 'global'
+
                 $AppRecord = GetTestAppRecord
                 $AppRecord | Should -Not -BeNullOrEmpty
                 $AppRecord.sys_id | Should -Not -BeNullOrEmpty
-                Set-SNOWWebConcourseState -ScopeName $AppRecord.scope
+                $ConcourseState = Set-SNOWWebConcourseState -ScopeName $AppRecord.scope
+                #  = Get-SNOWWebConcourseState
+                $ConcourseState.Current.currentApplication.sysId | Should -BeExactly $AppRecord.sys_id
             }
 
             It 'Should Sync the TEST App and apply remote changes' {
@@ -118,7 +126,7 @@ InModuleScope $ProjectName {
             }
 
             It 'should pull in the app - when the REPO config is removed.' {
-                $RepoConfig = Get-SNOWObject -Table 'sys_repo_config' -Query "urlEQ$($RepoURL)"
+                $RepoConfig = Get-SNOWObject -Table 'sys_repo_config' -Query "url=$($TestRequest.RepoURL)^"
                 if ($RepoConfig) {
                     Write-Warning "Deleting RepoConfig: $($RepoConfig.sys_id)"
                     Remove-SNOWObject -Table 'sys_repo_config' -sys_id $RepoConfig.sys_id -Confirm:$false

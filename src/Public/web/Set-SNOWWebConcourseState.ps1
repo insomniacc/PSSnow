@@ -80,13 +80,23 @@ function Set-SNOWWebConcourseState {
             }
         }
         'ScopeName' {
+            # Global is a special case
+            if($ScopeName -eq 'global') {
+                $TargetValue = 'Global'
+                $MatchProperty = "name"
+                $CurrentValue = $ConcourseState.Current.currentApplication.name
+            }else{
+                $TargetValue = $ScopeName
+                $MatchProperty = "scopeName"
+                $CurrentValue = $ConcourseState.Current.currentApplication.scopeName
+            }
             @{
                 Uri           = "$pickerBase/application"
                 BodyProperty  = 'app_id'
-                CurrentValue  = $ConcourseState.Current.currentApplication.scopeName
-                TargetValue   = $ScopeName
+                CurrentValue  = $CurrentValue
+                TargetValue   = $TargetValue
                 AvailableList = $ConcourseState.ConcourseList.availableApplications
-                MatchProperty = 'scopeName'
+                MatchProperty = $MatchProperty
             }
         }
         'UpdateSet' {

@@ -21,7 +21,7 @@ InModuleScope $ProjectName {
             It 'should execute a background script successfully' {
                 $TestGuid = [guid]::NewGuid().ToString()
                 $ScriptContents = "gs.info('Executing PSSnow Test {0}')" -f $TestGuid
-                $Response = Invoke-SNOWBackgroundScript -ScriptContents $ScriptContents
+                $Response = Invoke-SNOWBackgroundScript -ScriptContents $ScriptContents -Scope 'global'
                 $Response | Should -BeOfType 'PSCustomObject'
                 $Response.ScriptResponse | Should -BeLike "*$TestGuid*"
             }

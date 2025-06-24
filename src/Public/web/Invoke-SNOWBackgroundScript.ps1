@@ -31,11 +31,15 @@ function Invoke-SNOWBackgroundScript {
     )
     
     Assert-SNOWAuthWebSession
-    
-    $ScopeSysId = $Session.ConcourseList.availableApplications | 
+    $Session = Get-SNOWWebSessionState -ValidateSession -ErrorAction Stop
+    $ConcourseState = Get-SNOWWebConcourseState
+    $ScopeSysId = $ConcourseState.ConcourseList.availableApplications | 
     Where-Object { ($_.scopeName -eq $Scope) -or ($_.sysId -eq $Scope) } | 
     Select-Object -ExpandProperty sysId
     
+    if($Scope -eq 'global'){
+        $ScopeSysId = 'global'
+    }
     
     
     $RequestParams = @{

@@ -180,6 +180,8 @@ function Set-SNOWAuth {
             }
         }
         Write-Verbose "Servicenow $($PsCmdlet.ParameterSetName) authentication has been set for $Instance"
+
+        Set-SNOWPagination -Limit 1000 -Verbose:$False
     }
 
     END{}

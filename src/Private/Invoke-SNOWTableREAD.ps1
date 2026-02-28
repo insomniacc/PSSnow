@@ -10,7 +10,7 @@ function Invoke-SNOWTableREAD {
         [Parameter()]
         [int]
         #Default pagination value
-        $PaginationAmount = 1000
+        $PaginationAmount = $Script:SNOWPaginationDefault
     )
     
     BEGIN {
